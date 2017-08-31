@@ -1,0 +1,10 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+         0          0          0          0          0   mpl_parser.obj
+         0          0          0          0          0   mpl_session.obj
+         0          0          0          0          0   mpl_utility.obj
+         0          0          0          0          0   mpl_video_clipper.obj
+         0          0          0          0          0   mpl_video_recorder.obj
+         0          0          0          0          0   mpl_vt.obj
+         0          0          0          0          0   TOTAL
+

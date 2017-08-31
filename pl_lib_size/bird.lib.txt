@@ -1,0 +1,42 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+      4546         85          0       9953       2950   Bird_gpscell.obj
+      2156          0          1        405       1010   Bird_main.obj
+       668          0          2         56        521   Bird_mileage.obj
+       412          0          0        224        301   Bird_nbrcell.obj
+       918          0          0          1        878   Bird_oilcut.obj
+     20768        590         20      69164       4541   Bird_socket.obj
+      4124         68          4       9017       1650   Bird_std.obj
+      1072         40          8        844       1040   Bird_task.obj
+       578          0          0          2        730   Yd_acc_control.obj
+       552          0          0          0        580   Yd_az_alarm.obj
+      4358          0          0        639       5507   Yd_base.obj
+        60          0          0          0        118   Yd_collision_alarm.obj
+     18602         24          0        810       3800   Yd_datadeal.obj
+      1200         30          0         56       1485   Yd_defense.obj
+       184          0          0          0        295   Yd_fly_mode_control.obj
+       288          0          0          1        413   Yd_gps_control.obj
+       384          0          0          0        285   Yd_heart.obj
+       228          0          0          4        236   Yd_learn_command.obj
+      1004          0          0          7        485   Yd_login_handle.obj
+       240          0          0          0        448   Yd_low_power_alarm.obj
+      4766          0          0        816       1444   Yd_main.obj
+       720         79          0          2        638   Yd_move_alarm.obj
+      2276        154          0          1       1124   Yd_nv_handler.obj
+       564          0          1          1        524   Yd_out_vol_alarm.obj
+       134          0          0          0        229   Yd_power_off.obj
+      1632          0          0        608        237   Yd_readposfile.obj
+       452         15          0          1        632   Yd_reboot_control.obj
+       320          0          0          0        413   Yd_rollover_alarm.obj
+       476          0          0          2        537   Yd_run_static_event.obj
+      1644         68          0          9       1398   Yd_sleep_state.obj
+      4290         18          0       1807       1006   Yd_sms.obj
+        76          0          0          0        118   Yd_sos_alarm.obj
+       512          0          0          1        565   Yd_speed_alarm.obj
+      4484          0          0          2       3346   Yd_tboxpro.obj
+         0          0          0          0          0   Yd_uart_main.obj
+       460          0          0          3        597   Yd_vibration_alarm.obj
+       428          0          0          0        384   Yd_wakeup_handle.obj
+      3442          0          0          1       1576   hd8020_agps.obj
+     89018       1171         36      94437      42041   TOTAL
+

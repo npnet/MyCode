@@ -1,0 +1,13 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+        96         20         16          0        267   bmt_create.obj
+        74        244          0          0        122   bmt_hw.obj
+       600         48          0          0        783   bmt_internal_chr_setting.obj
+      1412         73          8          1       1066   bmt_linear_li.obj
+         0          0          0          0          0   bmt_sw_chip_setting.obj
+      1242          0          3          0        381   bmt_task_main.obj
+       520          0          0          0        254   bmt_timer_control.obj
+      2802        136         24        147       2950   bmt_utility.obj
+       512          0          4          4        503   dcl_bmt.obj
+      7258        521         55        152       6326   TOTAL
+

@@ -1,0 +1,5 @@
+Can't open the directory: ..\\..\\Customer\\Images\\PLUTO240X320\\DispChar
+==Begin auto generate image resource==
+    WALLPAPER: ADD_APPLICATION_IMAGE3(30963, ..\\..\\Customer\\Images\\PLUTO240X320\\MainLCD\\IdleScreen\\WallPaper\\wall01.BMP)
+                ADD_APPLICATION_IMAGE3(IMG_ID_PHNSET_ON_ANIMATION_DEFAULT=30967, path=..\\..\\Customer\\Images\\PLUTO240X320\\MainLCD\\Active\\poweronoff\\logo.BMP)
+                ADD_APPLICATION_IMAGE3(IMG_ID_PHNSET_OFF_ANIMATION_DEFAULT=30968, path=..\\..\\Customer\\Images\\PLUTO240X320\\MainLCD\\Active\\poweronoff\\logo.BMP)

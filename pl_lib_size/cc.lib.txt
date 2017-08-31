@@ -1,0 +1,23 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+        84         20          0          0        116   cc_create.obj
+      2402          0          0          0       1224   cc_disc_proc.obj
+      2048          0          0          0       1480   cc_dtmf_proc.obj
+      3058          0          0          0       2120   cc_estab_proc.obj
+      4396          0          0          0       2384   cc_facility_proc.obj
+       768        268          0          0        248   cc_fsm_main.obj
+      1052          0          0          0        972   cc_hold_proc.obj
+      2222          0          0          0       2700   cc_ie_err_chk_proc.obj
+      1098          0          0          0       2184   cc_ie_form.obj
+       582          0          0          0        732   cc_init.obj
+       836          0          0       1052        308   cc_main.obj
+       580          0          0          0        460   cc_misc_proc.obj
+      1224          0          0          0        788   cc_modify_proc.obj
+      1380          0          0          0       1316   cc_mpty_proc.obj
+      2124          0          0          0       1752   cc_msg_form.obj
+       424          0          0          0        500   cc_reestab_proc.obj
+       348          0          0          0        432   cc_timer.obj
+      2740          0          0          0       2220   cc_utility.obj
+         8          0          0          0        104   cc_uus_proc.obj
+     27374        288          0       1052      22040   TOTAL
+

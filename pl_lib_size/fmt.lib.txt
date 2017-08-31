@@ -1,0 +1,6 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+      4644         48          0        136       2250   fmt_adv.obj
+      1526         20          1        328       1044   fmt_main.obj
+      6170         68          1        464       3294   TOTAL
+

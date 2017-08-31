@@ -1,0 +1,25 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+      2996         15          0          0        980   PnSrvUtilObj.obj
+      1462          0         33          0        704   dump.obj
+       152          0          0          0        248   error.obj
+      1028          0        116          0       1332   hashtable.obj
+      1092          0         97         17        352   hpnsConfig.obj
+      1814        227         60          0       1372   hpnsMain.obj
+      2334         64          0          0        416   hpnsMd5.obj
+       416          0          0          0        708   hpnsNetwork.obj
+      1664          0          0       1092        432   hpnsPush.obj
+      2606          0          0          0       1228   hpnsPushMsg.obj
+      4628        240         20       2436       1588   hpnsStm.obj
+       286         20          0          4        180   hpnsTask.obj
+       244          0          0        436        500   hpnsTimer.obj
+       238          0          0         12        312   hpnsUtil.obj
+      3302          0          0          0       1580   load.obj
+        74          0          8          0        220   memory.obj
+      3248         61         36          0       1164   pack_unpack.obj
+       254          0          0          0        532   strbuffer.obj
+       224          0          0          0        136   strconv.obj
+       458          0          0          0        312   utf.obj
+      2592          0         24          0       3568   value.obj
+     31112        627        394       3997      17864   TOTAL
+

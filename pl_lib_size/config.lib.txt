@@ -1,0 +1,8 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+        84          4          0        128         52   ctrl_buff_pool.obj
+       850          0          0       1528        234   stack_config.obj
+         0       4169        180          0          0   syscomp_config.obj
+       598          0          0       6791        348   task_config.obj
+      1532       4173        180       8447        634   TOTAL
+

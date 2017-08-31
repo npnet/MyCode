@@ -1,0 +1,114 @@
+Warning: L6340W: options first and last are ignored for link type of scattered
+Warning: L6304W: Duplicate input file mtk_lib\MT6261\S00\gprs\abm.lib ignored.
+Warning: L6304W: Duplicate input file mtk_lib\MT6261\S00\gprs\soc.lib ignored.
+Warning: L6304W: Duplicate input file mtk_lib\MT6261\S00\gprs\tcpip.lib ignored.
+Warning: L6304W: Duplicate input file mtk_lib\MT6261\S00\gprs\tcpip_wifi.lib ignored.
+Warning: L6304W: Duplicate input file hal\audio\lib\MTKRVCT31\BesLoudness.a ignored.
+"custom\system\BIRD61A_11C_BB\59a61172.tmp", line 80 (column 1): Warning: L6312W: Empty Load region description for region BOOTLOADER
+"custom\system\BIRD61A_11C_BB\59a61172.tmp", line 85 (column 1): Warning: L6312W: Empty Load region description for region ROOT_CERT
+"custom\system\BIRD61A_11C_BB\59a61172.tmp", line 89 (column 1): Warning: L6312W: Empty Load region description for region EXT_BOOTLOADER
+"custom\system\BIRD61A_11C_BB\59a61172.tmp", line 96 (column 1): Warning: L6312W: Empty Load region description for region CBR
+Warning: L6320W: Ignoring --first command. Cannot find argument 'LARGEPOOL_FIRST_ZI'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'CUST_MEM_INFO'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'DL_CTRL_BIN'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'g_boot_cert_sig'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'logical_data_item_table_camera'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'logical_data_item_table_ul1'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'logical_data_item_table_mmi_gps'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'logical_data_item_table_cust'.
+Warning: L6320W: Ignoring --keep command. Cannot find argument 'g_nvram_custpack_init'.
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$CACHED_EXTSRAM_NVRAM_LTABLE$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_RW$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI_MMIPOOL$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$EXTSRAM_DSP_TX$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$EXTSRAM_DSP_RX$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$EMIINIT_CODE$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$INTSRAM_CODE$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$INTSRAM_DATA$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$INTSRAM_DATA_PREINIT$$Base' attempts to get the load address of a region following data.
+Warning: L6746W: RW data compression has been turned off: Linker defined symbol 'Load$$ROM_SIGNATURE_SECTION$$Base' attempts to get the load address of a region following data.
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+Warning: L6385W: Addition overflow on line 362
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 114 (column 17): Warning: L6314W: No section matches pattern *.obj(SECINFO).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 119 (column 17): Warning: L6314W: No section matches pattern *.obj(MAUI_FOTA_HEAD_INFO).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 123 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_3).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 126 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_5).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 128 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_9).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 129 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_21).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 130 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_21).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 132 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_31).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 133 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_60).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 134 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_60).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 135 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_100).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 136 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_100).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 137 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_1000).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 138 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_1000).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 139 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_3600).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 140 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_3600).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 141 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_udiv_10000).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 142 (column 41): Warning: L6314W: No section matches pattern *(i.__rt_sdiv_10000).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 145 (column 16): Warning: L6314W: No section matches pattern *(CAT_RODATA_IMG).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 145 (column 32): Warning: L6314W: No section matches pattern *(CAT_RODATA_ADO).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 145 (column 48): Warning: L6314W: No section matches pattern *(CAT_RODATA_STR).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 153 (column 13): Warning: L6329W: Pattern *(SNORCONST) only matches removed unused sections.
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 158 (column 24): Warning: L6314W: No section matches pattern *deniro.lib(RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 158 (column 29): Warning: L6314W: No section matches pattern *deniro.lib(ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 159 (column 24): Warning: L6314W: No section matches pattern *fs_fig.lib(RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 159 (column 29): Warning: L6314W: No section matches pattern *fs_fig.lib(ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 163 (column 24): Warning: L6314W: No section matches pattern med_main.obj(LARGEPOOL_ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 172 (column 13): Warning: L6314W: No section matches pattern *(DYNAMICCACHEABLERW_NC).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 178 (column 13): Warning: L6314W: No section matches pattern *(CACHED_EXTSRAM_RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 178 (column 32): Warning: L6314W: No section matches pattern *(CACHED_EXTSRAM_ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 189 (column 28): Warning: L6314W: No section matches pattern *gadget_adp.lib(RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 189 (column 33): Warning: L6314W: No section matches pattern *gadget_adp.lib(ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 190 (column 28): Warning: L6314W: No section matches pattern *gadget_lib.lib(RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 190 (column 33): Warning: L6314W: No section matches pattern *gadget_lib.lib(ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 191 (column 27): Warning: L6314W: No section matches pattern *(EXTSRAM_GADGET_RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 191 (column 46): Warning: L6314W: No section matches pattern *(EXTSRAM_GADGET_ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 195 (column 13): Warning: L6314W: No section matches pattern *(DYNAMICCACHEABLERW_C).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 200 (column 13): Warning: L6314W: No section matches pattern *(VIDEOPOOL_C).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 204 (column 13): Warning: L6314W: No section matches pattern *(DYNAMICCACHEABLEZI_C).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 222 (column 25): Warning: L6329W: Pattern armlibc_rt.obj(SHOULD_NOT_USED_FUNCTION) only matches removed unused sections.
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 223 (column 30): Warning: L6329W: Pattern armlibc_rt_heap.obj(SHOULD_NOT_USED_FUNCTION) only matches removed unused sections.
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 224 (column 28): Warning: L6314W: No section matches pattern armlibc_rt_io.obj(SHOULD_NOT_USED_FUNCTION).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 225 (column 29): Warning: L6329W: Pattern syscomp_config.obj(SHOULD_NOT_USED_RODATA) only matches removed unused sections.
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 235 (column 13): Warning: L6314W: No section matches pattern *(INTSRAM_ROCODE_*).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 238 (column 23): Warning: L6314W: No section matches pattern bootarm.obj(INTERNCODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 239 (column 28): Warning: L6314W: No section matches pattern SST_intrCtrl.obj(INTERNCODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 239 (column 40): Warning: L6314W: No section matches pattern SST_intrCtrl.obj(INTERNCONST).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 241 (column 21): Warning: L6314W: No section matches pattern memset.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 241 (column 31): Warning: L6314W: No section matches pattern memset.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 242 (column 24): Warning: L6314W: No section matches pattern rt_memclr.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 242 (column 34): Warning: L6314W: No section matches pattern rt_memclr.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 243 (column 22): Warning: L6314W: No section matches pattern callvia.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 243 (column 32): Warning: L6314W: No section matches pattern callvia.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 244 (column 23): Warning: L6314W: No section matches pattern _sprintf.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 244 (column 33): Warning: L6314W: No section matches pattern _sprintf.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 245 (column 24): Warning: L6314W: No section matches pattern rt_memcpy.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 245 (column 34): Warning: L6314W: No section matches pattern rt_memcpy.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 247 (column 22): Warning: L6314W: No section matches pattern rt_udiv.o(RO-CODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 247 (column 32): Warning: L6314W: No section matches pattern rt_udiv.o(RO-DATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 257 (column 13): Warning: L6314W: No section matches pattern *(INTSRAM_RODATA_*).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 257 (column 31): Warning: L6314W: No section matches pattern *(INTSRAM_RW_*).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 257 (column 45): Warning: L6314W: No section matches pattern *(INTSRAM_ZI_*).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 259 (column 26): Warning: L6314W: No section matches pattern stack_init.obj(INTERNCONST).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 259 (column 39): Warning: L6314W: No section matches pattern stack_init.obj(INTERNRW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 259 (column 49): Warning: L6314W: No section matches pattern stack_init.obj(INTERNZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 270 (column 20): Warning: L6314W: No section matches pattern uart.obj(INTSRAM_RODATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 270 (column 36): Warning: L6314W: No section matches pattern uart.obj(INTSRAM_RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 270 (column 48): Warning: L6314W: No section matches pattern uart.obj(INTSRAM_ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 272 (column 21): Warning: L6314W: No section matches pattern *init.lib(INTSRAM_RODATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 272 (column 37): Warning: L6314W: No section matches pattern *init.lib(INTSRAM_RW).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 272 (column 49): Warning: L6314W: No section matches pattern *init.lib(INTSRAM_ZI).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 331 (column 13): Warning: L6314W: No section matches pattern *(DYNAMIC_CODE_VEENC_ROCODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 331 (column 40): Warning: L6314W: No section matches pattern *(DYNAMIC_CODE_VEENC_RODATA).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 343 (column 13): Warning: L6314W: No section matches pattern *(DYNAMIC_CODE_VEDEC_ROCODE).
+"custom\system\BIRD61A_11C_BB\scatBIRD61A_11C.txt", line 343 (column 40): Warning: L6314W: No section matches pattern *(DYNAMIC_CODE_VEDEC_RODATA).
+Finished: 0 information, 113 warning and 0 error messages.

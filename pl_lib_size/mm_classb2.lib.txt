@@ -1,0 +1,46 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+      3612          0          0          0       2636   mm_common_construct_msgs.obj
+      9256         32          0          0       8404   mm_common_funcs.obj
+      1264          0          0          0        776   mm_cs_common_proc.obj
+      3070          0          0          0       1264   mm_cs_conn_mgmt.obj
+       896          0          0          0        204   mm_cs_detach.obj
+      2752          0          0          0       1132   mm_cs_loc_update.obj
+      1338          0          0          0        652   mm_cs_mocall.obj
+       940          0          0          0        524   mm_cs_mtcall.obj
+      2774         42          0          0       2652   mm_cs_other.obj
+      1430          0          0          0        824   mm_cs_pack.obj
+       908          0          0          0        652   mm_cs_peermsghdlr.obj
+      1710          0          0          0       1416   mm_cs_timer.obj
+      1072          0          0          0        848   mm_cs_unpack.obj
+      1968          0          0          0        904   mm_ctrl_attach.obj
+       176          0          0          0        132   mm_ctrl_auth.obj
+      5000          0          0          0       1144   mm_ctrl_cell_proc.obj
+      2928          0          0          0        684   mm_ctrl_detach.obj
+      9694          0          0          0       3324   mm_ctrl_ilm_com.obj
+       512          0          0          0        256   mm_ctrl_ilm_cs.obj
+       888          0          0          0        264   mm_ctrl_ilm_ps.obj
+      1774         20          0       1760        636   mm_ctrl_main.obj
+      1162          0          0          0        684   mm_ctrl_msgs.obj
+      1792          0          0          0        984   mm_ctrl_peermsgs.obj
+      9206          0          0          0       6360   mm_ctrl_plmn_search.obj
+      2592          0          0          0        896   mm_ctrl_routing.obj
+       746          0          0          0        620   mm_ctrl_timer.obj
+       712          0          0          0        424   mm_ps_attach.obj
+       378          0          0          0        244   mm_ps_attach_aux.obj
+       372          0          0          0        136   mm_ps_auth.obj
+      1544          0          0          0        540   mm_ps_cause_handler.obj
+      1416          0          0          0        712   mm_ps_common_proc.obj
+       636          0          0          0        368   mm_ps_conn.obj
+      1120          0          0          0        448   mm_ps_detach.obj
+      3090          0          0          0       3264   mm_ps_other.obj
+      2720          0          0          0       1976   mm_ps_other_aux.obj
+      1948          0          0          0        856   mm_ps_pack.obj
+       188          0          0          0        512   mm_ps_peermsgs.obj
+      1040          0          0          0        568   mm_ps_routing.obj
+       104          0          0          0        120   mm_ps_service.obj
+       534          0          0          0        564   mm_ps_timer.obj
+       558          0          0          0        376   mm_ps_timer_aux.obj
+      2960          0          0          0       1728   mm_sim_access.obj
+     88780         94          0       1760      51708   TOTAL
+

@@ -1,0 +1,370 @@
+min	max	appname
+3001	3300	APP_GLOBALDEFS	
+3301	4801	APP_WAP	
+4802	4902	APP_MRE	..\mre\res\
+4903	4913	APP_MRE_BG	..\mre\res\
+4914	5114	VAPP_SNS	..\venusmmi\app\Cosmos\SNS\res\
+5115	5120	VAPP_SNS_PLUGIN	..\venusmmi\app\Cosmos\SNS\res\
+5121	5126	VAPP_SNS_BG	..\venusmmi\app\Cosmos\SNS\res\
+5127	5147	VCUI_SNS_UPLOAD_PIC	..\venusmmi\app\Cosmos\SNS\res\
+5148	5158	VCUI_SNS_SLIM_UPLOAD_PIC	..\venusmmi\app\Cosmos\SNS\res\
+5159	5179	VCUI_SNS_CONTACTS_PICKER	..\venusmmi\app\Cosmos\SNS\res\
+5180	5190	VCUI_SNS_MSG_COMPOSER	..\venusmmi\app\Cosmos\SNS\res\
+5191	5211	VAPP_WIDGET_SNS_COSMOS	..\venusmmi\app\Cosmos\SNS\Widget\res\
+5212	5222	VAPP_WIDGET_SNS_DUMMY	..\venusmmi\app\Cosmos\SNS\Widget\res\
+5223	5239	SRV_SNS	.\Service\SnsSrv\
+5240	5248	SRV_SSO	.\Service\SsoSrv\
+5249	5349	SRV_BACKUP_RESTORE	.\Service\CloudSrv\res\
+5350	5360	VAPP_GOOGLE_SEARCH	..\venusmmi\app\Cosmos\WidgetGoogleSearch\res\
+5361	5461	FRAMEWORK_ASM	.\Framework\MemManager\MemManagerRes\
+5462	5472	SRV_NMGR	.\Framework\Notification\NotificationRes\
+5473	5773	SRV_STATUS_ICONS	..\Plutommi\Framework\GUI\GUI_Res\
+5774	5874	SRV_CONNECTS	
+5875	6175	SRV_COMMON_SCREENS	
+6176	6276	SRV_HELP	
+6277	6477	SRV_CTK	
+6478	6578	SRV_COMPOSE_RINGTONE	
+6579	6599	SRV_NV_RAM_FILE_EXT_MELODY	
+6600	6700	SRV_MMIAPI	
+6701	6801	SRV_PICT_BRIDGE	.\mtkapp\Pictbridge\PictBridgeRes\
+6802	7302	SRV_VOIP	
+7303	7403	SRV_MONWAP	
+7404	7504	SRV_SOFTWARE_TRACER	
+7505	7605	SRV_GPS	.\Mtkapp\GPS\GPSRes\
+7606	7706	SRV_MDI	.\Service\MDI\MDIRes\
+7707	7709	SRV_MDI_AUDPLY	.\Service\MDI\MDIRes\
+7710	7712	SRV_MDI_AUD_INFO	.\Service\MDI\MDIRes\
+7713	7715	SRV_MDI_VDOPLY	.\Service\MDI\MDIRes\
+7716	7718	SRV_MDI_VDOPLY_V	.\Service\MDI\MDIRes\
+7719	7721	SRV_MDI_VDOPLY_A	.\Service\MDI\MDIRes\
+7722	7724	SRV_MDI_VDOPLY_QVGA	.\Service\MDI\MDIRes\
+7725	7727	SRV_MDI_VDOPLY_CIF	.\Service\MDI\MDIRes\
+7728	7730	SRV_MDI_VDOPLY_PREVIEW	.\Service\MDI\MDIRes\
+7731	7733	SRV_MDI_VDOPLY_INFO	.\Service\MDI\MDIRes\
+7734	7736	SRV_MDI_VDOPLY_MP4	.\Service\MDI\MDIRes\
+7737	7739	SRV_MDI_VDOPLY_SUBTITLE	.\Service\MDI\MDIRes\
+7740	7742	SRV_MDI_VDOPLY_QVGA_MPEG4SP	.\Service\MDI\MDIRes\
+7743	7745	SRV_MDI_STREAMING	.\Service\MDI\MDIRes\
+7746	7748	SRV_MDI_STREAMING_QVGA	.\Service\MDI\MDIRes\
+7749	7751	SRV_MDI_STREAMING_CIF	.\Service\MDI\MDIRes\
+7752	7762	SRV_MDI_VT	.\Service\MDI\MDIRes\
+7763	7913	SRV_PROF	.\Service\ProfilesSrv\ProfilesSrvRes\
+7914	7916	SRV_MDI_CAMERA_STANDARD	.\Service\MDI\MDIRes\
+7917	7919	SRV_MDI_CAMERA_FULL	.\Service\MDI\MDIRes\
+7920	7922	SRV_MDI_CAMERA_ONLY_CAP_LCD	.\Service\MDI\MDIRes\
+7923	7925	SRV_MDI_CAMERA_ONLY_CAP_LCD_DISABLE_JAIA	.\Service\MDI\MDIRes\
+7926	7928	SRV_MDI_CAMERA_CAP_VGA_BELOW	.\Service\MDI\MDIRes\
+7929	7931	SRV_MDI_CAMERA_AUTORAMA	.\Service\MDI\MDIRes\
+7932	7934	SRV_MDI_CAMERA_CAP_HDR	.\Service\MDI\MDIRes\
+7935	7937	SRV_MDI_CAMERA_CAP_MAV	.\Service\MDI\MDIRes\
+7938	7940	SRV_MDI_WEBCAM	.\Service\MDI\MDIRes\
+7941	7943	SRV_MDI_ATV_REC	.\Service\MDI\MDIRes\
+7944	7946	SRV_MDI_ATV	.\Service\MDI\MDIRes\
+7947	7949	SRV_MDI_MTV	.\Service\MDI\MDIRes\
+7950	7952	SRV_MDI_MBBMS_ESG	.\Service\MDI\MDIRes\
+7953	7955	SRV_MDI_VDOCLIP	.\Service\MDI\MDIRes\
+7956	8006	SRV_BOOTUP	.\Service\BootupSrv\BootupSrvRes\
+8007	8057	SRV_SIM_CTRL	.\Service\SimCtrlSrv\SimCtrlSrvRes\
+8058	8108	SRV_NW_INFO	.\Service\NwInfoSrv\NwInfoSrvRes\
+8109	8159	SRV_SHUTDOWN	.\Service\ShutdownSrv\ShutdownSrvRes\
+8160	8190	SRV_SECSET	.\Service\SecSetSrv\SecSetSrvRes\
+8191	9191	APP_PHONEBOOK	.\mmi\PhoneBook\PhoneBookRes\
+9192	9292	APP_FUNANDGAMES	.\mmi\FunAndGames\FunAndGamesRes\
+9293	9313	APP_SERVICES	
+9314	9364	SRV_DTCNT	.\Service\DtcntSrv\DtcntSrvRes\
+9365	9465	APP_MESSAGES	
+9466	9516	SRV_SMS	.\Service\SmsSrv\
+9517	9527	APP_CHAT	
+9528	9538	SRV_UNIFIEDMESSAGE	.\Service\UmSrv\UmSrvRes\
+9539	9569	SRV_SECURITY_SETTING	
+9570	9620	SRV_CALLSET	.\Service\CallSetSrv\
+9621	9691	SRV_SS	.\Service\SsSrv\
+9692	9742	APP_CALLMANAGEMENT	
+9743	9753	SRV_CTM	.\Service\CtmSrv\
+9754	9954	SRV_GCALL	.\Service\Gsm3gCallSrv\
+9955	10705	APP_IDLEAPP	
+10706	11406	APP_UIFRAMEWORK	..\Plutommi\Framework\GUI\GUI_Res\
+11407	11457	APP_IDLE_FANCY_HANDSET_LOCK	
+11458	11558	APP_IDLE_HOMESCREEN	.\mmi\IdleScreen\IdleScreenRes\
+11559	11569	APP_SIM_DETECTION	
+11570	11620	SRV_SAT	.\Service\SatSrv\
+11621	11631	SRV_CPHS	.\Service\CphsSrv\
+11632	11662	APP_CHARGER	.\mmi\MiscFramework\MiscFrameworkRes\
+11663	11673	SRV_CHARBAT	.\Service\CharBatSrv\
+11674	11774	APP_CALLBARRING	
+11775	11875	APP_NETWORKSETUP	
+11876	13376	APP_ENGINEERMODE1	.\MtkApp\EngineerMode\EngineerModeApp\EngineerModeAppRes\
+13377	13397	APP_ENGINEERMODE	
+13398	13418	APP_ENGINEERMODE_APP	
+13419	14269	APP_FACTORYMODE	.\MtkApp\FactoryMode\FactoryModeRes\
+14270	14370	SRV_FILEMANAGER	.\Service\FileMgrSrv\FileMgrSrvRes\
+14371	14401	SRV_PNS	.\Service\PnSrv\
+14402	14902	APP_JAVA	.\mtkapp\JavaAgency\JavaAgencyRes\
+14903	15103	APP_EXTDEVICE	
+15104	15109	APP_CONNECTIVITY_MAINMENU	.\mtkapp\Connectivity\ConnectivityRes\
+15110	15120	APP_USBSRV	.\service\usbsrv\UsbSrvRes\
+15121	15221	APP_MULTIMEDIA	
+15222	15322	APP_EXTRA	.\mmi\Extra\ExtraRes\
+15323	15333	APP_DICTIONARY	.\mmi\Dictionary\Dict_Res\
+15334	15534	APP_PICTURE_EDITOR	
+15535	15545	APP_MESSAGE_CLUB	
+15546	15596	SRV_DOWNLOADAGENT	.\Service\DLAgentSrv\res\
+15597	16097	APP_VDOEDT	
+16098	16198	APP_MYFAVORITE	.\mtkapp\MyFavorite\MyFavoriteRes\
+16199	16229	SRV_UCM	.\Service\UcmSrv\UcmSrvRes\
+16230	16730	APP_MOBILE_TV_PLAYER	.\MtkApp\MobileTVPlayer\MobileTVPlayerRes\
+16731	17231	APP_DTV_PLAYER	.\MtkApp\DTVPlayer\DTVPlayerRes\
+17232	17237	APP_DTV_MBBMS_ESG	.\MtkApp\DTVPlayer\DTVPlayerRes\
+17238	17298	APP_APPLIST	.\MMI\AppList\AppListRes\
+17299	17319	APP_APPLIST_BARREL	.\MMI\AppList\AppListRes\
+17320	17321	APP_VT	
+17322	17342	APP_MMS_V01AGENT	
+17343	17443	APP_GIS	
+17444	17844	APP_AVK	.\VendorApp\AVK\AVKRes\
+17845	17945	APP_MRE_APPMGR	.\Service\MREAppMgrSrv\MREAppMgrSrvRes\
+17946	17956	APP_A2DP	.\MtkApp\Connectivity\ConnectivityRes\
+17957	17967	SRV_BTCM	.\Service\BtcmSrv\res\
+17968	17978	APP_FTP	
+17981	17991	APP_BIP	
+17992	18002	APP_UCWEB	
+18003	18303	APP_QQIM	
+18304	18504	APP_A8BOX	
+18505	24505	SRV_VIRTUAL_KEYBOARD	
+24506	24806	SRV_VIRTUAL_KEYBOARD_MISC	..\Plutommi\Framework\GUI\GUI_Res\
+24807	24957	SRV_VENUS_COMPONENTS	
+24958	24968	SRV_VENUS_COMPONENT_NORMAL_MODE_MENU	..\venusmmi\visual\cp\res\
+24969	25069	APP_QQ_MOVIE	
+25070	25090	CUI_TONE_SELECTOR	
+25091	25391	SRV_VENUS_FW	
+25392	25412	CUI_MENU	
+25413	25463	SRV_MMI_CHARSET	..\custom\common\CharsetRes\
+25464	25474	APP_PBAP	
+25475	25485	APP_OPP	
+25486	25536	SRV_PLST	.\Service\PlstSrv\res\
+25537	25557	SRV_PLST_SLIM	.\Service\PlstSlimSrv\res\
+25558	25658	APP_MEDIAWALL	..\venusmmi\app\pluto_variation\MediaWall\res\
+25659	25759	APP_VENUS_CUBE	
+25760	25810	APP_FONT_MANAGER	.\mmi\MiscFramework\MiscFrameworkRes\
+25811	25841	SRV_WGTMGR	.\Service\WgtMgrSrv\WgtMgrSrvRes\
+25842	25942	SRV_EDITOR	.\Framework\CommonScreens\CommonScreensRes\
+25943	25953	SRV_SENSOR	.\Service\SensorSrv\
+25954	25964	IMPS_SRV	.\Service\ImpsSrv\
+25965	25995	SRV_GPIO	.\Service\GpioSrv\
+25996	26026	APP_GPIO	.\mmi\gpio\gpiores\
+26027	26827	SRV_NETSET	.\service\NetSetSrv\res\
+26828	26838	SRV_MODESWITCH	.\Service\ModeSwitchSrv\res\
+26839	26869	SRV_PEN_CALIBRATION	.\Service\SettingSrv\res\
+26870	26900	SRV_GENERAL_SETTING	.\Service\SettingSrv\res\
+26901	26911	SRV_NW_USAB	
+26912	26962	SRV_CBS	.\Service\SmsSrv\
+26963	26973	SRV_CBM	.\Service\CbmSrv\res\
+26974	26994	APP_OPERA_ADP	..\vendor\opera\browser\adaptation\res\
+26995	27895	APP_OPERA	
+27896	27916	APP_OPERA_PARTIAL	
+27917	27967	APP_IDLE	.\MMI\Idle\IdleRes\
+27968	27988	APP_IDLE_NMGR	.\MMI\IdleScreen\IdleScreenRes\
+27989	28019	APP_SCR_LOCKER	.\MMI\ScrLocker\ScrLockerRes\
+28020	28040	CUI_DIALER	.\CUI\DialerCui\res\
+28041	28091	SRV_NW_NAME	.\Service\NwNameSrv\res\
+28092	28142	SRV_INLINE_EDITOR	.\CUI\InlineCUI\InlineCui_Res\
+28143	28153	CUI_MSG_VIEWER	
+28154	28189	APP_VENUS_SHELL_RECENT_CALLS	..\venusmmi\app\pluto_variation\ShellApp\panel\RecentCalls\
+28190	28220	APP_VENUS_SHELL_IV	..\venusmmi\app\pluto_variation\ShellApp\panel\ImageViewer\res\
+28221	28271	APP_VENUS_SHELL_MEDIAPLAYER	..\venusmmi\app\pluto_variation\ShellApp\panel\MediaPlayer\
+28272	28352	APP_SHELLAPP_BASE	..\venusmmi\app\pluto_variation\ShellApp\base\res\
+28353	28383	APP_VENUS_SHELL_SETTINGS	..\venusmmi\app\pluto_variation\ShellApp\panel\Settings\
+28384	28434	APP_VENUS_SHELL_MSG_VIEWER	..\venusmmi\app\pluto_variation\ShellApp\panel\MsgViewer\res\
+28435	28485	APP_VENUS_NOTEPAPER	..\venusmmi\app\pluto_variation\ShellApp\panel\MsgViewer\res\
+28486	28536	APP_VENUS_SHELL_FC	..\venusmmi\app\pluto_variation\ShellApp\panel\FavoriteContacts\res\
+28537	28547	APP_VENUS_SHELL_SCRLOCK	..\venusmmi\app\pluto_variation\ShellApp\base\res\
+28548	28648	APP_VENUS_HOMESCREEN	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28649	28669	APP_VENUS_HOMESCREEN_WG_CALENDAR	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28670	28720	APP_VENUS_HOMESCREEN_WG_DATE	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28721	28731	APP_VENUS_HOMESCREEN_WG_MEMO	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28732	28932	APP_VENUS_HOMESCREEN_WG_CLOCK	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28933	28983	APP_VENUS_HOMESCREEN_WG_PET	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28984	28994	APP_VENUS_HOMESCREEN_WG_SNOW	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+28995	29005	APP_VENUS_HOMESCREEN_WG_MRE	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29006	29031	APP_VENUS_HOMESCREEN_WG_PROFILE	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29032	29042	APP_VENUS_HOMESCREEN_WG_OPERATOR_NAME	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29043	29053	APP_VENUS_HOMESCREEN_WG_EVENT_INBOX	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29054	29074	APP_VENUS_HOMESCREEN_WG_NEXT_ALARM	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29075	29125	APP_VENUS_HS_TODO	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29126	29156	APP_VENUS_HOMESCREEN_WG_AUDIOPLAYER	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29157	29187	APP_VENUS_HOMESCREEN_WG_FMRADIO	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29188	29218	APP_VENUS_HOMESCREEN_WG_PHOTO	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29219	29239	SRV_CALLLOG	.\Service\CallLogSrv\CallLogSrvRes\
+29240	29540	APP_OP11_HS32	.\mmi\IdleScreen\IdleScreenRes\
+29541	29561	APP_VENUS_HS_WG_BKM	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29562	29582	APP_IMAGEFLOW	..\venusmmi\app\pluto_variation\ImageFlow\res\
+29583	29613	APP_VENUS_HS_WG_BAIDU	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+29614	29664	APP_SIM_ME_LOCK	.\mmi\MiscFramework\MiscFrameworkRes\
+29665	29715	APP_NMC	..\vendor\nmc\adaption\nmc_res\
+29716	29766	APP_MOBILEVIDEO	..\vendor\mobilevideo\adaption\MobileVideoRes\
+29798	29801	APP_CB_MGR	.\Framework\CallbackManager\CallbackManagerRes\
+29802	29807	APP_APPMGR_TEST_1	.\Service\NativeAppFactorySrv\NativeAppFactorySrvRes\
+29808	29813	APP_APPMGR_TEST_2	
+29814	29819	APP_APPMGR_TEST_3	
+29820	29825	APP_APPMGR_TEST_4	
+29826	29836	APP_AUTO_ROTATE	
+29837	29847	FW_NVRAM_MGR	.\Framework\NVRAMManager\NVRAMManagerRes\
+29848	29878	SRV_REMINDER	.\Service\ReminderSrv\ReminderSrvRes\
+29879	29899	SRV_TODOLIST	.\Service\TodoSrv\res\
+29900	29910	SRV_SOUNDREC	.\Service\SoundRecSrv\res\
+29911	29961	SRV_BROWSER	.\service\BrowserSrv\res\
+29962	30012	SRV_PUSH	.\Service\WapPushSrv\res\
+30013	30015	SRV_MDI_VDOREC	.\Service\MDI\MDIRes\
+30016	30018	SRV_MDI_VDOREC_CIF	.\Service\MDI\MDIRes\
+30019	30919	APP_SDK_TEST	.\mtkapp\sdk\sdkres\
+30920	30940	APP_SIMSPACE	.\MMI\SimSpace\SimSpaceRes\
+30941	30951	SRV_DATETIME	.\mmi\DateTime\Res\
+30952	30962	CUI_SIM_SEL	.\CUI\SimSelCui\res\
+31164	31174	SRV_RESTORE	.\service\settingsrv\res\
+31175	31375	SRV_INPUT_METHOD	..\plutommi\Framework\InputMethod\res\
+31376	31676	APP_139	..\vendor\pushmail\mail139\PushMailRes\
+31677	31687	SRV_ALARM	.\Service\AlarmSrv\Res\
+31688	31728	SRV_TETHERING	.\Service\TetheringSrv\TetheringSrvRes\
+31729	31779	SRV_PHB	.\Service\PhbSrv\PhbSrvRes\
+31780	31785	SRV_PUSH_SWITCH	.\Service\PushSwitchSrv\PushSwitchSrvRes\
+31786	31914	SRV_GDI	..\Plutommi\Framework\GDI\GDIRes\
+31915	31925	SRV_NITZ	.\service\nitzsrv\res\
+31926	31936	APP_EM_MULTI_TOUCH_TEST	..\venusmmi\app\pluto_variation\MultiTouchTest\res\
+31937	32037	APP_ALIPAY_ADP	..\vendor\alipay\res\
+32038	32040	CUI_ALERT	.\Framework\CommonScreens\CommonScreensRes\
+32041	32141	SRV_DM	.\service\DmSrv\DmSrvRes\
+32142	32152	SRV_DM_SR	.\service\DmSRsrv\
+32153	32163	SRV_DATALOCK	.\service\datalocksrv\res\
+32164	32174	SRV_CNMGR	.\service\CnmgrSrv\CnmgrSrvRes\
+32175	32185	SRV_APPMGR	.\service\AppMgrSrv\AppMgrSrvRes\
+32186	32236	CUI_USE_DETAIL	.\CUI\UseDetailCui\res\
+32237	32297	APP_FONT_EFFECTS	.\mmi\MiscFramework\MiscFrameworkRes\
+32298	32308	VAPP_VIDEO_PLAYER_CP	..\venusmmi\app\common\cp\res\
+32309	32314	SRV_MPR	.\Service\MREPushSrv\
+32315	32325	SRV_NSS	.\Service\NotificationSettingSrv\
+32326	32331	SRV_SAFE_MODE	.\Service\SafeModeSrv\res\
+32332	32362	CORE_UCM	.\AppCore\Ucm\res\
+32363	32366	SRV_VENUS_THEME	..\Plutommi\MMI\Resource\Res\
+32367	32567	APP_AM	.\mtkapp\MREAPP\MREAPPRes\
+32568	32578	SRV_FULLSCREEN_EDITOR	.\CUI\FSEditorCui\FSEditorCui_Res\
+32579	33029	APP_BLUETOOTH	.\mtkapp\Connectivity\ConnectivityRes\Bluetooth\
+33030	33230	APP_BOOTUP	.\MMI\Bootup\BootupRes\
+33231	33251	APP_NW_INFO	.\MMI\NWInfo\NWInfoRes\
+33252	33272	APP_SIM_CTRL	.\MMI\SimCtrl\SimCtrlRes\
+33273	33323	APP_SHUTDOWN	.\MMI\Shutdown\ShutdownRes\
+33324	33474	APP_SECURITY_SETTING	.\MMI\SecuritySetting\SecSetRes\
+33475	33495	CUI_VERIFY	.\CUI\SecSetCui\SecSetCuiRes\
+33496	33526	CUI_PASSWORD	.\CUI\PasswordCui\res\
+33527	34127	APP_CAMERA	.\mtkapp\camera\camerares\
+34128	34428	APP_IMAGEVIEWER	.\mtkapp\ImageView\ImageViewRes\
+34429	34459	CUI_IMAGEVIEWER	.\CUI\ImageViewCui\res\
+34460	34470	CUI_TONESELECTOR	.\CUI\ToneSelectorCui\res\
+34471	34771	APP_SOUNDRECORDER	.\mtkapp\Sndrec\SndrecRes\
+34772	35272	APP_AUDIOPLAYER	.\mtkapp\AudioPlayer\AudioPlayerRes\
+35273	35274	APP_SINGLE_AUDIO	
+35275	35277	APP_MEDPLY_SINGLE	.\mtkapp\MediaPlayer\MediaPlayerRes\
+35278	35478	APP_BGSOUND	.\mtkapp\BGSound\BGSound_Res\
+35479	35489	APP_WEBCAM	.\mtkapp\Connectivity\ConnectivityRes\
+35490	36490	APP_CAMCO	.\mtkapp\Camcorder\CamcorderRes\
+36491	36501	CUI_CAMERACUI	.\CUI\CameraCui\CameraCuiRes\
+36502	36702	APP_WORLDCLOCK	.\mmi\Organizer\OrganizerRes\WorldClock\
+36703	36853	APP_CALLSET	.\MMI\CallSetting\CallSettingRes\
+36854	36904	APP_SS	.\MMI\SupplementaryService\SsRes\
+36905	36955	CUI_IMAGE_CLIP	.\CUI\ImageClipCui\ImageClipCuiRes\
+36956	36976	APP_CTM	.\Mmi\Ctm\CtmRes\
+36977	37027	APP_APN_CONTROL	.\mmi\Setting\SettingRes\
+37028	37228	APP_MMI_CERTMAN	.\mmi\CertificateManager\CertificateManagerRes\
+37229	37529	APP_DATAACCOUNT	.\mmi\DataAccount\DataAccountRes\
+37530	37630	APP_UNITCONVERTER	.\mmi\Extra\ExtraRes\
+37631	37681	APP_CURRENCYCONVERTER	.\mmi\Extra\ExtraRes\
+37682	37692	APP_HEALTH	.\mmi\Extra\ExtraRes\
+37693	37743	APP_HEALTHMENSTRUAL	.\mmi\Extra\ExtraRes\
+37744	37794	APP_HEALTHBMI	.\mmi\Extra\ExtraRes\
+37795	37925	APP_CALLLOG	.\mmi\CallLog\CallLogRes\
+37926	38126	APP_MSPACE	.\mtkapp\MSpace\MSpaceRes\
+38127	38357	APP_PROFILES	.\mmi\PROFILES\Profiles_Res\
+38358	38558	APP_FILEMANAGER	.\MtkApp\FileMgr\FileMgrRes\
+38559	38759	APP_FILEMANAGER_OTHER	
+38760	38860	SRV_SCREENSAVER	.\mmi\Setting\SettingRes\
+38861	38961	SRV_WALLPAPER	.\mmi\Setting\SettingRes\
+38962	39062	SRV_SPOF	.\mmi\Setting\SettingRes\
+39063	39163	SRV_PHNSET_ONOFF	.\mmi\Setting\SettingRes\
+39164	39264	SRV_FLIGHT_MODE	.\mmi\Setting\SettingRes\
+39265	39275	SRV_LANG_SETTINGS	.\mmi\Setting\SettingRes\
+39276	39776	APP_SETTINGS	.\mmi\Setting\SettingRes\
+39777	39977	APP_PHONESETUP	.\mmi\Setting\SettingRes\
+39978	39988	APP_CALIBRATION	.\mmi\Setting\SettingRes\PenCalibration\
+39989	40089	APP_SETTING_NEW	.\mmi\Setting\SettingRes\
+40090	40290	APP_PHONESETTING_NEW	.\mmi\Setting\SettingRes\
+40291	40301	APP_RESTORE	.\mmi\Setting\SettingRes\
+40302	40502	APP_NETSET	.\mmi\Setting\SettingRes\
+40503	40703	APP_MODE_SWITCH	.\mmi\Setting\SettingRes\
+40704	40724	APP_SETTING_MENU_EFFECT	.\mmi\Setting\SettingRes\
+40725	40735	APP_SETTING_DOWNLOAD_CAL_DATA	.\mmi\Setting\SettingRes\
+40736	40756	APP_NFC	.\MtkApp\Connectivity\ConnectivityRes\NFC\
+40757	40777	APP_SAT	.\mmi\SAT\SATRes\
+40778	40788	APP_SERVICES_SAT	.\mmi\SAT\SATRes\
+40789	40939	APP_DCD	.\MtkApp\DCD\DCDRes\
+40940	41040	APP_MOBILE_SERVICE	.\mmi\MobileService\MobileServiceRes\
+41041	41141	APP_CUSTOMER_SERVICE	.\mmi\CustomerService\CustomerServiceRes\
+41142	41152	APP_SETTING_VERSION	.\mmi\Setting\SettingRes\
+41153	41163	APP_PUSH_SWITCH	.\mtkapp\PushSwitch\PushSwitchRes\
+41164	41174	APP_DATA_SERVICE	.\mtkapp\DataService\DataServiceRes\
+41175	41225	APP_SHORTCUTS	.\mmi\Extra\ExtraRes\
+41226	41236	APP_VENUS_HOMESCREEN_WG_MOBILE_INTERNET	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+41237	41247	APP_VENUS_HOMESCREEN_WG_WO_STORE	..\venusmmi\app\pluto_variation\ShellApp\panel\HomeScreen\res\
+41248	41448	APP_EBOOK	.\mmi\ebookreader\ebookres\
+41449	41499	APP_CALCULATOR	.\mmi\Extra\ExtraRes\
+41500	41800	SRV_SYNCML	.\mtkapp\SyncML\SyncMLRes\
+41801	41811	APP_SYNCML	.\mtkapp\SyncML\SyncMLRes\
+41812	41912	SRV_MMI_THEME	.\mmi\Setting\SettingRes\
+41913	41914	APP_SWFLASH	
+41915	41916	APP_AVATAR	
+41917	42217	APP_CBS	.\mmi\Messages\MessagesRes\
+42218	42268	APP_ALARM	.\mmi\Organizer\OrganizerRes\AlarmRes\
+42269	42289	APP_NITZ	.\mmi\NITZHandler\NITZRes\
+42290	42310	APP_NTP	.\mmi\Setting\SettingRes\
+42311	42411	APP_CONNECTMANAGE	.\mmi\ConnectManagement\ConnectManagementRes\
+42412	42462	APP_ORGANIZER	.\mmi\Organizer\OrganizerRes\
+42463	42763	APP_CALENDAR	.\mmi\Organizer\OrganizerRes\
+42764	42964	APP_TODOLIST	.\mmi\Organizer\OrganizerRes\
+42965	43165	APP_LUNAR_QUERY	.\mmi\Organizer\OrganizerRes\
+43166	43266	APP_NOTE	.\mmi\Organizer\OrganizerRes\
+43267	43367	APP_UDX	.\mmi\UDX\UDXRes\
+43368	43378	APP_DIALER	.\mmi\Dialer\DialerRes\
+43379	43409	APP_BT_DIALER	.\MtkApp\BTdialer\BTdialerRes\
+43410	43460	SRV_VOBJECT	.\mtkapp\vObjects\vObjectRes\
+43461	43511	SRV_VCALENDAR	.\mtkapp\vObjects\vObjectRes\
+43512	43562	SRV_VCARD	.\mtkapp\vObjects\vObjectRes\
+43563	43613	SRV_VBOOKMARK	.\mtkapp\vObjects\vObjectRes\
+43614	43714	APP_AZAAN_ALARM	.\mmi\Organizer\HijriCalendar\HijriCalendar_res\
+43715	43865	APP_HIJRI_CALENDAR	.\mmi\Organizer\HijriCalendar\HijriCalendar_res\
+43866	44016	APP_INDICAL	.\mmi\Organizer\IndianCalendar\IndianCalendar_res\
+44017	44217	APP_UCM	.\MMI\UCM\UcmRes\
+44218	44418	APP_UCMBT	.\MMI\BT_UCM\UcmBTRes\
+44419	44429	CUI_BKM	.\CUI\BookmarkCui\res\
+44430	44450	APP_TETHERING	.\mmi\Tethering\TetheringRes\
+44451	44461	APP_REMINDER	.\mmi\Organizer\Reminder\Res\
+44462	44962	APP_SMS	.\mmi\messages\messagesres\
+44963	45363	APP_VDOREC	.\MtkApp\Video\VideoRes\
+45364	45464	APP_CSB	.\Framework\CSBrowser\CSBrowserRes\
+45465	45615	APP_UNIFIEDMESSAGE	.\MMI\UnifiedMessage\UnifiedMessageRes\
+45616	45716	APP_SEARCH_WEB	.\MtkApp\SearchWeb\SearchWebRes\
+45717	46017	APP_PHOEDT	.\mtkapp\PhotoEditor\PhotoEditorRes\
+46018	46318	APP_MAINMENU	.\MMI\MainMenu\MainMenuRes\
+46319	46369	APP_SOUNDEFFECT	.\mmi\Setting\SettingRes\SoundEffect\
+46370	46400	APP_USBMMI	.\mtkapp\Connectivity\ConnectivityRes\USB\
+46401	46411	APP_VIEWSETTING	.\mmi\Setting\SettingRes\
+46412	46422	APP_TTS_SETTING	.\mmi\Setting\SettingRes\
+46423	46453	APP_CBM	.\mmi\Cbm\CbmRes\
+46454	46474	APP_NSS	.\mmi\Setting\SettingRes\
+46475	46625	APP_DOWNLOADAGENT	.\MtkApp\DLAgent\DLAgentRes\
+46626	46636	MOTION_SENSOR	.\mmi\Setting\SettingRes\
+46637	46639	APP_PACKAGE_CONCURRENT	.\mmi\inc\
+46640	46642	APP_VT_CALL	.\mmi\ucm\UcmRes\
+46643	46693	APP_MRE_DLS	.\MtkApp\MREAPP\MREAPPRes\
+46694	46744	APP_SSO	.\mmi\SSOAPP\SSOAPPRes\
+46745	46795	CUI_SSO	.\cui\SsoCui\SSOCuiRes\
+46796	46846	APP_SMSBTUNIFIEDMESSAGE	.\MMI\SmsbtmapcApp\SmsbtmapcAppSrc\
+46847	47747	APP_DEVAPP	.\VendorApp\DevApp\DevAppRes\
+47748	47749	APP_DEFAULT_END	
+47750	47751	END	

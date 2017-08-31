@@ -1,0 +1,47 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+         0          0          0          0          0   gd_2d_engine.obj
+        70       2978          0          0        169   gd_primitive.obj
+      7576          0          0          0       1034   gd_primitive16.obj
+        38          0          0          0         77   gd_primitive24.obj
+      1236          0          0          0        399   gd_primitive32.obj
+      1322          0          0          0        804   gd_primitive32pargb.obj
+      1212          0          0          0        397   gd_primitive8.obj
+      3022          0         20       2568       1837   gdc_main.obj
+       596          0         20         80        650   gdd_main.obj
+       868          0          0        104        562   gdi.obj
+      3272          0          4       2576       2381   gdi_animate.obj
+      1372          0          0         92        907   gdi_bytestream.obj
+      3022        244          0         20        554   gdi_font.obj
+      4292       1089          0         93       4784   gdi_image.obj
+      5264          0          4         36       1742   gdi_image_9slice.obj
+      6486         16          0         84       1340   gdi_image_alpha_bmp.obj
+      2620          0          0         20       1403   gdi_image_alpha_bmp_v2.obj
+      4758          0          0          0       1652   gdi_image_alpha_bmp_v2_internal.obj
+      2068         20          0         20       1063   gdi_image_bmp.obj
+       132          0          0          4        307   gdi_image_decoder.obj
+      1220          0          0          0        595   gdi_image_dev_bmp.obj
+      3654          0          1       1060       2469   gdi_image_gif.obj
+       630          0          0          1       1087   gdi_image_jpeg.obj
+         0          0          0          0          0   gdi_image_ktx.obj
+       280          0          0          0        397   gdi_image_png.obj
+       434          0          0          0        369   gdi_image_sequence.obj
+      1164          0          0          0        790   gdi_image_virtualfile.obj
+       100          0          0          0        174   gdi_image_wbmp.obj
+       838         80          0         12        508   gdi_imgdec.obj
+      4782          0          0          4        904   gdi_imgdec_bmp.obj
+       376          0          0          0        494   gdi_imgdec_bytestream.obj
+       188          0          0          0        142   gdi_imgdec_gif.obj
+      1734         88          0          0        705   gdi_imgdec_resizer.obj
+       698          0          0          0        368   gdi_imgdec_wbmp.obj
+       784          0          0          8        633   gdi_ipp.obj
+     12254          8          0       4836       9238   gdi_layer.obj
+      2964          0          0        240       2749   gdi_lcd.obj
+        74          0          0          8        347   gdi_lfs.obj
+       544          0         20          0        472   gdi_mutex.obj
+     12570        192          0        481       4028   gdi_primitive.obj
+       120          0         20          0        172   gdi_task.obj
+      4050        512          0          4       2028   gdi_util.obj
+       218         72          0     316896        347   ui_buffer.obj
+     98902       5299         89     329247      51078   TOTAL
+

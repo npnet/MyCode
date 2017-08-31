@@ -1,0 +1,17 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+      1162          0          0          0        684   abm_api.obj
+      4806          0          0          0       1260   abm_app_fsm.obj
+      2054          0          0          0        804   abm_bearer_fsm.obj
+         2          0          0          0         52   abm_common_api.obj
+         0          0          0          0          0   abm_csd_msg.obj
+      2992         56          0          0        816   abm_ext_msg.obj
+      1892          0          0          0        824   abm_gprs_msg.obj
+       372         24          0        784        300   abm_main.obj
+         0          0          0          0          0   abm_timer.obj
+      5588          0          0          0       3728   abm_util.obj
+         0          0          0          0          0   abm_wifi_msg.obj
+      2768          0          0          0       2288   cbm_api.obj
+         0          0          0          0          0   cbm_ut.obj
+     21636         80          0        784      10756   TOTAL
+

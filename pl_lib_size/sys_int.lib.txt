@@ -1,0 +1,6 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+       952          0          0          8        348   dcmgr_pl_logic.obj
+        78         32          0      70713        320   third_rom_int.obj
+      1030         32          0      70721        668   TOTAL
+

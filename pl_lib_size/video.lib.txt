@@ -1,0 +1,18 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+         0          0          0          0          0   custom_video_enc.obj
+         0          0          0          0          0   custom_video_enc_h264.obj
+         0          0          0          0          0   custom_video_enc_matv.obj
+         0          0          0          0          0   custom_video_enc_matv_mjpeg.obj
+         0          0          0          0          0   custom_video_enc_mjpeg.obj
+         0          0          0          0          0   custom_video_enc_mpeg4.obj
+         0          0          0          0          0   custom_video_enc_utility.obj
+         0          0          0          0          0   custom_video_enc_vt.obj
+        18         20          0          0        156   vcodec_main.obj
+        18         20          0          0        156   vcodec_v2_main.obj
+       116         20          0          0        278   vfile_main.obj
+       906          0          0          0       1320   video_codec_utility_v2.obj
+         0          0          0          0          0   video_renderer_task_thread_pool.obj
+       116         20          0          0        278   vsrc_main.obj
+      1174         80          0          0       2188   TOTAL
+

@@ -1,0 +1,305 @@
+#! armcc -E
+;/*****************************************************************************
+;*  Copyright Statement:
+;*  --------------------
+;*  This software is protected by Copyright and the information contained
+;*  herein is confidential. The software may not be copied and the information
+;*  contained herein may not be used or disclosed except with the written
+;*  permission of MediaTek Inc. (C) 2007
+;*
+;*  BY OPENING THIS FILE, BUYER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
+;*  THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
+;*  RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO BUYER ON
+;*  AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL WARRANTIES,
+;*  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+;*  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NONINFRINGEMENT.
+;*  NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH RESPECT TO THE
+;*  SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY, INCORPORATED IN, OR
+;*  SUPPLIED WITH THE MEDIATEK SOFTWARE, AND BUYER AGREES TO LOOK ONLY TO SUCH
+;*  THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO. MEDIATEK SHALL ALSO
+;*  NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE RELEASES MADE TO BUYER'S
+;*  SPECIFICATION OR TO CONFORM TO A PARTICULAR STANDARD OR OPEN FORUM.
+;*
+;*  BUYER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S ENTIRE AND CUMULATIVE
+;*  LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE RELEASED HEREUNDER WILL BE,
+;*  AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE MEDIATEK SOFTWARE AT ISSUE,
+;*  OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE CHARGE PAID BY BUYER TO
+;*  MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
+;*
+;*  THE TRANSACTION CONTEMPLATED HEREUNDER SHALL BE CONSTRUED IN ACCORDANCE
+;*  WITH THE LAWS OF THE STATE OF CALIFORNIA, USA, EXCLUDING ITS CONFLICT OF
+;*  LAWS PRINCIPLES.  ANY DISPUTES, CONTROVERSIES OR CLAIMS ARISING THEREOF AND
+;*  RELATED THERETO SHALL BE SETTLED BY ARBITRATION IN SAN FRANCISCO, CA, UNDER
+;*  THE RULES OF THE INTERNATIONAL CHAMBER OF COMMERCE (ICC).
+;*
+;*****************************************************************************/
+;
+;/*****************************************************************************
+; *
+; * Filename:
+; * ---------
+; *   scatBIRD61A_11C_flashtool.txt
+; *
+; * Project:
+; * --------
+; *   Maui_Software
+; *
+; * Description:
+; * ------------
+; *   defines the memory map for the validation board
+; *
+; * Author:
+; * -------
+; *   system auto generator v6.99 -> p7.00 -> p7.01 -> p7.04 -> p7.05 -> p7.09 -> p7.14 + scatFrame v0.12 + sysGenUtility v0.42 -> p0.43 -> p0.44 -> p0.45 -> p0.49
+; *
+; * Auto Generated Date:
+; * -------
+; *   2017/8/29
+; *
+; * Revision History:
+; * -------
+; * $Log: scatBIRD61A_11C_flashtool.txt system auto generator v6.99 -> p7.00 -> p7.01 -> p7.04 -> p7.05 -> p7.09 -> p7.14 + scatFrame v0.12 + sysGenUtility v0.42 -> p0.43 -> p0.44 -> p0.45 -> p0.49 $
+; * 
+; ****************************************************************************/
+;
+;=========================================================================
+; This scatter file is auto-generated and please DO NOT change the content at will
+;=========================================================================
+;
+;--------------------
+; SCHEME   : external 7.5MB flash memory and 4MB SRAM
+; PLATFORM : MT6261
+; FEATURES : ESBNOR 
+;--------------------
+
+#define ALIGNMENT_32B 0x20
+#define SetAddress(address, alignment) ((address+(alignment-1)) AND ~(alignment-1))
+
+BOOTLOADER 0x10001000 0x00005000
+{
+}
+
+ROOT_CERT 0x10006000 0x00000000
+{
+    ; reserved region for secure chip project
+}
+
+EXT_BOOTLOADER 0x10006000 0x00018000
+{
+}
+
+
+
+CBR 0x10020000 0x00000000
+{
+    ; reserved for bootup and features
+}
+
+; ROM Load region is block-aligned
+ROM 0x10020000
+{
+    ROM_GFH 0x10020000 
+    {
+         *                             (MAUI_GFH, +First)
+         *                             (MAUI_GFH_EXT)
+    }
+    ROM +0x0 0x00000800
+    {
+         bootarm.obj (C$$code,+First)
+;*obj (MBA_INFO)
+         *.obj (LEADING_PART)
+    }
+    ROM0 +0x0 
+    {
+         *.obj (SECINFO)
+    }
+    ROMHEAD +0x0 
+    {
+         *.obj (SECOND_PART)
+         *.obj (MAUI_FOTA_HEAD_INFO)
+    }
+    ROM1 +0x0 
+    {
+         *                             (i.__rt_udiv_3)
+         *                             (i.__rt_sdiv_3)
+         *                             (i.__rt_udiv_5)
+         *                             (i.__rt_sdiv_5)
+         *                             (i.__rt_udiv_9)
+         *                             (i.__rt_sdiv_9)
+         *                             (i.__rt_udiv_21)
+         *                             (i.__rt_sdiv_21)
+         *                             (i.__rt_udiv_31)
+         *                             (i.__rt_sdiv_31)
+         *                             (i.__rt_udiv_60)
+         *                             (i.__rt_sdiv_60)
+         *                             (i.__rt_udiv_100)
+         *                             (i.__rt_sdiv_100)
+         *                             (i.__rt_udiv_1000)
+         *                             (i.__rt_sdiv_1000)
+         *                             (i.__rt_udiv_3600)
+         *                             (i.__rt_sdiv_3600)
+         *                             (i.__rt_udiv_10000)
+         *                             (i.__rt_sdiv_10000)
+         
+         *    (+RO)
+         *    (CAT_RODATA_IMG, CAT_RODATA_ADO, CAT_RODATA_STR)
+         *    (PRIMARY_ROCODE, PRIMARY_RODATA)
+    }
+    SINGLE_BANK_CODE 0x00000200 
+    {
+;for single bank support , certain following code need to be called by sleep manager
+         ex_hdlr.obj (SNORCODE,+First)
+         * (SNORCODE)
+         * (SNORCONST)
+    }
+    EXTSRAM 0x00002000 
+    {
+         * (NONCACHEDRW, NONCACHEDZI)
+         *deniro.lib (+RW, +ZI)
+         *fs_fig.lib (+RW, +ZI)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_ZI_MMIPOOL +0x1000 
+    {
+         med_main.obj (LARGEPOOL_ZI)
+         * (DYNAMICCACHEABLEZI_NC_MMIPOOL)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_ZI +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_NC)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_RW +0x0 
+    {
+         * (DYNAMICCACHEABLERW_NC)
+    }
+    CACHED_EXTSRAM +0xF0001000
+    {
+; All RW/ZI are put in CACHED region by default
+         * (+RW, +ZI)
+         * (CACHED_EXTSRAM_RW, CACHED_EXTSRAM_ZI)
+    }
+    CACHED_EXTSRAM_NVRAM_LTABLE +0x00 
+    {
+         * (_nvram_ltable)
+         * (_indirect_init)
+         * (_fs_filetable_zi)
+         * (_nvram_callback_tbl)
+    }
+    EXTSRAM_GADGET +0x00 
+    {
+         *gadget_adp.lib (+RW, +ZI)
+         *gadget_lib.lib (+RW, +ZI)
+         *               (EXTSRAM_GADGET_RW, EXTSRAM_GADGET_ZI)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_RW +0x1000 
+    {
+         * (DYNAMICCACHEABLERW_C)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI_MMIPOOL +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_C_MMIPOOL)
+         * (VIDEOPOOL_C)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_C)
+    }
+    CACHED_DUMMY_END 0xf03eb000 
+    {
+         bootarm.obj (DUMMY_POOL)
+    }
+; DSP execution regions cannot be OVERLAY; its size should be specified as 2^N, larger than 4KB, and should be 32K aligned with its start and END address
+    EXTSRAM_DSP_TX 0x003eb000 ABSOLUTE 0x6000
+    {
+         *.obj (EXTRAM_TXDATA)
+    }
+    EXTSRAM_DSP_RX 0x003f1000 0xf000
+    {
+         *.obj (EXTRAM_RXDATA)
+    }
+    ; define an empty section to detect unsafe APIs in link time
+    SHOULDBE_EMPTYSECTION +0 0x0
+    {
+        armlibc_rt.obj (SHOULD_NOT_USED_FUNCTION)
+        armlibc_rt_heap.obj (SHOULD_NOT_USED_FUNCTION)
+        armlibc_rt_io.obj (SHOULD_NOT_USED_FUNCTION)
+        syscomp_config.obj (SHOULD_NOT_USED_RODATA)
+    }
+    EMIINIT_CODE 0x70008000 OVERLAY
+    {
+         * (EMIINITCODE, EMIINITCONST, EMIINITZI, EMIINITRW)
+    }
+    INTSRAM_CODE 0x70008000 OVERLAY 0x00001200
+    {
+; Please do NOT remove any content below!
+         * (INTSRAM_ROCODE)
+         * (INTSRAM_ROCODE_*)
+         switch8.o (+RO-CODE)
+; system-realted CODE , Extra SMALL set
+         bootarm.obj (INTERNCODE)
+         SST_intrCtrl.obj (INTERNCODE, INTERNCONST)
+; common used C library
+         memset.o (+RO-CODE, +RO-DATA)
+         rt_memclr.o (+RO-CODE, +RO-DATA)
+         callvia.o (+RO-CODE, +RO-DATA)
+         _sprintf.o (+RO-CODE, +RO-DATA)
+         rt_memcpy.o (+RO-CODE, +RO-DATA)
+         lludiv10.o (+RO-CODE, +RO-DATA)
+         rt_udiv.o (+RO-CODE, +RO-DATA)
+         uread4.o (+RO-CODE, +RO-DATA)
+         uwrite4.o (+RO-CODE, +RO-DATA)
+
+; Please do NOT remove any content above!
+    }
+    INTSRAM_DATA 0x70009200 ABSOLUTE 0x00000E00
+    {
+; Please do NOT remove any content below!
+         * (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         * (INTSRAM_RODATA_*, INTSRAM_RW_*, INTSRAM_ZI_*)
+; system-realted data
+         stack_init.obj (INTERNCONST, INTERNRW, INTERNZI)
+
+
+; Please do NOT remove any content above!
+    }
+
+    INTSRAM_DATA_PREINIT +0x0 0x00000E00
+    {
+; data passed from bootloader to maui
+         * (PREINIT_INTSRAM_RODATA, PREINIT_INTSRAM_RW, PREINIT_INTSRAM_ZI)
+; Please do NOT remove any content below!
+         uart.obj (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         *system.lib (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         *init.lib (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+; system-realted data
+         bootarm.obj (STACK_POOL_INTSRAM)
+; Please do NOT remove any content above!
+    }   
+    ;INTSRAM_DUMMY_END=INTSRAM_DATA base+size (Shared with INTSRAM_DATA_PREINIT)
+    INTSRAM_DUMMY_END 0x7000A000
+    {
+         bootarm.obj (INTSRAM_END)
+    }
+    ROM_SIGNATURE_SECTION +0x0
+    {
+         *                             (MAUI_SIGNATURE_SECTION)
+    }
+}
+
+
+VIVA +0x400 0x4c
+{
+    VIVA_GFH +0x0 ; Only exist on SV5 platform
+    {
+        *                             (VIVA_GFH)
+    }
+
+    VIVA +0x0
+    {
+        *                             (VIVA)
+    }
+}
+
+
+
+
+

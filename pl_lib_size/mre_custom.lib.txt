@@ -1,0 +1,21 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+         0          0          0          0          0   mre_app_sina_weibo_vxp.obj
+         0     317076          0          0          0   mre_app_twitter.obj
+         0      70092          0          0          0   mre_app_yahoo_messengerv2.obj
+         0      75312          0          0          0   mre_app_yahoo_messengerv2_SSL_vsm.obj
+         0     290608          0          0          0   mre_app_yahoo_messengerv2_UI_vsm.obj
+       244          0          0        316        126   vmapparray.obj
+       870          0          0          4       2669   vmcamera.obj
+       632        336         40         12        974   vmchset.obj
+         0          0          0          0          0   vmeditor.obj
+      1418        772         16        132       1449   vmime.obj
+       882          0        100          8       1626   vmmacrostub.obj
+         0          0          0          0          0   vmsalsensor.obj
+       248         29          0          0        369   vmsettings.obj
+         0          0         32          0          0   vmshortcutarray.obj
+      1194          0          1         40       1495   vmsim.obj
+         0         77         96          0          0   vmsparray.obj
+       228          0          0          0        318   vmua.obj
+      5716     754302        285        512       9026   TOTAL
+

@@ -1,0 +1,9 @@
+[Dependency] H:\6261A\11CW1352MP_BIRD61A_11C_V33_GPRS_MMI\plutommi\Customer\ResGenerator\..\CustResource\PlutoAppIcon1.xml 
+[ThemeGen] Load ..\CustResource\VenusSysThemeCFG.xml 
+[makeopt] The output file is latest
+[prexml] Read option count: 483
+[ThemeGen] Load debug\venus_theme_log.txt 
+[ThemeGen] Load debug\resgen_xml_all_enum_IDs.log 
+[ThemeGen] Output ..\CustResource\CustVenusThemeId.h 
+[ThemeGen] Read option FALSE 
+[ThemeGen] System Theme generate completely 

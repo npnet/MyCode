@@ -1,0 +1,56 @@
+Root of SW-Load: H:\6261A\11CW1352MP_BIRD61A_11C_V33_GPRS_MMI
+paddingSize: 0
+Meta section found!!
+Parse Type: MAP
+Parse Language: 1
+Parse BIT_MODE: 16
+symbol found:__align(4) const CUSTOM_STRING_MAP_16 StrMap_1[] = {
+
+Meta section found!!
+Parse Type: MAP
+Parse Language: FIXED
+Parse BIT_MODE: 16
+symbol found:const CUSTOM_STRING_MAP_16 StrMap_Fixed[] = {
+
+Meta section found!!
+Parse Type: VALUE
+Parse Name: mtk_gTrans_string_count
+Parse (NALE: VALUE) =  (mtk_gTrans_string_count,1466)
+Meta section found!!
+Parse Type: VALUE
+Parse Name: mtk_gMaxDeployedLangs
+Parse (NALE: VALUE) =  (mtk_gMaxDeployedLangs,1)
+Meta section found!!
+Parse Type: VALUE
+Parse Name: max_total_len
+Parse (NALE: VALUE) =  (max_total_len,0)
+Finish parse
+
+Meta section found!!
+Parse Type: RES
+Parse Language: 1
+symbol found:__align(4) const CUSTOM_STRING StrRes_1[] = {
+
+Meta section found!!
+Parse Type: RES
+Parse Language: FIXED
+symbol found:__align(4) const CUSTOM_STRING StrRes_Fixed[] = {
+
+Meta section found!!
+Parse Type: SEARCH_MAP
+symbol found:const CUSTOM_STRMAP_SEARCH StrMapSearch[] = {
+
+Finish parse
+
+Read data from strres_1.compress
+Read data from strmap_1.compress
+Read data from strres_FIXED.compress
+Read data from strmap_FIXED.compress
+Read data from strres_1.compress
+Read data from strres_1.bin.decompress
+read strres_1.bin.decompress37936
+
+content lengh:37936
+content lengh:2932
+content lengh:11206
+content lengh:1368

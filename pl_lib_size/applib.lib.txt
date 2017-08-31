@@ -1,0 +1,22 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+       912          0          0          0        803   app_addr.obj
+      1132          0          0          0        755   app_asyncfile.obj
+      1400          0        320          0        874   app_base64.obj
+        44       1024          0          0         63   app_crc.obj
+      4644        263        152         11       2318   app_datetime.obj
+      1766        554          0          0        470   app_html.obj
+       868       3889          0          0        400   app_html_char_ref.obj
+      2354         64          0          0        344   app_md5.obj
+      3552         24          0       1124       3787   app_mem.obj
+       972        764          4         20        661   app_mime.obj
+       290          0          0          0        294   app_plmn.obj
+      2018         17          0          0       1139   app_qp.obj
+      4066         40          0          0       4438   app_str.obj
+        96          0          0          4        122   app_time.obj
+       746       2554          0         12        747   app_ua.obj
+      2010        121         88          0        996   app_url.obj
+      4850         18          0          0       2517   app_usedetails.obj
+      2002          0          0          0       2254   dict.obj
+     33722       9332        564       1171      22982   TOTAL
+

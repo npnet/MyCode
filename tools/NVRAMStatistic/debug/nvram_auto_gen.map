@@ -1,0 +1,775 @@
+Archive member included because of file (symbol)
+
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRTglob.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_CRT_glob)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRTfmode.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_CRT_fmode)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(txtmode.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_fmode)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(pseudo-reloc.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_pei386_runtime_relocator)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRT_fp10.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_fpreset)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(gccmain.o)
+                              ../debug/nvram_auto_gen.o (__main)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(pseudo-reloc-list.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(pseudo-reloc.o) (__RUNTIME_PSEUDO_RELOC_LIST_END__)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtbegin.o (__w32_sharedptr_initialize)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_chkstk.o)
+                              ../debug/nvram_auto_gen.o (_alloca)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_ctors.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(gccmain.o) (__CTOR_LIST__)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+                              ../debug/nvram_auto_gen.o (access)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+                              ../debug/nvram_auto_gen.o (stricmp)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dh.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o) (_head_libmoldname_a)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dt.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dh.o) (_libmoldname_a_iname)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_imp___iob)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_imp____set_app_type)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00517.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_imp__atexit)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00336.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_imp___onexit)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_cexit)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (__p__environ)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (signal)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (__p__fmode)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_fileno)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (_setmode)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (__getmainargs)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+                              ../debug/nvram_auto_gen.o (system)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+                              ../debug/nvram_auto_gen.o (sprintf)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+                              ../debug/nvram_auto_gen.o (strlen)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+                              ../debug/nvram_auto_gen.o (malloc)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+                              ../debug/nvram_auto_gen.o (fclose)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+                              ../debug/nvram_auto_gen.o (printf)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+                              ../debug/nvram_auto_gen.o (strrchr)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+                              ../debug/nvram_auto_gen.o (strstr)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+                              ../debug/nvram_auto_gen.o (strchr)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+                              ../debug/nvram_auto_gen.o (fgets)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+                              ../debug/nvram_auto_gen.o (_errno)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+                              ../debug/nvram_auto_gen.o (strerror)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+                              ../debug/nvram_auto_gen.o (fopen)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+                              ../debug/nvram_auto_gen.o (exit)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+                              ../debug/nvram_auto_gen.o (fprintf)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+                              ../debug/nvram_auto_gen.o (memset)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+                              ../debug/nvram_gen_util.o (strcmp)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o) (free)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o) (abort)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dh.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o) (_head_libmsvcrt_a)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dt.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dh.o) (_libmsvcrt_a_iname)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (SetUnhandledExceptionFilter@4)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o (ExitProcess@4)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o) (FindAtomA@4)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o) (AddAtomA@4)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o) (GetAtomNameA@12)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dh.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o) (_head_libkernel32_a)
+h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dt.o)
+                              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dh.o) (_libkernel32_a_iname)
+
+Allocating common symbols
+Common symbol       size              file
+
+gFS_IntQuotaSet     0x10              ../debug/fs_quota_entry_dump.o
+__DTOR_LIST__       0x10              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_ctors.o)
+__w32_sharedptr_terminate
+                    0x10              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+logical_data_item_table
+                    0x10              ../debug/nvram_gen_util.o
+s                   0x200             ../debug/nvram_auto_gen.o
+nvram_gen_total_lid
+                    0x10              ../debug/nvram_gen_util.o
+__w32_sharedptr     0x10              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+__CTOR_LIST__       0x10              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_ctors.o)
+FS_MAX_QSET         0x10              ../debug/fs_quota_entry_dump.o
+__w32_sharedptr_unexpected
+                    0x10              h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+system_boot_mode    0x10              ../debug/nvram_gen_util.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00400000                __image_base__ = 0x400000
+                0x00000000                __dll__ = 0x0
+                0x00001000                __section_alignment__ = 0x1000
+                0x00000200                __file_alignment__ = 0x200
+                0x00000004                __major_os_version__ = 0x4
+                0x00000000                __minor_os_version__ = 0x0
+                0x00000001                __major_image_version__ = 0x1
+                0x00000000                __minor_image_version__ = 0x0
+                0x00000004                __major_subsystem_version__ = 0x4
+                0x00000000                __minor_subsystem_version__ = 0x0
+                0x00000003                __subsystem__ = 0x3
+                0x00200000                __size_of_stack_reserve__ = 0x200000
+                0x00001000                __size_of_stack_commit__ = 0x1000
+                0x00100000                __size_of_heap_reserve__ = 0x100000
+                0x00001000                __size_of_heap_commit__ = 0x1000
+                0x00000000                __loader_flags__ = 0x0
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtbegin.o
+
+.text           0x00401000     0xa600
+ *(.init)
+ *(.text)
+ .text          0x00401000      0x2c0 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o
+                0x00401260                WinMainCRTStartup
+                0x00401240                mainCRTStartup
+                0x00401280                atexit
+                0x004012a0                _onexit
+ .text          0x004012c0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtbegin.o
+                0x004012c0                __do_sjlj_init
+ .text          0x004012d0     0x5200 ../debug/nvram_auto_gen.o
+                0x00401546                nvram_gen_sys_cache_default
+                0x0040248f                nvram_gen_lid_size
+                0x00403d98                nvram_gen_array
+                0x004019fb                nvram_gen_sys_cache_res_func
+                0x00404cad                nvram_gen_close_file
+                0x00404eef                nvram_gen_restore_function
+                0x00405510                nvram_gen_custpack_table
+                0x004051a3                nvram_gen_database_key
+                0x00404b79                nvram_gen_create_file
+                0x00401346                nvram_gen_check_sys_cache
+                0x00405bd3                nvram_gen_cat_xml
+                0x00403ac3                nvram_gen_statistic
+                0x00401cf0                nvram_gen_ltable_list
+                0x0040586e                get_str_default_value
+                0x00404430                nvram_gen_secro
+                0x0040609e                nvram_gen_trace
+                0x00406306                main
+ .text          0x004064d0      0x900 ../debug/nvram_gen_util.o
+                0x00406d68                nvram_gen_search_entry
+                0x004064d4                free_int_ilm
+                0x00406b8a                nvram_gen_construct_ltable
+                0x0040668e                nvram_gen_assign_entry
+                0x004064d0                NVRAM_EF_CAT_TIMESTAMP_DEFAULT
+ .text          0x00406dd0      0x420 ../debug/nvram_factory_config.o
+ .text          0x004071f0      0xcc0 ../debug/nvram_data_items.o
+                0x004071f1                NVRAM_EF_FF_DEFAULT
+                0x004071f0                NVRAM_EF_ZERO_DEFAULT
+ .text          0x00407eb0      0x8c0 ../debug/nvram_cust_pack.o
+                0x00408150                NVRAM_EF_MMI_CACHE_SHORT_DEFAULT
+                0x00408570                COMMON_NVRAM_EF_INET_CUSTPACK_DEFAULT
+                0x00407f20                COMMON_NVRAM_EF_RAC_PREFERENCE_DEFAULT
+                0x00407f16                COMMON_NVRAM_EF_ALS_LINE_ID_DEFAULT
+                0x00407f18                COMMON_NVRAM_EF_MSCAP_DEFAULT
+                0x00407eb0                COMMON_NVRAM_EF_SMSAL_MAILBOX_ADDR_DEFAULT
+                0x00407f37                COMMON_NVRAM_EF_CB_DEFAULT_CH_DEFAULT
+                0x00408350                NVRAM_EF_MMI_CACHE_DOUBLE_DEFAULT
+                0x00407f50                NVRAM_EF_MMI_CACHE_BYTE_DEFAULT
+                0x00408548                COMMON_NVRAM_EF_PHB_SOS_DEFAULT
+                0x00407f27                COMMON_NVRAM_EF_SMSAL_COMMON_PARAM_DEFAULT
+                0x00407ef0                COMMON_NVRAM_EF_MS_SECURITY_DEFAULT
+ .text          0x00408770       0xe0 ../debug/custom_nvram_sec.o
+                0x00408770                custom_secret_key
+                0x00408790                NVRAM_EF_SML_DEFAULT
+                0x00408778                NVRAM_SECURE_PARA
+ .text          0x00408850      0x2e0 ../debug/fs_quota_entry_dump.o
+                0x0040895a                nvram_gen_fs_quota
+                0x00408866                FS_QuotaInit
+ .text          0x00408b30       0xc0 ../debug/adc_nvram_def.o
+ .text          0x00408bf0      0x1a0 ../debug/touchpanel_nvram_def.o
+                0x00408bf0                NVRAM_TOUCHPANEL_DEFAULT
+ .text          0x00408d90      0x6e0 ../debug/nvram_user_config.o
+                0x00408d90                NVRAM_EF_CUST_HW_LEVEL_TBL_DEFAULT
+ .text          0x00409470      0x7c0 ../debug/nvram_common_config.o
+ .text          0x00409c30      0xfc0 ../debug/audio_nvram_def.o
+ .text          0x0040abf0      0x200 ../debug/userprofile_nvram_def.o
+                0x0040abf0                NVRAM_PROFILES_DEFAULT
+ .text          0x0040adf0       0x70 ../debug/fs_quota.o
+                0x0040ae36                fs_quota_init
+ .text          0x0040ae60       0x70 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(pseudo-reloc.o)
+                0x0040aea0                _pei386_runtime_relocator
+ .text          0x0040aed0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRT_fp10.o)
+                0x0040aed0                _fpreset
+                0x0040aed0                fpreset
+ .text          0x0040aee0       0xb0 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(gccmain.o)
+                0x0040af70                __main
+                0x0040aee0                __do_global_dtors
+                0x0040af10                __do_global_ctors
+ .text          0x0040af90      0x320 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+                0x0040b050                __w32_sharedptr_initialize
+ .text          0x0040b2b0       0x30 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_chkstk.o)
+                0x0040b2b0                __chkstk
+                0x0040b2b0                _alloca
+ .text          0x0040b2e0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+                0x0040b2e0                access
+ *fill*         0x0040b2e8        0x8 00
+ .text          0x0040b2f0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+                0x0040b2f0                stricmp
+ *fill*         0x0040b2f8        0x8 00
+ .text          0x0040b300        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+                0x0040b300                __set_app_type
+ *fill*         0x0040b308        0x8 00
+ .text          0x0040b310        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+                0x0040b310                _cexit
+ *fill*         0x0040b318        0x8 00
+ .text          0x0040b320        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+                0x0040b320                __p__environ
+ *fill*         0x0040b328        0x8 00
+ .text          0x0040b330        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+                0x0040b330                signal
+ *fill*         0x0040b338        0x8 00
+ .text          0x0040b340        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+                0x0040b340                __p__fmode
+ *fill*         0x0040b348        0x8 00
+ .text          0x0040b350        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+                0x0040b350                _fileno
+ *fill*         0x0040b358        0x8 00
+ .text          0x0040b360        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+                0x0040b360                _setmode
+ *fill*         0x0040b368        0x8 00
+ .text          0x0040b370        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+                0x0040b370                __getmainargs
+ *fill*         0x0040b378        0x8 00
+ .text          0x0040b380        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+                0x0040b380                system
+ *fill*         0x0040b388        0x8 00
+ .text          0x0040b390        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+                0x0040b390                sprintf
+ *fill*         0x0040b398        0x8 00
+ .text          0x0040b3a0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+                0x0040b3a0                strlen
+ *fill*         0x0040b3a8        0x8 00
+ .text          0x0040b3b0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+                0x0040b3b0                malloc
+ *fill*         0x0040b3b8        0x8 00
+ .text          0x0040b3c0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+                0x0040b3c0                fclose
+ *fill*         0x0040b3c8        0x8 00
+ .text          0x0040b3d0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+                0x0040b3d0                printf
+ *fill*         0x0040b3d8        0x8 00
+ .text          0x0040b3e0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+                0x0040b3e0                strrchr
+ *fill*         0x0040b3e8        0x8 00
+ .text          0x0040b3f0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+                0x0040b3f0                strstr
+ *fill*         0x0040b3f8        0x8 00
+ .text          0x0040b400        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+                0x0040b400                strchr
+ *fill*         0x0040b408        0x8 00
+ .text          0x0040b410        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+                0x0040b410                fgets
+ *fill*         0x0040b418        0x8 00
+ .text          0x0040b420        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+                0x0040b420                _errno
+ *fill*         0x0040b428        0x8 00
+ .text          0x0040b430        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+                0x0040b430                strerror
+ *fill*         0x0040b438        0x8 00
+ .text          0x0040b440        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+                0x0040b440                fopen
+ *fill*         0x0040b448        0x8 00
+ .text          0x0040b450        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+                0x0040b450                exit
+ *fill*         0x0040b458        0x8 00
+ .text          0x0040b460        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+                0x0040b460                fprintf
+ *fill*         0x0040b468        0x8 00
+ .text          0x0040b470        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+                0x0040b470                memset
+ *fill*         0x0040b478        0x8 00
+ .text          0x0040b480        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+                0x0040b480                strcmp
+ *fill*         0x0040b488        0x8 00
+ .text          0x0040b490        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+                0x0040b490                free
+ *fill*         0x0040b498        0x8 00
+ .text          0x0040b4a0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+                0x0040b4a0                abort
+ *fill*         0x0040b4a8        0x8 00
+ .text          0x0040b4b0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+                0x0040b4b0                SetUnhandledExceptionFilter@4
+ *fill*         0x0040b4b8        0x8 00
+ .text          0x0040b4c0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+                0x0040b4c0                ExitProcess@4
+ *fill*         0x0040b4c8        0x8 00
+ .text          0x0040b4d0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+                0x0040b4d0                FindAtomA@4
+ *fill*         0x0040b4d8        0x8 00
+ .text          0x0040b4e0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+                0x0040b4e0                AddAtomA@4
+ *fill*         0x0040b4e8        0x8 00
+ .text          0x0040b4f0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+                0x0040b4f0                GetAtomNameA@12
+ *fill*         0x0040b4f8        0x8 00
+ .text          0x0040b500       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtend.o
+ *(SORT(.text$*))
+ *(.glue_7t)
+ *(.glue_7)
+                0x0040b510                ___CTOR_LIST__ = .
+                0x0040b510                __CTOR_LIST__ = .
+                0x0040b510        0x4 LONG 0xffffffff
+ *(SORT(.ctors.*))
+ *(.ctors)
+ .ctors         0x0040b514        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtend.o
+ *(.ctor)
+                0x0040b518        0x4 LONG 0x0
+                0x0040b51c                ___DTOR_LIST__ = .
+                0x0040b51c                __DTOR_LIST__ = .
+                0x0040b51c        0x4 LONG 0xffffffff
+ *(SORT(.dtors.*))
+ *(.dtors)
+ *(.dtor)
+                0x0040b520        0x4 LONG 0x0
+ *(.fini)
+ *(.gcc_exc)
+                0x0040b524                etext = .
+ *(.gcc_except_table)
+
+.data           0x0040c000      0x600
+                0x0040c000                __data_start__ = .
+ *(.data)
+ .data          0x0040c000       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../crt2.o
+                0x0040c000                _argc
+                0x0040c004                _argv
+ .data          0x0040c010       0x10 ../debug/nvram_auto_gen.o
+ .data          0x0040c020      0x400 ../debug/nvram_data_items.o
+                0x0040c020                nvram_sys_cache
+ .data          0x0040c420       0x10 ../debug/nvram_common_config.o
+                0x0040c420                nvram_ltable_comm_app
+ .data          0x0040c430       0x20 ../debug/custom_nvram_cat.o
+                0x0040c430                nvram_cat_replace_tbl
+ .data          0x0040c450       0x80 ../debug/fs_quota.o
+                0x0040c450                gFS_ExtQuotaSet
+ .data          0x0040c4d0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRTglob.o)
+                0x0040c4d0                _CRT_glob
+ .data          0x0040c4e0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(CRTfmode.o)
+                0x0040c4e0                _CRT_fmode
+ .data          0x0040c4f0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(txtmode.o)
+                0x0040c4f0                _fmode
+ .data          0x0040c500       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(gccmain.o)
+ .data          0x0040c510       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a(pseudo-reloc-list.o)
+ .data          0x0040c520       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+ *(.data2)
+ *(SORT(.data$*))
+                0x0040c530                __data_end__ = .
+ *(.data_cygwin_nocopy)
+
+.rdata          0x0040d000        0x0
+ *(.rdata)
+ *(SORT(.rdata$*))
+ *(.eh_frame)
+                0x0040d000                ___RUNTIME_PSEUDO_RELOC_LIST__ = .
+                0x0040d000                __RUNTIME_PSEUDO_RELOC_LIST__ = .
+ *(.rdata_runtime_pseudo_reloc)
+                0x0040d000                ___RUNTIME_PSEUDO_RELOC_LIST_END__ = .
+                0x0040d000                __RUNTIME_PSEUDO_RELOC_LIST_END__ = .
+
+.pdata
+ *(.pdata)
+
+.bss            0x0040d000      0x540
+                0x0040d000                __bss_start__ = .
+ *(.bss)
+ .bss           0x0040d000       0xe0 ../debug/nvram_auto_gen.o
+ .bss           0x0040d0e0       0x20 ../debug/nvram_gen_util.o
+                0x0040d0e4                secupack_total_to_verify
+                0x0040d0f4                nvram_gen_backup_total
+                0x0040d0e8                secupack_size_to_verify
+                0x0040d0f0                nvram_gen_backup_size
+                0x0040d0ec                secupack_idx
+                0x0040d0e0                custpack_total_to_verify
+ .bss           0x0040d100      0x180 ../debug/nvram_common_config.o
+ .bss           0x0040d280       0x20 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+ *(COMMON)
+ COMMON         0x0040d2a0      0x200 ../debug/nvram_auto_gen.o
+                                  0x0 (size before relaxing)
+                0x0040d2a0                s
+ COMMON         0x0040d4a0       0x30 ../debug/nvram_gen_util.o
+                                  0x0 (size before relaxing)
+                0x0040d4a0                logical_data_item_table
+                0x0040d4b0                nvram_gen_total_lid
+                0x0040d4c0                system_boot_mode
+ COMMON         0x0040d4d0       0x20 ../debug/fs_quota_entry_dump.o
+                                  0x0 (size before relaxing)
+                0x0040d4d0                gFS_IntQuotaSet
+                0x0040d4e0                FS_MAX_QSET
+ COMMON         0x0040d4f0       0x30 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(w32-shared-ptr.o)
+                                  0x0 (size before relaxing)
+                0x0040d4f0                __w32_sharedptr_terminate
+                0x0040d500                __w32_sharedptr
+                0x0040d510                __w32_sharedptr_unexpected
+ COMMON         0x0040d520       0x20 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a(_ctors.o)
+                                  0x0 (size before relaxing)
+                0x0040d540                __bss_end__ = .
+
+.edata
+ *(.edata)
+
+/DISCARD/
+ *(.debug$S)
+ *(.debug$T)
+ *(.debug$F)
+ *(.drectve)
+
+.idata          0x0040e000      0x600
+ SORT(*)(.idata$2)
+ .idata$2       0x0040e000       0x14 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dh.o)
+                0x0040e000                _head_libkernel32_a
+ .idata$2       0x0040e014       0x14 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dh.o)
+                0x0040e014                _head_libmoldname_a
+ .idata$2       0x0040e028       0x14 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dh.o)
+                0x0040e028                _head_libmsvcrt_a
+ SORT(*)(.idata$3)
+                0x0040e03c        0x4 LONG 0x0
+                0x0040e040        0x4 LONG 0x0
+                0x0040e044        0x4 LONG 0x0
+                0x0040e048        0x4 LONG 0x0
+                0x0040e04c        0x4 LONG 0x0
+ SORT(*)(.idata$4)
+ .idata$4       0x0040e050        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dh.o)
+ .idata$4       0x0040e054        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+ .idata$4       0x0040e058        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+ .idata$4       0x0040e05c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+ .idata$4       0x0040e060        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+ .idata$4       0x0040e064        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+ .idata$4       0x0040e068        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dt.o)
+ .idata$4       0x0040e06c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dh.o)
+ .idata$4       0x0040e070        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+ .idata$4       0x0040e074        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+ .idata$4       0x0040e078        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dt.o)
+ .idata$4       0x0040e07c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dh.o)
+ .idata$4       0x0040e080        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+ .idata$4       0x0040e084        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+ .idata$4       0x0040e088        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+ .idata$4       0x0040e08c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+ .idata$4       0x0040e090        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+ .idata$4       0x0040e094        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+ .idata$4       0x0040e098        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+ .idata$4       0x0040e09c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o)
+ .idata$4       0x0040e0a0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00336.o)
+ .idata$4       0x0040e0a4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+ .idata$4       0x0040e0a8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+ .idata$4       0x0040e0ac        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00517.o)
+ .idata$4       0x0040e0b0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+ .idata$4       0x0040e0b4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+ .idata$4       0x0040e0b8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+ .idata$4       0x0040e0bc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+ .idata$4       0x0040e0c0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+ .idata$4       0x0040e0c4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+ .idata$4       0x0040e0c8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+ .idata$4       0x0040e0cc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+ .idata$4       0x0040e0d0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+ .idata$4       0x0040e0d4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+ .idata$4       0x0040e0d8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+ .idata$4       0x0040e0dc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+ .idata$4       0x0040e0e0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+ .idata$4       0x0040e0e4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+ .idata$4       0x0040e0e8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+ .idata$4       0x0040e0ec        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+ .idata$4       0x0040e0f0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+ .idata$4       0x0040e0f4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+ .idata$4       0x0040e0f8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dt.o)
+ SORT(*)(.idata$5)
+ .idata$5       0x0040e0fc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dh.o)
+ .idata$5       0x0040e100        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+                0x0040e100                _imp__AddAtomA@4
+ .idata$5       0x0040e104        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+                0x0040e104                _imp__ExitProcess@4
+ .idata$5       0x0040e108        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+                0x0040e108                _imp__FindAtomA@4
+ .idata$5       0x0040e10c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+                0x0040e10c                _imp__GetAtomNameA@12
+ .idata$5       0x0040e110        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+                0x0040e110                _imp__SetUnhandledExceptionFilter@4
+ .idata$5       0x0040e114        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dt.o)
+ .idata$5       0x0040e118        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dh.o)
+ .idata$5       0x0040e11c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+                0x0040e11c                _imp__access
+ .idata$5       0x0040e120        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+                0x0040e120                _imp__stricmp
+ .idata$5       0x0040e124        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dt.o)
+ .idata$5       0x0040e128        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dh.o)
+ .idata$5       0x0040e12c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+                0x0040e12c                _imp____getmainargs
+ .idata$5       0x0040e130        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+                0x0040e130                _imp____p__environ
+ .idata$5       0x0040e134        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+                0x0040e134                _imp____p__fmode
+ .idata$5       0x0040e138        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+                0x0040e138                _imp____set_app_type
+ .idata$5       0x0040e13c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+                0x0040e13c                _imp___cexit
+ .idata$5       0x0040e140        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+                0x0040e140                _imp___errno
+ .idata$5       0x0040e144        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+                0x0040e144                _imp___fileno
+ .idata$5       0x0040e148        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o)
+                0x0040e148                _imp___iob
+ .idata$5       0x0040e14c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00336.o)
+                0x0040e14c                _imp___onexit
+ .idata$5       0x0040e150        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+                0x0040e150                _imp___setmode
+ .idata$5       0x0040e154        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+                0x0040e154                _imp__abort
+ .idata$5       0x0040e158        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00517.o)
+                0x0040e158                _imp__atexit
+ .idata$5       0x0040e15c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+                0x0040e15c                _imp__exit
+ .idata$5       0x0040e160        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+                0x0040e160                _imp__fclose
+ .idata$5       0x0040e164        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+                0x0040e164                _imp__fgets
+ .idata$5       0x0040e168        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+                0x0040e168                _imp__fopen
+ .idata$5       0x0040e16c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+                0x0040e16c                _imp__fprintf
+ .idata$5       0x0040e170        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+                0x0040e170                _imp__free
+ .idata$5       0x0040e174        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+                0x0040e174                _imp__malloc
+ .idata$5       0x0040e178        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+                0x0040e178                _imp__memset
+ .idata$5       0x0040e17c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+                0x0040e17c                _imp__printf
+ .idata$5       0x0040e180        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+                0x0040e180                _imp__signal
+ .idata$5       0x0040e184        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+                0x0040e184                _imp__sprintf
+ .idata$5       0x0040e188        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+                0x0040e188                _imp__strchr
+ .idata$5       0x0040e18c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+                0x0040e18c                _imp__strcmp
+ .idata$5       0x0040e190        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+                0x0040e190                _imp__strerror
+ .idata$5       0x0040e194        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+                0x0040e194                _imp__strlen
+ .idata$5       0x0040e198        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+                0x0040e198                _imp__strrchr
+ .idata$5       0x0040e19c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+                0x0040e19c                _imp__strstr
+ .idata$5       0x0040e1a0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+                0x0040e1a0                _imp__system
+ .idata$5       0x0040e1a4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dt.o)
+ SORT(*)(.idata$6)
+ .idata$6       0x0040e1a8        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+ .idata$6       0x0040e1b4        0xe h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+ *fill*         0x0040e1c2        0x2 00
+ .idata$6       0x0040e1c4        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+ .idata$6       0x0040e1d0       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+ .idata$6       0x0040e1e0       0x1e h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+ *fill*         0x0040e1fe        0x2 00
+ .idata$6       0x0040e200        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+ *fill*         0x0040e20a        0x2 00
+ .idata$6       0x0040e20c        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+ .idata$6       0x0040e218       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+ .idata$6       0x0040e228       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+ .idata$6       0x0040e238        0xe h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+ *fill*         0x0040e246        0x2 00
+ .idata$6       0x0040e248       0x12 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+ *fill*         0x0040e25a        0x2 00
+ .idata$6       0x0040e25c        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+ *fill*         0x0040e266        0x2 00
+ .idata$6       0x0040e268        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+ *fill*         0x0040e272        0x2 00
+ .idata$6       0x0040e274        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+ *fill*         0x0040e27e        0x2 00
+ .idata$6       0x0040e280        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o)
+ .idata$6       0x0040e288        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00336.o)
+ *fill*         0x0040e292        0x2 00
+ .idata$6       0x0040e294        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+ .idata$6       0x0040e2a0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+ .idata$6       0x0040e2a8        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00517.o)
+ *fill*         0x0040e2b2        0x2 00
+ .idata$6       0x0040e2b4        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+ .idata$6       0x0040e2bc        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+ *fill*         0x0040e2c6        0x2 00
+ .idata$6       0x0040e2c8        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+ .idata$6       0x0040e2d0        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+ .idata$6       0x0040e2d8        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+ *fill*         0x0040e2e2        0x2 00
+ .idata$6       0x0040e2e4        0x8 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+ .idata$6       0x0040e2ec        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+ *fill*         0x0040e2f6        0x2 00
+ .idata$6       0x0040e2f8        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+ *fill*         0x0040e302        0x2 00
+ .idata$6       0x0040e304        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+ *fill*         0x0040e30e        0x2 00
+ .idata$6       0x0040e310        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+ *fill*         0x0040e31a        0x2 00
+ .idata$6       0x0040e31c        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+ *fill*         0x0040e326        0x2 00
+ .idata$6       0x0040e328        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+ *fill*         0x0040e332        0x2 00
+ .idata$6       0x0040e334        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+ *fill*         0x0040e33e        0x2 00
+ .idata$6       0x0040e340        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+ .idata$6       0x0040e34c        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+ *fill*         0x0040e356        0x2 00
+ .idata$6       0x0040e358        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+ *fill*         0x0040e362        0x2 00
+ .idata$6       0x0040e364        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+ *fill*         0x0040e36e        0x2 00
+ .idata$6       0x0040e370        0xa h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+ SORT(*)(.idata$7)
+ *fill*         0x0040e37a        0x2 00
+ .idata$7       0x0040e37c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00000.o)
+ .idata$7       0x0040e380        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00131.o)
+ .idata$7       0x0040e384        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00148.o)
+ .idata$7       0x0040e388        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00193.o)
+ .idata$7       0x0040e38c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(ds00660.o)
+ .idata$7       0x0040e390       0x10 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a(dt.o)
+                0x0040e390                _libkernel32_a_iname
+ .idata$7       0x0040e3a0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00000.o)
+ .idata$7       0x0040e3a4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(ds00084.o)
+ .idata$7       0x0040e3a8        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a(dt.o)
+                0x0040e3a8                _libmoldname_a_iname
+ .idata$7       0x0040e3b4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00039.o)
+ .idata$7       0x0040e3b8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00059.o)
+ .idata$7       0x0040e3bc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00061.o)
+ .idata$7       0x0040e3c0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00078.o)
+ .idata$7       0x0040e3c4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00118.o)
+ .idata$7       0x0040e3c8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00147.o)
+ .idata$7       0x0040e3cc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00169.o)
+ .idata$7       0x0040e3d0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00222.o)
+ .idata$7       0x0040e3d4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00336.o)
+ .idata$7       0x0040e3d8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00373.o)
+ .idata$7       0x0040e3dc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00510.o)
+ .idata$7       0x0040e3e0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00517.o)
+ .idata$7       0x0040e3e4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00531.o)
+ .idata$7       0x0040e3e8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00534.o)
+ .idata$7       0x0040e3ec        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00540.o)
+ .idata$7       0x0040e3f0        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00545.o)
+ .idata$7       0x0040e3f4        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00546.o)
+ .idata$7       0x0040e3f8        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00552.o)
+ .idata$7       0x0040e3fc        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00603.o)
+ .idata$7       0x0040e400        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00611.o)
+ .idata$7       0x0040e404        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00616.o)
+ .idata$7       0x0040e408        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00633.o)
+ .idata$7       0x0040e40c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00636.o)
+ .idata$7       0x0040e410        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00641.o)
+ .idata$7       0x0040e414        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00642.o)
+ .idata$7       0x0040e418        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00646.o)
+ .idata$7       0x0040e41c        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00648.o)
+ .idata$7       0x0040e420        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00653.o)
+ .idata$7       0x0040e424        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00655.o)
+ .idata$7       0x0040e428        0x4 h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(ds00663.o)
+ .idata$7       0x0040e42c        0xc h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a(dt.o)
+                0x0040e42c                _libmsvcrt_a_iname
+
+.CRT
+ *(SORT(.CRT$*))
+
+.endjunk        0x0040f000        0x0
+                0x0040f000                end = .
+                0x0040f000                _end = .
+                0x0040f000                __end__ = .
+
+.rsrc
+ *(.rsrc)
+ *(SORT(.rsrc$*))
+
+.reloc
+ *(.reloc)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+NVRAM_LTABLE    0x0040f000     0x1000
+                0x0040f000                _nvram_ltable_begin = .
+ *(_nvram_ltable)
+ _nvram_ltable  0x0040f000       0x50 ../debug/nvram_gen_util.o
+                0x0040f000                logical_data_item_table_internal
+ _nvram_ltable  0x0040f050      0x348 ../debug/nvram_factory_config.o
+                0x0040f050                logical_data_item_table_factory
+ _nvram_ltable  0x0040f398      0x4b0 ../debug/nvram_data_items.o
+                0x0040f398                logical_data_item_table_core
+ _nvram_ltable  0x0040f848       0x28 ../debug/adc_nvram_def.o
+                0x0040f848                logical_data_item_table_adc
+ _nvram_ltable  0x0040f870       0x28 ../debug/touchpanel_nvram_def.o
+                0x0040f870                logical_data_item_table_touchpanel
+ _nvram_ltable  0x0040f898      0x5a0 ../debug/nvram_common_config.o
+                0x0040f898                logical_data_item_table_common_app
+ _nvram_ltable  0x0040fe38       0xa0 ../debug/audio_nvram_def.o
+                0x0040fe38                logical_data_item_table_audio
+ _nvram_ltable  0x0040fed8       0x50 ../debug/userprofile_nvram_def.o
+                0x0040fed8                logical_data_item_table_userprofile
+                0x0040ff28                _nvram_ltable_end = .
+                0x0040ff28                _indirect_init_begin = .
+ *(_indirect_init)
+ _indirect_init
+                0x0040ff28        0x4 ../debug/fs_quota.o
+                0x0040ff28                g_fs_quota_init
+                0x0040ff2c                _indirect_init_end = .
+LOAD ../debug/nvram_auto_gen.o
+LOAD ../debug/nvram_gen_util.o
+LOAD ../debug/nvram_factory_config.o
+LOAD ../debug/nvram_data_items.o
+LOAD ../debug/nvram_cust_pack.o
+LOAD ../debug/custom_nvram_sec.o
+LOAD ../debug/fs_quota_entry_dump.o
+LOAD ../debug/ul1_nvram_def.o
+LOAD ../debug/adc_nvram_def.o
+LOAD ../debug/camera_nvram_def.o
+LOAD ../debug/touchpanel_nvram_def.o
+LOAD ../debug/nvram_user_config.o
+LOAD ../debug/nvram_common_config.o
+LOAD ../debug/custom_nvram_cat.o
+LOAD ../debug/audio_nvram_def.o
+LOAD ../debug/mmi_gps_nvram_def.o
+LOAD ../debug/userprofile_nvram_def.o
+LOAD ../debug/fs_quota.o
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingwex.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libuser32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libkernel32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libadvapi32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libshell32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingw32.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/libgcc.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmoldname.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmingwex.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/../../../libmsvcrt.a
+LOAD h:/6261A/11CW1352MP_BIRD61A_11C_V33_GPRS_MMI/Tools/MinGW/bin/../lib/gcc-lib/mingw32/3.3.1/crtend.o
+OUTPUT(../debug/nvram_auto_gen.exe pei-i386)

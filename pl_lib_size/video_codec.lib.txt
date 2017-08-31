@@ -1,0 +1,12 @@
+
+      Code    RO Data    RW Data    ZI Data      Debug   Object Name
+        64          0          0          0        420   H264SwDecCustomize.obj
+        48          0          0          0        360   MP4SwDecCustomize.obj
+         0          0          0          0          0   RVSwDecCustomize.obj
+        40          0          0          0        300   VP8SwDecCustomize.obj
+       100          0          0          0        216   hal_custom_video_codec_internal.obj
+         0          0          0          0          0   vcodec_customization.obj
+         0         16          0          0          0   vcodec_dcm.obj
+         0         64          0          0          0   vcodec_demand_page.obj
+       252         80          0          0       1296   TOTAL
+
