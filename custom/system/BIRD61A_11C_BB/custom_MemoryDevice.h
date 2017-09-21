@@ -495,9 +495,14 @@
 
  ****************************************************************************
 */
-
-//#define NOR_BOOTING_NOR_FS_BASE_ADDRESS 0x00F00000
-//#define NOR_BOOTING_NOR_FS_SIZE 0x00100000
+/*
+ATTENTION:
+	Don't change NOR_BOOTING_NOR_FS_BASE_ADDRESS's value at will.
+	If you has changed NOR_BOOTING_NOR_FS_BASE_ADDRESS's value,you MUST to
+	check and configurate OTA's address
+*/
+#define NOR_BOOTING_NOR_FS_BASE_ADDRESS 0x00700000
+#define NOR_BOOTING_NOR_FS_SIZE 		      0x00100000
 #define NOR_BOOTING_NOR_FS_FIRST_DRIVE_SECTORS    0
 
 /*
