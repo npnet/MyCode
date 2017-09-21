@@ -1012,6 +1012,32 @@ ifneq ($(filter __MMI_VPP_UPGRADE__, $(strip $(MODULE_DEFS))),)
    INC_DIR += plutommi\MMI\Upgrade\UpgradeInc
 endif
 
+### add redstone FOTA debug+++ <<<
+ifdef RS_FOTA_SUPPORT
+  ifeq ($(strip $(RS_FOTA_SUPPORT)),TRUE)
+  	COMP_DEFS += __RS_FOTA_SUPPORT__ \
+  				 DRV_DEBUG
+				 
+	INC_DIR +=  vendor/rsfota/rsdl/porting/inc \
+				vendor/rsfota/rsdl/porting/MTK/inc
+
+				
+	SRC_LIST += vendor/rsfota/rsdl/porting/MTK/src/rs_dev.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_notify_user.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_dev.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_fs.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_mem.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_socket.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_system.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_flash_operate.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_param.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_sdk_api_ex.c \
+				vendor/rsfota/rsdl/porting/MTK/src/rs_std_fun.c		
+
+  endif
+endif
+### end +++ >>>
+
 # Define the specified compile options to COMP_DEFS
 COMP_DEFS = MMI_ON_HARDWARE_P  \
             __EMS__ \

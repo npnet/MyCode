@@ -145,6 +145,10 @@
 #include "dcl.h"
 #include "uart_internal.h"
 
+#if defined(__RS_FOTA_SUPPORT__)
+#define DRV_DEBUG 
+#endif
+
 /*#include "uart_sw.h"*/
 #ifdef  DRV_DEBUG
 static void itoa(char **buf, int i, int base);

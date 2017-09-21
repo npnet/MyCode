@@ -453,8 +453,8 @@
 //#define MAX_DEMAND_PAGING_ROM0_SIZE
 //#define MAX_LANG_PACK_ROM_SIZE
 //#define MAX_CUSTPACK_ROM_SIZE
-//#define MAX_BL_SIZE
-//#define MAX_EXT_BL_SIZE
+#define MAX_BL_SIZE 0x2800
+#define MAX_EXT_BL_SIZE 0x20000
 
 /*
  ****************************************************************************

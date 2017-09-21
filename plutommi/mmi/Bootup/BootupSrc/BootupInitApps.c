@@ -87,6 +87,9 @@
 #include "gdi_include.h"
 #include "kal_general_types.h"
 
+#if defined(__RS_FOTA_SUPPORT__)
+extern void rs_sdk_start();
+#endif
 
 #define MMI_BOOTUP_ANI_MIN_FRAME_INTERVAL 60 /* ms */
 

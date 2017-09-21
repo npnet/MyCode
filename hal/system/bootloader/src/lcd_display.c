@@ -134,7 +134,11 @@
 /* include LCD driver setting and predefined MACROs */
 #include "kal_release.h"
 #include "lcd_if.h"
+#if defined(__RS_FOTA_SUPPORT__) && defined(__RS_FOTA_EXTBL_DISPLAY__)  //lcd display added, add by jintao at 20160113 +++ <<< 
+#include "rs_ua_display.h"
+#else
 #include "lcd_fota.h"
+#endif//end +++ >>>
 #include "lcd_sw_inc.h"
 #include "lcd_sw_rnd.h"
 #include "sw_types.h"
@@ -225,7 +229,7 @@
 /* size of the background image resource header */
 #define IMG_RES_HEADER_SIZE     21
 
-#if defined(__BG_IMAGE__) && defined(__CARD_DOWNLOAD__)
+#if defined(__BG_IMAGE__) && (defined(__CARD_DOWNLOAD__) || (defined(__RS_FOTA_SUPPORT__) && defined(__RS_FOTA_EXTBL_DISPLAY__)))//lcd display, add by jintao at 20160113 +++
 /* include raw data of background image */
 #include "CustBLImgData.h"
 #endif /* __BG_IMAGE__ */
@@ -353,7 +357,8 @@ static void BL_UpdateLCDScreen(void)
 
 }
 
-#ifdef __CARD_DOWNLOAD__
+//#ifdef __CARD_DOWNLOAD__
+#if defined(__CARD_DOWNLOAD__) || (defined(__RS_FOTA_SUPPORT__) && defined(__RS_FOTA_EXTBL_DISPLAY__)) //lcd display, add by jintao at 20160113 +++
 /*****************************************************************************
  * FUNCTION
  *  BL_ShowUpdateFirmwareInitBackground

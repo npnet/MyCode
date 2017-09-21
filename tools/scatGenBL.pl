@@ -824,6 +824,33 @@ sub GenEXT_BL_SIGNATURE_SECTION_OnlySV5
     return $template;
 }
 
+# IOT_RS_FOTA start, redstone ram malloc, add by liujw at 20170322 +++ <<<
+#****************************************************************************
+# For IOT_RS_FOTA
+#****************************************************************************
+sub GenEXT_BL_IOT_RS_FOTA_WORKING_BUF
+{
+    my $template = '';
+	my $ext_bl_IOT_RS_FOTA_support = &$FEATURE_QUERY_FUNCTION_PTR('RS_FOTA_SUPPORT');
+	my %BBtbl_BL_IOT_RS_FOTA_WORKING_base =  #Sysram Base
+    (
+         'MT6260'  => '0x00072000',
+		 'MT6261_Family'  => '0x00072000',
+    );
+	my $bb = (&sysUtil::is_MT6261_Family($BB))? 'MT6261_Family'  : $BB;
+	my $IOT_RS_FOTA_WORKING_base = &config_query_hash_bb(\%BBtbl_BL_IOT_RS_FOTA_WORKING_base, $bb, __LINE__) ;
+	$IOT_RS_FOTA_WORKING_base = "$IOT_RS_FOTA_WORKING_base EMPTY";
+	if (defined $ext_bl_IOT_RS_FOTA_support and $ext_bl_IOT_RS_FOTA_support eq 'TRUE') 
+  {
+	    $template .= &format_execution_view('EXT_BL_IOT_RS_FOTA_WORKING_BUF',
+	                                        $IOT_RS_FOTA_WORKING_base,
+	                                        '0x380000',
+	                                        [""]);
+	}
+    chomp($template);
+    return $template;
+}
+# IOT_RS_FOTA end +++ >>>
 #****************************************************************************
 # For IOT-FOTA
 #****************************************************************************
@@ -940,6 +967,7 @@ sub GetEXT_UN_INITBase
     # --- --- ---
     ### NAND: ExtMem size - 4M, NOR: ExtMem size - 1.5M, N+0: fixed
     my $ext_un_init_base = '';
+ my $ext_bl_IOT_RS_FOTA_support = &$FEATURE_QUERY_FUNCTION_PTR('RS_FOTA_SUPPORT');###ram malloc, add by  at 20160113 +++
     if ($BB eq 'MT6251')
     {
     	$ext_un_init_base = "0x40007000";
@@ -947,6 +975,10 @@ sub GetEXT_UN_INITBase
     elsif ($NFB ne 'NONE')
     {
     	$ext_un_init_base = sprintf("0x%x", $EXTSRAM_SIZE - (4*1024*1024));
+    }
+		elsif (defined $ext_bl_IOT_RS_FOTA_support and $ext_bl_IOT_RS_FOTA_support eq 'TRUE')###ram malloc, add by  at 20160113 +++
+		{
+			$ext_un_init_base = "0x00020000"
     }
     elsif($BB eq 'MT6260' or $BB eq 'MT6261')
 	{

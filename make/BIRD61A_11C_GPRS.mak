@@ -80,7 +80,7 @@ SUB_BOARD_VER = PCB01
   # Switch-ability:
   #   Non-switchable
 
-DCM_COMPRESSION_SUPPORT = TRUE
+DCM_COMPRESSION_SUPPORT = FALSE
   # Description:
   #   Dynamic code management with compression support.
   #   Certain codes would be put on flash in compressed form and decompressed into RAM to execute.
@@ -99,7 +99,7 @@ DCM_COMPRESSION_AUDIO_BT = FALSE
   # Switch-ability:
   #   [Any] -> [Any]
 
-DCM_COMPRESSION_AUDIO_CODEC = TRUE
+DCM_COMPRESSION_AUDIO_CODEC = FALSE
   # Description:
   #   To enable DCM with compression mechanism for audio codec.
   # Option Values:
@@ -108,7 +108,7 @@ DCM_COMPRESSION_AUDIO_CODEC = TRUE
   # Switch-ability:
   #   [Any] -> [Any]
 
-DCM_COMPRESSION_AUDIO_EFFECT = TRUE
+DCM_COMPRESSION_AUDIO_EFFECT = FALSE
   # Description:
   #   To enable DCM with compression mechanism for audio post-processing.
   # Option Values:
@@ -154,7 +154,7 @@ FM_RADIO_RDS_SUPPORT = FALSE
   # Switch-ability:
   #   TRUE -> FALSE
 
-DCM_COMPRESSION_MAUI_INIT = TRUE
+DCM_COMPRESSION_MAUI_INIT = FALSE
   # Description:
   #   To enable DCM with compression mechanism for MAUI INIT code.
   # Option Values:
@@ -644,7 +644,7 @@ DA_MEMORY_CUT_SUPPORT = FALSE
   # Switch-ability:
   #   [Any] -> [Any]
 
-DA_SMART_SELECTION_SUPPORT = TRUE
+DA_SMART_SELECTION_SUPPORT = TRUE #FALSE  redstone modify 
   # Description:
   #   Give a chance to close smart selection feature to slim project
   # Option Values:
@@ -1726,7 +1726,7 @@ STREAM_SUPPORT = FALSE
   # Switch-ability:
   #   [Any] -> [Any]
 
-VIDEO_PLAYER_RECORDER_W_DCM = ENABLE
+VIDEO_PLAYER_RECORDER_W_DCM = DISABLE
   # Description:
   #   To enable video player/recorder middleware DCM with compression mechanism.
   # Option Values:
@@ -2375,7 +2375,7 @@ EXT_BL_UPDATE_SUPPORT = FALSE
   #   TRUE -> FALSE
   #   FALSE -> TRUE
 
-BLRESERVEDSIZE_AUTOCONFIG = FALSE
+BLRESERVEDSIZE_AUTOCONFIG = FALSE	#redstone modify 
   # Description:
   #   To define if we need to adjust bootloader size(MAX_BL_SIZE, MAX_EXT_BL_SIZE) in custom_FeatureConfig.h automatically for scatGen
   # Option Values:
@@ -5140,6 +5140,27 @@ RX_G2_HIGH_GAIN_MODE_DE_FEATURE_SAWLESS = FALSE
   # Switch-ability:
   #   Non-switchable
 
+# add redstone FOTA function, add by  at 20160113 +++ <<<
+RS_FOTA_SUPPORT = TRUE
+  # Description:
+  #   Turn on redstone FOTA (firmware update over the air) feature, support diff image firmware update now
+  # Option Values:
+  #   FALSE: FOTA is disable
+  #   TRUE: Support FOTA
+  # Switch-ability:
+  #   TRUE -> FALSE
+  #   FALSE -> TRUE
+
+RS_FOTA_EXTBL_DISPLAY = FALSE
+  # Description:
+  #   Turn on redstone FOTA update display when at ext bootloader, support TRUE or FALSE
+  # Option Values:
+  #   FALSE: display is off
+  #   TRUE: display is on
+  # Switch-ability:
+  #   TRUE -> FALSE
+  #   FALSE -> TRUE
+# end +++ >>>
 #[Phase-out and MTK internal used]# ------------------------------
 TST_DNT_LOGGING = FALSE
 

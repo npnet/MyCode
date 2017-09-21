@@ -637,7 +637,10 @@
 #if defined(__BMT_2_0_ARCHITECTURE__)
 #include "bmt_chr_setting.h"
 #endif
-
+#if defined(__RS_FOTA_SUPPORT__)
+#include "fs_gprot.h"
+#include "rs_ua_update.h"
+#endif
 #include "init.h"
 #include "config_hw.h"
 
@@ -835,8 +838,9 @@ const MTK_EXT_BL_INFO_v01 g_ExtBootloaderInfo =
 
 #endif /* __SV5_ENABLED__ */
 
-#if defined (__BROM_USBDL_V2__) || defined(__FUNET_ENABLE__)
+#if defined (__BROM_USBDL_V2__) || defined(__FUNET_ENABLE__) || defined(__RS_FOTA_SUPPORT__)
 kal_uint32 g_usbdlRetnValue = 0xffffffff;   //Must use RW
+static kal_bool g_power_latched = KAL_FALSE;// fix latch power, add by jintao at 20160831 +++
 #endif /* __BROM_USBDL_V2__ */
 
 #pragma arm section rwdata = "MINI_EXT_DA_SHARE", zidata = "MINI_EXT_DA_SHARE"
@@ -2118,6 +2122,54 @@ kal_bool bl_FUNET_IsGoing()
 #endif
 	
 }
+
+// fix latch power issue when cut off power under updating, add by jintao at 20160831 +++ <<<
+#if defined(__RS_FOTA_SUPPORT__)
+void bl_DL_latch_power()
+{
+    if(!g_power_latched)
+   {     
+       /* HW initialization */
+      DclPW_Initialize();
+      
+      //GPIO_init();          //Not init GIPO here or other one's setting will be overwritten
+      //DclGPIO_Initialize();
+
+      //DclPWM_Initialize();
+      //PWM_initialize();
+      //DclPMU_Initialize();
+
+      
+      BL_PRINT(LOG_DEBUG, "[FUNET]Latch power start...\n\r");
+      {
+         DCL_HANDLE rtc_handler;
+         DCL_HANDLE pw_handle;
+
+         //before call dclpw, rtc is needed to be initialized
+         rtc_handler = DclRTC_Open(DCL_RTC,FLAGS_NONE);
+
+         BL_PRINT(LOG_DEBUG, "[FUNET]Latch power rtc_handler  = %d \n\r", rtc_handler);
+         
+         DclRTC_Control(rtc_handler, RTC_CMD_SETXOSC, (DCL_CTRL_DATA_T *)NULL);
+         DclRTC_Control(rtc_handler, RTC_CMD_HW_INIT, (DCL_CTRL_DATA_T *)NULL);
+         DclRTC_Close(rtc_handler);
+
+         //Use dclpw to latch the power
+         pw_handle=DclPW_Open(DCL_PW, FLAGS_NONE);
+         
+         BL_PRINT(LOG_DEBUG, "[FUNET]Latch power pw_handle  = %d \n\r", pw_handle);
+         
+         DclPW_Control(pw_handle,PW_CMD_POWERON,NULL);
+         DclPW_Close(pw_handle);
+      }
+
+      g_power_latched = KAL_TRUE;
+      BL_PRINT(LOG_DEBUG, "[FUNET]Latch power done...\n\r");
+    }
+}
+#endif
+// end +++ >>>
+
 void FUNETProcedure(void)
 {
 
@@ -2643,7 +2695,39 @@ kal_bool LatchPowerInBL(void)
 
 }
 
+#if defined(__RS_FOTA_SUPPORT__)//fota add, add by jintao at 20160113 +++ <<<
+rs_u32 rs_ua_processExtendFile()
+{
+	kal_int32 ret = 0;
+#if defined(__GPS_FW_UPDATE_SUPPORT__)
 
+	BL_PRINT(LOG_DEBUG, "[redstone]g_usbdlRetnValue = %d \n\r", g_usbdlRetnValue);
+	if (g_usbdlRetnValue == -1 || g_usbdlRetnValue == 0)
+	{
+		SetRetnFlag(RETN_FUNET_GPS_FW_DL_EN);
+		g_usbdlRetnValue = *RETN_FLAG;
+	}
+	BL_PRINT(LOG_DEBUG, "[redstone]g_usbdlRetnValue 2 = %d \n\r", g_usbdlRetnValue);
+	BL_PRINT(LOG_DEBUG, "[redstone]rs_ua_processExtendFile enter \n\r");
+	if (bl_FUNET_GPS_FW_Triggered() || bl_FUNET_GPS_IsGoing())
+	{
+		BL_PRINT(LOG_DEBUG, "[redstone]Enter gps FW upgrade process \n\r");
+		if (bl_FUNET_GPS_IsGoing() == KAL_FALSE)
+		{
+			bl_FUNET_GPS_update();
+		}
+		ret = GPS_DL();
+		BL_PRINT(LOG_DEBUG, "[redstone]GPS DL result = %d \n\r", ret);
+		if (ret == GPS_FW_DOWNLOAD_OK)
+		{
+			FS_Delete(GPS_MARKER_FILE_NAME);
+		}
+		ClrRetnFlag(RETN_FUNET_GPS_FW_DL_EN);
+	}
+#endif
+	return ret;
+}
+#endif
 /**********************************************************
 Description : Main body of Ext Bootloader
 Input       : None
@@ -2776,8 +2860,18 @@ void ExtBootloader(void)
 #endif /* __EXT_BL_UPDATE__ */
 
 #endif /* !__BL_SLIM_SEG__ && !__BRINGUP_SUPPORT__ */
+#if defined(__RS_FOTA_SUPPORT__)//fota add, add by jintao at 20160113 +++ <<<
+{
+	int ret2 = 0;
+	BL_PRINT(LOG_INFO, "%s, start to run redstone fota progress!!!\n\r", __func__);
+	bl_DL_latch_power();
+	WacthDogRestart();
+	ret2 = rs_ua_execute();
+	BL_PRINT(LOG_INFO, "%s, fota udpate return %d\n\r", __func__, ret2);
+}
+#else
    FUNETProcedure();
-
+#endif // end +++ >>>
     if(!IsInWithOutBatteryMode())   
       BL_Disable_Usbdl_Wo_Battery();
 

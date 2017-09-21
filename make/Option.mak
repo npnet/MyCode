@@ -12791,6 +12791,20 @@ ifeq ($(strip $(SSS_SUPPORT)),SSS_LIB)
     BL_COMPOBJS += sss\lib\sss.lib
   endif
 endif
+
+### add redstone FOTA function, add by  at 20160113 +++ <<<
+ifdef RS_FOTA_SUPPORT
+	ifeq ($(strip $(RS_FOTA_SUPPORT)),TRUE)
+		COM_DEFS += __RS_FOTA_SUPPORT__
+#		COM_DEFS += __NOR_FDM_IN_BL__
+#		BL_COMPLIST += fdm_bl gfx_core32 sys_sec
+
+#		COMPLIST += fdm_bl gfx_core32 sys_sec
+		BL_COMPOBJS  += vendor\rsfota\rsua\lib\rsuasdk.lib
+		BL_COMPOBJS  += vendor\rsfota\rsua\lib\rsua.lib
+	endif
+endif
+### end +++ >>>
 #########################################################
 # Replace alias modules. (for build flow)
 #########################################################
@@ -13091,3 +13105,4 @@ ifdef RS_FOTA_SUPPORT
     COMPOBJS  += vendor/rsfota/rsdl/lib/rsdlsdk.lib
   endif
 endif
+### end +++ >>>

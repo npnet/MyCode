@@ -292,3 +292,16 @@ ifeq ($(TS_PROFILING),TRUE)
               hal\system\profile\src\time_stamp_timer.c
 endif
 
+### fota, add by redstone at 20160817 +++ <<<
+ifdef RS_FOTA_SUPPORT
+ifeq ($(strip $(RS_FOTA_SUPPORT)),TRUE)
+	COMP_DEFS += \
+    		BL_DEBUG \
+    		__UBL_NOR_FULL_DRIVER__ \
+             __NOR_FULL_DRIVER__ \
+    		__RS_FOTA_SUPPORT__ \
+
+	INC_DIR += vendor\rsfota\rsua\porting\inc
+endif
+endif
+### end +++  >>>

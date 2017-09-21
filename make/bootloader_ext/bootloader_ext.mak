@@ -579,3 +579,84 @@ ifdef FUNET_ENABLE
              __FS_FUNET_ENABLE__
   endif
 endif
+
+### fota, add by redstone at 20160817 +++ <<<
+ifdef RS_FOTA_SUPPORT
+ifeq ($(strip $(RS_FOTA_SUPPORT)),TRUE)
+	COMP_DEFS += \
+    		BL_DEBUG \
+    		__UBL_NOR_FULL_DRIVER__ \
+             __NOR_FULL_DRIVER__ \
+    		__RS_FOTA_SUPPORT__ \
+
+	INC_DIR += vendor\rsfota\rsua\porting\inc
+	SRC_LIST += vendor\rsfota\rsua\porting\src\rs_porting.c \
+				vendor\rsfota\rsua\porting\src\rs_extbl_fs.c \
+				vendor\rsfota\rsua\porting\src\rs_extbl_flash.c
+
+	SRC_LIST += hal\peripheral\src\dcl_rtc.c \
+              hal\peripheral\src\dcl_pwm.c \
+              hal\peripheral\src\dcl_pw.c
+
+	# IOT FOTA FS
+#	SRC_LIST += custom\system\$(strip $(BOARD_VER))\fs_config.c \
+#	              fs\fat\src\Format.c \
+#	              fs\efs\src\fs_bl_func.c \
+#	              fs\efs\src\fs_utility.c \
+#	              fs\fat\src\fs_bl_main.c \
+#	              fs\fat\src\fs_kal.c \
+#	              fs\fat\src\rtfcore.c \
+#	              fs\fat\src\rtfbuf.c \
+#	              fs\fat\src\rtfex.c \
+#	              fs\efs\src\fs_internal.c\
+#	              fs\common\src\fs_internal_api.c\
+#	              fs\fat\src\rtfiles.c\
+#	              fs\fat\src\rtfbs.c
+
+	ifdef RS_FOTA_EXTBL_DISPLAY
+	ifeq ($(strip $(RS_FOTA_EXTBL_DISPLAY)),TRUE)
+		### LCD porting macro
+		COMP_DEFS += __LCD_DRIVER_IN_BL__ \
+					 __RS_FOTA_EXTBL_DISPLAY__
+		# For LCD
+		SRC_LIST += vendor\rsfota\rsua\porting\src\rs_ua_display.c \
+					hal\display\lcd_if_manager\src\lcd_if_manager.c \
+					hal\display\common\src\lcm_proxy.c \
+					hal\lqt\src\lcd_lqt.c \
+					hal\graphics\misc\src\simple_memory_manager.c
+	  
+		ifneq ($(strip $(RS_FOTA_SUPPORT)),TRUE)
+			SRC_LIST += hal\system\compression\src\code_decompression_fota.c
+		endif
+		FOLDER_LIST = custom\drv\LCD\$(strip $(LCD_MODULE))
+		SRC_LIST += $(foreach DIR,$(FOLDER_LIST), \
+	  	    $(foreach FILE,$(shell if exist $(DIR)\*.c dir $(DIR)\*.c /b),$(DIR)\$(FILE)) \
+		      )
+		
+		# For Backlight
+		SRC_LIST += $(call AUTO_MERGE_FILE_CHECK,custom\drv\misc_drv,pwmdrv.c) \
+					hal\peripheral\src\rtc.c \
+					hal\peripheral\src\rwg.c \
+					hal\peripheral\src\pwm.c \
+					custom\common\ps\custom_uem.c \
+					$(call AUTO_MERGE_FILE_CHECK,custom\drv\misc_drv,custom_equipment.c) \
+					$(call AUTO_MERGE_FILE_CHECK,custom\drv\misc_drv,uem_gpio.c) \
+					$(call AUTO_MERGE_FILE_CHECK,custom\drv\misc_drv,custom_hw_default.c) \
+					custom\codegen\$(strip $(BOARD_VER))\uem_drv.c
+	  
+		#LCD only display picture in COSMOS/PLUTO project
+		ifdef MMI_VERSION
+		  ifneq ($(filter COSMOS_MMI PLUTO_MMI IOT_MMI,$(MMI_VERSION)),)
+			SRC_LIST += hal\system\bootloader\src\gdi_image_alpha_bmp_v2_internal.c \
+						hal\system\bootloader\src\gdi_image_alpha_bmp_v2_core.c
+		  endif
+		endif
+		
+		SRC_LIST += hal\peripheral\src\dcl_rtc.c \
+					hal\peripheral\src\dcl_pwm.c \
+					hal\peripheral\src\dcl_pw.c
+	endif
+	endif
+endif
+endif
+### end +++ >>>

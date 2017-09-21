@@ -105,6 +105,10 @@
 #ifndef __FLASH_DISK_H__
 #define __FLASH_DISK_H__
 
+#if defined(__RS_FOTA_SUPPORT__) // flash should be operated, add by redstone at 20160830 +++
+#define __NOR_FULL_DRIVER__
+#endif // end +++ >>>
+
 #if defined __MTK_TARGET__
 #if (!defined(_NAND_FLASH_BOOTING_)  && !defined(__NOR_FDM5__)) || defined(__SERIAL_FLASH_EN__)
 
