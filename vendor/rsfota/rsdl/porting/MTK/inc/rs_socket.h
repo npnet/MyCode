@@ -97,4 +97,6 @@ rs_s32 rs_socket_close(rs_socket_handle sockHndl);
 */
 rs_s32 rs_socket_only_wait_callback();
 
+void rs_socket_wait_moment();
+
 #endif

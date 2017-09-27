@@ -124,8 +124,8 @@ rs_u32 rs_sys_available_space();
 
 #define RS_CONFIG_UPINFO_FILE1 "Z:\\updateinfo1"
 #define RS_CONFIG_UPINFO_FILE2 "Z:\\updateinfo2"
-#define RS_CONFIG_UPINFO_FILE1 "Z:\\@rsfota\\updateinfo1"
-#define RS_CONFIG_UPINFO_FILE2 "Z:\\@rsfota\\updateinfo2"
+//#define RS_CONFIG_UPINFO_FILE1 "Z:\\@rsfota\\updateinfo1"
+//#define RS_CONFIG_UPINFO_FILE2 "Z:\\@rsfota\\updateinfo2"
 
 /**
 函数说明：获取升级包信息的存储路径

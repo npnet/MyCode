@@ -7,7 +7,7 @@
  * 下载过程中是否支持把下载信息记录于文件系统
  * 在不支持的情况下,升级信息会存储于flash中，那么此时也表示能够支持flash的操作
  */
-//#define RS_SUPPORT_UPDATE_INFO_FS
+#define RS_SUPPORT_UPDATE_INFO_FS
 
 /*
  * RS_SUPPORT_UPDATE_DATA_FS

@@ -714,3 +714,7 @@ rs_s32 rs_socket_only_wait_callback()
 	return 0;
 }
 
+void rs_socket_wait_moment()
+{
+	// 根据实际情况sleep一会
+}

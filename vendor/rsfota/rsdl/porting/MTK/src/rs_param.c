@@ -28,6 +28,8 @@
 #include "CharBatSrvGprot.h"
 #include "uem_utility.h"
 
+#include "NwInfoSrvGprot.h"
+
 
 /***********************************************************************************/
 //extern kal_uint32 Image$$VIVA_GFH$$Base;
@@ -191,6 +193,14 @@ static void get_Channel(char *buf)
 	rs_strcpy(buf, "bird");
 }
 
+static void get_CellInfo(char *buf)
+{
+	srv_nw_info_location_info_struct loc_info = {0};
+	srv_nw_info_get_location_info(MMI_SIM1, &loc_info);
+
+	rs_sprintf(buf, "%d-%d-0", loc_info.lac, loc_info.cell_id);
+}
+
 /**
 函数说明：获取设备属性
 参数说明：【key】设备属性标识
@@ -242,6 +252,10 @@ rs_s32 rs_cb_get_property(const rs_s8 *key, rs_s8 *value)
 	else if (0 == rs_strcmp(PROPERTY_KEY_DEVICE_DEVMAC, key)) // 获取渠道号
 	{
 		value[0] = 0;
+	}
+	else if(0 == rs_strcmp(PROPERTY_KEY_DEVICE_LOC, key))
+	{
+		get_CellInfo(value);
 	}
 	else
 	{
