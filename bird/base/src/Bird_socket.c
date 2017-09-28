@@ -41,6 +41,7 @@ static BOOL                          g_lima_gb_timer_ted = FALSE;//超时的timer是
 static U8                            g_lima_cbm_app_id     = 0;
 static U8                            g_lima_rec_res_flag     = 0;
 static Socket_Send g_socket_send;
+Socket_Send g_socket_send_alarm;
 static Socket_Rev g_socket_rev;
 static U8 g_n_reconn = 0;//lrf for reconn times
 static U8 g_n_rev_reconn = 0;//
@@ -81,9 +82,10 @@ U8 g_sleeppos_return = 0;
 S32 g_sleeppos_index = 0;
 U8 g_sleeppos_times = 0;
 
-extern U16 g_n_send_buf;
 extern U8 g_gettime_flag;
 extern U8 g_third_alarm_flag;
+
+extern void Yd_logintxbox();
 
 BOOL Lima_get_soc_init_flag()
 {
@@ -124,6 +126,8 @@ void Bird_clear_soc_conn()
 {	
     kal_prompt_trace(MOD_SOC," Bird_clear_soc_conn");
     g_n_reconn = 0;
+    g_lima_is_conn = FALSE;
+    g_lima_is_getip=FALSE;
 }
 /**************************************************************************************************
 Function name    :    Lima_Soc_Init
@@ -490,15 +494,16 @@ void Bird_soc_save_info(applib_time_struct dt)
     FS_Close(handle);
 }
 
-void Bird_infoformat(U8 *input, U8 *time, U32 *length)
+void Bird_infoformat(applib_time_struct* dt, U8 *time, U32 *length)
 {
 
-    S8 yearchar[4];
+    S8 yearchar[6];
     S8 monthchar[4];
     S8 daychar[4];
     S8 hourchar[4];
     S8 minchar[4];
     S8 secchar[4];	
+	/*
     applib_time_struct *dt;
 	
     dt->nYear=(U16)(input[0]+2000);
@@ -507,7 +512,7 @@ void Bird_infoformat(U8 *input, U8 *time, U32 *length)
     dt->nHour=input[3];
     dt->nMin=input[4];
     dt->nSec=input[5];
-
+	*/
     kal_prompt_trace(MOD_SOC,"Bird_infoformat %d %d %d %d %d %d",dt->nYear, dt->nMonth, dt->nDay, dt->nHour,dt->nMin,dt->nSec); 
 
     sprintf(yearchar,"%d",dt->nYear);
@@ -562,52 +567,54 @@ void Bird_infoformat(U8 *input, U8 *time, U32 *length)
 }
 void Bird_soc_setflag_posfile(applib_time_struct dt)
 {
-    S32  handle;
+    FS_HANDLE  handle;
     U32  len;
     U32 lenper;
     U32  buflen;
     kal_wchar  name[128];
-    static S8 buf[MAX_BIRD_SENDBUF_SIZE];
+    S8 buf[20];
     S8 nresult=0;
     U32 off;
-    S8 yearchar[4];
-    S8 monthchar[4];
-    S8 daychar[4];
-    S8 hourchar[4];
-    S8 minchar[4];
-    S8 secchar[4];	
+    S8 yearchar[6]={0};
+    S8 monthchar[4]={0};
+    S8 daychar[4]={0};
+    S8 hourchar[4]={0};
+    S8 minchar[4]={0};
+    S8 secchar[4]={0};	
 	
     lenper = strlen(BIRD_TBOXINFO);
     memset(name, 0, sizeof(name));
     kal_wsprintf(name,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV, dt.nYear, dt.nMonth, dt.nDay, dt.nHour);
     handle = FS_Open(name, FS_READ_WRITE);
-    kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d %d %d %d %d",handle,dt.nYear,dt.nMonth,dt.nDay,dt.nHour);
-
+    kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d", handle);
+	
     if (handle >= FS_NO_ERROR)
     {
 	FS_GetFileSize(handle,&buflen);
 	if(buflen> 0)
 	{
-	       for(off=0;off<=buflen;off=off+lenper)
+	       for(off=0;off<buflen;off=off+lenper)
 		{
 			FS_Seek(handle, off, FS_FILE_BEGIN);
 			memset(buf, 0, sizeof(buf));
 			FS_Read(handle, (void *)buf, lenper, &len);
-			kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d,%d,%d",buflen,len,off);
+			
 			memcpy(yearchar, (S8 *)&buf, 4);
 			memcpy(monthchar, (S8 *)&buf+4, 2);
 			memcpy(daychar, (S8 *)&buf+6, 2);
 			memcpy(hourchar, (S8 *)&buf+8, 2);
 			memcpy(minchar, (S8 *)&buf+10, 2);
 			memcpy(secchar, (S8 *)&buf+12, 2);
-
-			if((atol(yearchar)==dt.nYear)&&(atol(monthchar)==dt.nMonth)&&(atol(daychar)==dt.nDay)&&(atol(hourchar)==dt.nHour)
-				&&(atol(minchar)==dt.nMin)&&(atol(secchar)==dt.nSec))
+			
+			kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d,%d,%s",buflen,off,buf);
+			if((atoi(yearchar)==dt.nYear)&&(atoi(monthchar)==dt.nMonth)&&(atoi(daychar)==dt.nDay)&&(atoi(hourchar)==dt.nHour)
+				&&(atoi(minchar)==dt.nMin)&&(atoi(secchar)==dt.nSec))
 			{
 			       FS_Seek(handle, off+14, FS_FILE_BEGIN);
 				FS_Write(handle, "1",strlen("1"), &len);
-			       FS_Close(handle);
-			       return;
+				kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile write %d",len);
+			       //FS_Close(handle);
+			       //return;
 			}
 
 		}
@@ -974,6 +981,7 @@ void Bird_heart_return()
 	Lima_Soc_Dinit();
 	Bird_clear_soc_conn();
 	Bird_soc_conn();
+	Yd_logintxbox();
 	
 }
 /***************************************************************************
@@ -1189,8 +1197,8 @@ void Bird_soc_send(){
 		//g_socket_send.g_n_rev_state = 0;
 		//StartTimer(BIRD_SOCKET_SEND, 1000, Bird_soc_send);
 		Rj_stop_timer(BIRD_TASK_SOCKET_SEND);
-		if(g_socket_send.g_n_send_index+20<g_socket_send.g_n_send_indexAdd)
-                  Rj_start_timer(BIRD_TASK_SOCKET_SEND, 200, Bird_soc_send,NULL);
+		if(g_socket_send.g_n_send_index<g_socket_send.g_n_send_indexAdd)
+                  Rj_start_timer(BIRD_TASK_SOCKET_SEND, 1000, Bird_soc_send,NULL);
 		else
                   Rj_start_timer(BIRD_TASK_SOCKET_SEND, 1000, Bird_soc_send,NULL);
 		mmi_frm_clear_protocol_event_handler(MSG_ID_APP_SOC_NOTIFY_IND, (PsIntFuncPtr)Lima_Soc_Socket_Notify);
@@ -1388,12 +1396,11 @@ void Bird_soc_conn()
 		{
 			g_n_reconn ++;
 			kal_prompt_trace(MOD_SOC,"[Bird_soc_conn]: g_n_reconn=%d",g_n_reconn);
-	   		if(g_n_reconn>3)
+	   		if(g_n_reconn>=3)
 			{	
 			       Bird_set_reseterr(BIRD_CONN_ERR);     
 				Bird_set_resttime(); //write rest time
-				if(g_n_reconn>8)
-				    g_n_reconn = 4;
+				g_n_reconn = 0;
 				kal_prompt_trace(MOD_SOC,"g_n_reconn 30 min");
 			       Rj_stop_timer(BIRD_TASK_SOCKET_RECON);
 			       Rj_start_timer(BIRD_TASK_SOCKET_RECON, bird_get_conn_interval()*RJ_GPS_APP_1M, Bird_soc_conn,NULL);
@@ -1415,7 +1422,7 @@ void Bird_soc_conn()
 			if (LIMA_SOC_CREATE_ERR != ret)
 	       	{	       		
 	            		kal_prompt_trace(MOD_SOC,"[g_lima_is_getip]:%d",g_lima_is_getip);
-				if(g_n_reconn==4 || g_n_reconn==7)
+				if(g_n_reconn==2)
 				{
 					Bird_soc_Set_Header(1);
 					Lima_Soc_Http_Get_Parsed_Url((const S8*)g_lima_gp_socket->url, g_lima_gp_socket->url_parsed_info);
@@ -1444,7 +1451,7 @@ void Bird_soc_conn()
 	}	
 	else
 	{
-		if(g_n_reconn==4 || g_n_reconn==7)
+		if(g_n_reconn==2)
 		{
 			Bird_soc_Set_Header(1);
 			Lima_Soc_Http_Get_Parsed_Url((const S8*)g_lima_gp_socket->url, g_lima_gp_socket->url_parsed_info);
@@ -1501,6 +1508,88 @@ void Bird_soc_sendbufAdd2(Send_Info *_sendinfo)
 	memcpy(g_socket_send.send_info[send_index].send_buf, _sendinfo->send_buf, MAX_BIRD_SENDBUF_SIZE);   
 	kal_prompt_trace(MOD_SOC,"Bird_soc_sendbufAdd2 buf_len,indexAdd%d,%d",_sendinfo->buf_len,send_index); 
 	g_socket_send.g_n_send_indexAdd++;
+}
+
+void Bird_soc_alarm_sendbufAdd2(Send_Info *_sendinfo)
+{
+       S32 send_index=0;	   
+     	kal_prompt_trace(MOD_SOC,"Bird_soc_alarm_sendbufAdd2 \n");  
+       
+	if(_sendinfo->buf_len>MAX_BIRD_SENDBUF_SIZE)
+	{
+		return;
+	}
+	send_index = (g_socket_send_alarm.g_n_send_indexAdd % MAX_BIRD_SENDBUF_LEN);
+	g_socket_send_alarm.send_info[send_index].buf_len =_sendinfo->buf_len;
+	g_socket_send_alarm.send_info[send_index].ini_flag =_sendinfo->ini_flag;
+	g_socket_send_alarm.send_info[send_index].send_flow=_sendinfo->send_flow;
+	g_socket_send_alarm.send_info[send_index].send_statue=0;
+	g_socket_send_alarm.send_info[send_index].send_times=0;
+	g_socket_send_alarm.send_info[send_index].send_count=0;
+	g_socket_send_alarm.send_info[send_index].send_type=_sendinfo->send_type;
+	memset(g_socket_send_alarm.send_info[send_index].send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+	memcpy(g_socket_send_alarm.send_info[send_index].send_buf, _sendinfo->send_buf, MAX_BIRD_SENDBUF_SIZE);   
+	kal_prompt_trace(MOD_SOC,"Bird_soc_alarm_sendbufAdd2 buf_len,indexAdd%d,%d",_sendinfo->buf_len,send_index); 
+	g_socket_send_alarm.g_n_send_indexAdd++;
+}
+
+void Bird_soc_alarm_to_send()
+{
+     	S8 i,j;
+       U8 end_index=0;	   
+       S32 send_index=0;	  
+
+     	kal_prompt_trace(MOD_SOC,"Bird_soc_alarm_to_send");  
+/*
+      for (i = 0; i < g_socket_send_alarm.g_n_send_indexAdd ; i++)
+      {
+              send_index = (g_socket_send.g_n_send_indexAdd % MAX_BIRD_SENDBUF_LEN);
+              g_socket_send.send_info[send_index].buf_len =g_socket_send_alarm.send_info[i].buf_len;
+              g_socket_send.send_info[send_index].ini_flag =g_socket_send_alarm.send_info[i].ini_flag;
+              g_socket_send.send_info[send_index].send_flow=g_socket_send_alarm.send_info[i].send_flow;
+              g_socket_send.send_info[send_index].send_statue=g_socket_send_alarm.send_info[i].send_statue;
+              g_socket_send.send_info[send_index].send_times=g_socket_send_alarm.send_info[i].send_times;
+              g_socket_send.send_info[send_index].send_count=g_socket_send_alarm.send_info[i].send_count;
+              g_socket_send.send_info[send_index].send_type=g_socket_send_alarm.send_info[i].send_type;
+              memset(g_socket_send.send_info[send_index].send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+              memcpy(g_socket_send.send_info[send_index].send_buf, g_socket_send_alarm.send_info[i].send_buf, MAX_BIRD_SENDBUF_SIZE);   
+		g_socket_send.g_n_send_indexAdd++;
+      }
+*/       
+      for (i = 0; i < g_socket_send_alarm.g_n_send_indexAdd/3; i++)
+      {
+              send_index = (g_socket_send.g_n_send_indexAdd % MAX_BIRD_SENDBUF_LEN);
+              g_socket_send.send_info[send_index].buf_len =g_socket_send_alarm.send_info[i*3].buf_len*3;
+              g_socket_send.send_info[send_index].ini_flag =g_socket_send_alarm.send_info[i*3].ini_flag;
+              g_socket_send.send_info[send_index].send_flow=g_socket_send_alarm.send_info[i*3].send_flow;
+              g_socket_send.send_info[send_index].send_statue=g_socket_send_alarm.send_info[i*3].send_statue;
+              g_socket_send.send_info[send_index].send_times=g_socket_send_alarm.send_info[i*3].send_times;
+              g_socket_send.send_info[send_index].send_count=g_socket_send_alarm.send_info[i*3].send_count;
+              g_socket_send.send_info[send_index].send_type=g_socket_send_alarm.send_info[i*3].send_type;
+              memset(g_socket_send.send_info[send_index].send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+              for (j = 0; j <3; j++)  
+                  memcpy(g_socket_send.send_info[send_index].send_buf+j*g_socket_send_alarm.send_info[i*3].buf_len, g_socket_send_alarm.send_info[i*3+j].send_buf, g_socket_send_alarm.send_info[i*3].buf_len);  
+		end_index=end_index+3;	  
+		g_socket_send.g_n_send_indexAdd++;
+      }
+
+      if(g_socket_send_alarm.g_n_send_indexAdd%3==0)
+		return;
+	  
+      {
+              send_index = (g_socket_send.g_n_send_indexAdd % MAX_BIRD_SENDBUF_LEN);
+              g_socket_send.send_info[send_index].buf_len =g_socket_send_alarm.send_info[end_index].buf_len*(g_socket_send_alarm.g_n_send_indexAdd%3);
+              g_socket_send.send_info[send_index].ini_flag =g_socket_send_alarm.send_info[end_index].ini_flag;
+              g_socket_send.send_info[send_index].send_flow=g_socket_send_alarm.send_info[end_index].send_flow;
+              g_socket_send.send_info[send_index].send_statue=g_socket_send_alarm.send_info[end_index].send_statue;
+              g_socket_send.send_info[send_index].send_times=g_socket_send_alarm.send_info[end_index].send_times;
+              g_socket_send.send_info[send_index].send_count=g_socket_send_alarm.send_info[end_index].send_count;
+              g_socket_send.send_info[send_index].send_type=g_socket_send_alarm.send_info[end_index].send_type;
+              memset(g_socket_send.send_info[send_index].send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+              for (j = 0; j <g_socket_send_alarm.g_n_send_indexAdd%3; j++)  
+                  memcpy(g_socket_send.send_info[send_index].send_buf+j*g_socket_send_alarm.send_info[end_index].buf_len, g_socket_send_alarm.send_info[end_index+j].send_buf, g_socket_send_alarm.send_info[end_index].buf_len);   
+		g_socket_send.g_n_send_indexAdd++;
+      }
 }
 
 void Bird_soc_Set_Header(S8 nflag)
@@ -1562,6 +1651,24 @@ void Bird_soc_send_clear()
    /*lrf 2013-06-07add*/
 }
 
+void Bird_soc_send_alarm_clear()
+{
+     	S8 i;
+	g_socket_send_alarm.g_n_send_index = 0;
+	g_socket_send_alarm.g_n_send_indexAdd = 0;
+	g_socket_send_alarm.g_n_send_state=0;
+	g_socket_send_alarm.g_n_rev_state = 0;
+      for (i = 0; i < MAX_BIRD_SENDBUF_LEN ; i++)
+      {
+		g_socket_send_alarm.send_info[i].buf_len = 0;
+		memset(g_socket_send_alarm.send_info[i].send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+		g_socket_send_alarm.send_info[i].ini_flag = 0;
+		g_socket_send_alarm.send_info[i].send_statue = 0;
+		g_socket_send_alarm.send_info[i].send_times = 0;
+		g_socket_send_alarm.send_info[i].send_flow=0;
+		g_socket_send_alarm.send_info[i].send_count=0;
+      }
+}
 /***************************************************************************
   Function:      add_new_acc_prof_id 
   Description:    add a new gprs profile message to the g_config_account_gprs[]
@@ -3667,10 +3774,12 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 {
 	U32 length=0;
 	U8 command[2];
-	U8 time[6];
+	U8 time_rec[6]={0};
+	U8 time[6]={0};
 	U8 vin[17];
 	U8 encrypt[1];
 	U8 datalength[2];
+	U16 data_len=0;
 	U8 rest_buf[RECEIVE_DATA_LENGTH];
 	   
 	kal_prompt_trace(  MOD_SOC,"Bird_soc_tbox_rev_command_deal %d", receive_length);
@@ -3694,9 +3803,8 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 	memcpy(datalength, p_receive_data+length,2);
 	length=length+2;
 
-	kal_prompt_trace(  MOD_SOC,"Bird_soc_tbox_rev_command_deal %d %d %d %d %d %d ", p_receive_data[0],p_receive_data[1],p_receive_data[2],
-		p_receive_data[3],p_receive_data[4],p_receive_data[5]);
-
+	data_len=datalength[0]*256+datalength[1];
+	
 	if(strcmp(vin, rj_user_info.u_id) != 0)
 	{
 	 	kal_prompt_trace(  MOD_SOC,"Bird_soc_tbox_rev_command_deal vin not correct");
@@ -3713,24 +3821,27 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 	 	return;
 	}
 
-	kal_prompt_trace(  MOD_SOC,"Bird_soc_tbox_rev_command_deal %d", length);
+	kal_prompt_trace(  MOD_SOC,"Bird_soc_tbox_rev_command_deal %d %d", receive_length-length,data_len);
 
-       if(receive_length-length>0)
+       if(receive_length-length==data_len+1)
        {
 	 	memset(rest_buf,0,sizeof(rest_buf));
-	 	memcpy(rest_buf, p_receive_data+length,receive_length-length);
+	 	memcpy(rest_buf, p_receive_data+length,data_len);
        }
 	else
 	{
 	 	return;
 	}
+
+	if(encrypt[0]==0x03)
+		bird_set_inv_aes128_encode(rest_buf,data_len/16+1);
 	
 	if((command[0]==0x01)&&(command[1]==0x01))   
 	{
 	 	count_judge_gps_send_timer = 0; // 发送标志清零	
 	 	kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal login");
 		Bird_soc_set_loginflag();
-	 	Yd_tboxlogin_res(rest_buf,receive_length-length);
+	 	Yd_tboxlogin_res(rest_buf,data_len);
 	}
 	else if((command[0]==0x04)&&(command[1]==0x01))     
 	{
@@ -3741,13 +3852,13 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 	{
 		kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal timing");	 
 	 	count_judge_gps_send_timer = 0; //发送标志清零	
-	 	Yd_calib_res(rest_buf,receive_length-length);
+	 	Yd_calib_res(rest_buf,data_len);
 	}
 	else if((command[0]==0x02)&&(command[1]==0x01))   
 	{
 		applib_time_struct current_time = {0};
-		memset(time,0,sizeof(time));
-	 	memcpy(time, rest_buf,6);
+	 	memcpy(time_rec, rest_buf,6);
+		txboxdecimal(time ,time_rec);
 	 	current_time.nYear=(U16)time[0]+2000;
 	 	current_time.nMonth=time[1];
 	 	current_time.nDay=time[2];
@@ -3757,19 +3868,20 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 
 	 	kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal realinfo %d %d %d %d %d %d",current_time.nYear,current_time.nMonth,
 			current_time.nDay,current_time.nHour,current_time.nMin,current_time.nSec);
+		if(applib_dt_is_valid(&current_time))
 		Bird_soc_setflag_posfile(current_time);
 		if(g_third_alarm_flag==0)
 		{
-		StopTimer(BIRD_READ_FILE);
-		StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
+		//StopTimer(BIRD_READ_FILE);
+		//StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
 		}
 	 	count_judge_gps_send_timer = 0; //发送标志清零
 	}
 	else if((command[0]==0x03)&&(command[1]==0x01))      
 	{
 		applib_time_struct current_time = {0};
-		memset(time,0,sizeof(time));
-	 	memcpy(time, rest_buf,6);
+	 	memcpy(time_rec, rest_buf,6);
+		txboxdecimal(time ,time_rec);
 	 	current_time.nYear=(U16)time[0]+2000;
 	 	current_time.nMonth=time[1];
 	 	current_time.nDay=time[2];
@@ -3779,30 +3891,31 @@ void Bird_soc_tbox_rev_command_deal(U8 *p_receive_data, U32 receive_length)
 
 	 	kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal resendinfo %d %d %d %d %d %d",current_time.nYear,current_time.nMonth,
 			current_time.nDay,current_time.nHour,current_time.nMin,current_time.nSec);
+		if(applib_dt_is_valid(&current_time))
 		Bird_soc_setflag_posfile(current_time);
 		if(g_third_alarm_flag==0)
 		{
-		StopTimer(BIRD_READ_FILE);
-		StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
+		//StopTimer(BIRD_READ_FILE);
+		//StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
 		}
 	 	count_judge_gps_send_timer = 0; //发送标志清零
 	}
 	else if((command[0]==0x80)&&(command[1]==0xfe))     
 	{
 		kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal search");	 
-		bird_tbox_search_param_res(rest_buf,receive_length-length);
+		bird_tbox_search_param_res(rest_buf,data_len);
 	 	count_judge_gps_send_timer = 0; //发送标志清零		
 	}
 	else if((command[0]==0x81)&&(command[1]==0xfe))     
 	{
 		kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal set");	 
-		bird_tbox_set_param_res(rest_buf,receive_length-length);	
+		bird_tbox_set_param_res(rest_buf,data_len);	
 	 	count_judge_gps_send_timer = 0; //发送标志清零		
 	}
 	else if((command[0]==0x82)&&(command[1]==0xfe))    
 	{
 		kal_prompt_trace(MOD_SOC,"Bird_soc_tbox_rev_command_deal control");	 
-		bird_tbox_control_param_res(rest_buf,receive_length-length);
+		bird_tbox_control_param_res(rest_buf,data_len);
 	 	count_judge_gps_send_timer = 0; //发送标志清零		
 	}
 }
@@ -3828,7 +3941,7 @@ void Bird_soc_tbox_rev_deal()
 
 		if((g_socket_rev.rev_buf[rev_index] == 0x23)&&(zy_index<(g_socket_rev.g_n_rev_indexEnd-2)))
 		{
-			if(g_socket_rev.rev_buf[rev_index+1] == 0x23)
+			if(g_socket_rev.rev_buf[(rev_index+1)% RECEIVE_DATA_LENGTH] == 0x23)
 			{
 			ngetbg = 1;
 			ngetend = 1;

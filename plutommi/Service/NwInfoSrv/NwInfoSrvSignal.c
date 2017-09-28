@@ -581,7 +581,9 @@ static srv_nw_band_enum srv_nw_info_get_band_from_l4_value(kal_uint8 l4_band)
     return band;
 }
 
-
+ #ifdef RJ_GPS_APP
+#include "Bird_app.h"
+#endif
 /*****************************************************************************
  * FUNCTION
  *  srv_nw_info_get_percentage_from_gsm_rssi
@@ -592,6 +594,8 @@ static srv_nw_band_enum srv_nw_info_get_band_from_l4_value(kal_uint8 l4_band)
  * RETURNS
  *  Percentage
  *****************************************************************************/
+extern U8 g_signal_flag;
+extern U8 g_sim_count_signal;
 static U8 srv_nw_info_get_percentage_from_gsm_rssi(S32 rssi_in_qdBm)
 {
     /*----------------------------------------------------------------*/
@@ -620,7 +624,32 @@ static U8 srv_nw_info_get_percentage_from_gsm_rssi(S32 rssi_in_qdBm)
     {
         percentage = 100;
     }
-
+    //lrf add bg
+    if(rssi_in_qdBm < Q_DBM(-95))
+    {
+	 	rj_led_status_info.b_GSM_IS_SERACHING = KAL_TRUE;
+		//RJ_GPS_Gsmled_LightWink();
+		g_signal_flag = 0;
+		kal_prompt_trace( MOD_SOC,"[nw_info_signal yello wink] <95");
+     }
+     else{
+	      rj_led_status_info.b_GSM_IS_SERACHING = KAL_FALSE;
+	      //RJ_GPS_Gsmled_LightWink();	
+	      g_signal_flag = 1;
+		kal_prompt_trace( MOD_SOC,"[nw_info_signal yello wink] >95");  
+     }
+       
+    //lrf add ed	
+    if(rssi_in_qdBm < Q_DBM(-102))
+    {
+	 	g_sim_count_signal = 0;
+		kal_prompt_trace( MOD_SOC,"nw_info_signal g_sim_count_signal=0");
+     }
+     else{
+	       g_sim_count_signal = 1;
+		kal_prompt_trace( MOD_SOC,"nw_info_signal g_sim_count_signal=1");  
+     }
+       
     return (U8)percentage;
 }
 
@@ -759,7 +788,6 @@ static U8 srv_nw_info_get_percentage_from_gsm_rssi(S32 rssi_in_qdBm)
 /* under construction !*/
 #endif /* __UMTS_TDD128_MODE__ */
 #endif /* __UMTS_RAT__ */
-  U8 bird_sim_signal_strength_in_percentage;// add by lrf
 
 
 /*****************************************************************************
@@ -774,6 +802,7 @@ static U8 srv_nw_info_get_percentage_from_gsm_rssi(S32 rssi_in_qdBm)
  * RETURNS
  *  MMI_FALSE; continue message routing
  *****************************************************************************/
+  U8 bird_sim_signal_strength_in_percentage;// add by lrf
 MMI_BOOL srv_nw_info_rx_level_ind_hdlr(void *msg, S32 src_mod)
 {
     /*----------------------------------------------------------------*/

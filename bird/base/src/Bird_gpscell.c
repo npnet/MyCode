@@ -13,7 +13,7 @@
 
 #ifdef RJ_GPS_APP
 
-#include "Bird_app.h" 
+#include "Bird_app.h"
 #include "Bird_gpscell.h"
 #include <stdlib.h>
 #include  "Rj_DW02.h" 
@@ -458,6 +458,7 @@ S8 fjchar1[16];
 	  	{
 	  	g_n_saltllite_snr_isvalid = 1;
 	  	rj_position.satellite_num = gga_data->sat_in_view;
+		rj_led_status_info.b_GPS_IS_SERACHING = KAL_FALSE ;
 	  	}
 
 #if BIRD_GPS_CLOSE_OPEN_TEST	
@@ -472,6 +473,7 @@ S8 fjchar1[16];
 	  	g_n_saltllite_snr_isvalid = 0;
 	  	rj_position.satellite_num = 0;
 	  	gps_remove_timer=0;
+		rj_led_status_info.b_GPS_IS_SERACHING = KAL_TRUE ;
 	  }
 	  if(RJ_GPS_is_working())
         {
@@ -491,13 +493,13 @@ S8 fjchar1[16];
 #endif
             RJ_GPS_distance_handle(*gga_data);
             bird_set_agps_pos(gga_data->latitude, gga_data->longitude, gga_data->altitude);
-			rj_led_status_info.b_GPS_IS_SERACHING = KAL_FALSE ;
+			
 		gps_restart_timer=0;
         }
 	  else{
 		gps_restart_timer++;
 	  	kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gps_restart_timer=%d",gps_restart_timer);	
-		rj_led_status_info.b_GPS_IS_SERACHING = KAL_TRUE ;
+		
 		if(gps_restart_timer==120)
 			StartTimer(BIRD_GPS_RESTART_TIMER, 100, BIRD_Gps_restart);
 
@@ -505,9 +507,12 @@ S8 fjchar1[16];
 	 kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback g_n_saltllite_snr_isvalid=%d,rj_position.satellite_num= %d",g_n_saltllite_snr_isvalid,rj_position.satellite_num);	
 
 	 g_pos_data[0]=0x00;	 
-	 g_pos_data[0]=(0x01&RJ_GPS_is_working());	 
-	 g_pos_data[0]=(0x01&(rj_position.north_south!=78))<<1;	 
-	 g_pos_data[0]=(0x01&(rj_position.east_west!=69))<<2;	 
+	 g_pos_data[0]=(0x01&!RJ_GPS_is_working());	 
+	 if(RJ_GPS_is_working())
+	 {
+	     g_pos_data[0]=(0x01&(rj_position.north_south!=78))<<1;	 
+	     g_pos_data[0]=(0x01&(rj_position.east_west!=69))<<2;	 
+	 }
 	 g_pos_data[1]=(U8)((U32)(rj_position.lg*1000000)/0x1000000);	 
 	 g_pos_data[2]=(U8)(((U32)(rj_position.lg*1000000)/0x10000)%0x100);	 
 	 g_pos_data[3]=(U8)(((U32)(rj_position.lg*1000000)/0x100)%0x100);	 

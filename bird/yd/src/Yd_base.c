@@ -603,16 +603,16 @@ U8 bird_get_car_state(){
 	return yd_tk001_info.car_status;
 }
 
-void bird_set_conn_interval(U8 flag)
-{
-	kal_prompt_trace(MOD_SOC,"bird_set_conn_interval: %d",flag);
-	yd_tk005_info.conn_interval=flag;
-}
-U8 bird_get_conn_interval(){
-	kal_prompt_trace(MOD_SOC,"bird_get_conn_interval: %d",yd_tk005_info.conn_interval);
-	return yd_tk005_info.conn_interval;
-}
 
+void bird_set_savedata_ival(U16 flag)
+{
+	kal_prompt_trace(MOD_SOC,"bird_set_savedata_ival: %d",flag);
+	yd_tk005_info.savedata_ival=flag;
+}
+U16 bird_get_savedata_ival(){
+	kal_prompt_trace(MOD_SOC,"bird_get_savedata_ival: %d",yd_tk005_info.savedata_ival);
+	return yd_tk005_info.savedata_ival;
+}
 void bird_set_nmal_main_ival(U16 flag)
 {
 	kal_prompt_trace(MOD_SOC,"bird_set_nmal_main_ival: %d",flag);
@@ -622,7 +622,6 @@ U16 bird_get_nmal_main_ival(){
 	kal_prompt_trace(MOD_SOC,"bird_get_nmal_main_ival: %d",yd_tk005_info.nmal_main_ival);
 	return yd_tk005_info.nmal_main_ival;
 }
-
 void bird_set_alarm_main_ival(U8 flag)
 {
 	kal_prompt_trace(MOD_SOC,"bird_set_alarm_main_ival: %d",flag);
@@ -640,6 +639,33 @@ void bird_set_heart_ival(U8 flag)
 U8 bird_get_heart_ival(){
 	kal_prompt_trace(MOD_SOC,"bird_get_heart_ival: %d",yd_tk005_info.heart_ival);
 	return yd_tk005_info.heart_ival;
+}
+void bird_set_ter_res_time(U8 flag)
+{
+	kal_prompt_trace(MOD_SOC,"bird_set_ter_res_time: %d",flag);
+	yd_tk005_info.ter_res_time=flag;
+}
+U8 bird_get_ter_res_time(){
+	kal_prompt_trace(MOD_SOC,"bird_get_ter_res_time: %d",yd_tk005_info.ter_res_time);
+	return yd_tk005_info.ter_res_time;
+}
+void bird_set_ser_res_time(U8 flag)
+{
+	kal_prompt_trace(MOD_SOC,"bird_set_ser_res_time: %d",flag);
+	yd_tk005_info.ser_res_time=flag;
+}
+U8 bird_get_ser_res_time(){
+	kal_prompt_trace(MOD_SOC,"bird_get_ser_res_time: %d",yd_tk005_info.ser_res_time);
+	return yd_tk005_info.ser_res_time;
+}
+void bird_set_conn_interval(U8 flag)
+{
+	kal_prompt_trace(MOD_SOC,"bird_set_conn_interval: %d",flag);
+	yd_tk005_info.conn_interval=flag;
+}
+U8 bird_get_conn_interval(){
+	kal_prompt_trace(MOD_SOC,"bird_get_conn_interval: %d",yd_tk005_info.conn_interval);
+	return yd_tk005_info.conn_interval;
 }
 
 void RJ_GPS_Get_ID(void)

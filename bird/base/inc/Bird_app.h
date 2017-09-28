@@ -121,16 +121,17 @@
 	#define YD_TK001_YD_ADMIN_PSW "bdws"
 	#define YD_NV_BATCH "Y2.1"
 #elif defined(BIRD_DW60)
-	#define RJ_GPS_VERSION			"V1.01_NBBD_20170823_DW60_MT6261"
+	#define RJ_GPS_VERSION			"V1.01"
+	#define RJ_HW_VERSION			"DW60"
 	/*Ä¬ÈÏÃÜÂë*/
 	#define YD_TK001_PW "123456"
 	/*Ä¬ÈÏ·þÎñÆ÷µØÖ·*/
-	#define YD_TK001_HTTP "http://118.190.145.224:11546/"//"http://tbox.gpslink.cn:9090/"
-	#define YD_TK001_IP "118.190.145.224:11546"//"118.190.126.192:9090"
+	#define YD_TK001_HTTP "http://118.190.126.192:9090/"//"http://118.190.145.224:11546/"
+	#define YD_TK001_IP "118.190.126.192:9090"//"118.190.145.224:11546"
 	#define YD_TK001_HTTP2 "http://sk.gpslink.cn:8090/"
 	#define YD_TK001_IP2 "139.129.87.204:8090"
 	#define YD_TK001_YD_ADMIN_PSW "bdws"
-	#define YD_NV_BATCH "Y4.1"	
+	#define YD_NV_BATCH "Y4.0"	
 #else 
 	#define RJ_GPS_VERSION			"V1.01_NBBD_20170727_DW11OTA_MT6261"
 	/*Ä¬ÈÏÃÜÂë*/
@@ -175,7 +176,7 @@
 #define MMI_CARD_DRV_EXT   FS_GetDrive(FS_DRIVE_V_NORMAL, 2, FS_DRIVE_V_NORMAL | FS_DRIVE_V_REMOVABLE)
 #define MMI_CARD_DRV   FS_GetDrive(FS_DRIVE_V_REMOVABLE, 2,  FS_DRIVE_V_REMOVABLE)//FS_GetDrive(FS_DRIVE_V_NORMAL, 2, FS_DRIVE_V_NORMAL | FS_DRIVE_V_REMOVABLE) 
 #define MMI_CARD_DRV_1   FS_GetDrive(FS_DRIVE_V_REMOVABLE, 2,  FS_DRIVE_V_REMOVABLE)                               //E
-#define BIRD_FILE_PATH_LEN 256
+#define BIRD_FILE_PATH_LEN 100//256
 #define BIRD_LOG_LEN 256
 #define BIRD_RTLOG_CLEAN_LOG 1
 
@@ -257,6 +258,7 @@ typedef enum   //all timer
        BIRD_ATTEST_timer,
        BIRD_WDG_timer_TEST,
        BIRD_AT_TEST_TIMER,
+       BIRD_CAN_SIMULATE_SEND_TIMER,
        BIRD_COUNTOR_TIMEOUT_TIMER,
        BIRD_DW23_RUNSTATE_timer,
        BIRD_POWEROFF_VOLTAGE_TIMER,
@@ -265,6 +267,42 @@ typedef enum   //all timer
        BIRD_PWM_CONTROL_TIMER,
        BIRD_TRACECAR_TIMER,
        BIRD_LEARN_TIMER,
+       BIRD_DELETE_FILE_TIMER,
+ 
+	Bird_task_login_Timer,
+	Bird_task_logintxbox_Timer,
+	Bird_task_calibtime_Timer,
+	Bird_task_24calib_Timer,
+       Bird_task_main_Timer,
+       Bird_task_savedata_Timer,
+       Bird_task_heart_Timer,
+       BIRD_TASK_GPRS_TIMER_START,
+       BIRD_TASK_VIBRATION_TIMER_COUNT,
+       BIRD_TASK_YD_NORMAL_SLEEP_TIMER,
+       BIRD_TASK_SOCKET_SEND,
+       BIRD_TASK_SOCKET_RECON,
+       RJ_TASK_GPS_RESET_TIMER,
+       BIRD_TASK_SET_DEFENSE_DELAY_TIMER,
+       BIRD_TASK_POWER_OFF_DELAY,
+       BIRD_TASK_DW_TIMER,
+       BIRD_TASK_YD_DEEP_SLEEP_TIMER,
+       Bird_task_sleep_dinisocket_Timer,
+       BIRD_TASK_REST_TIMER,
+       BIRD_TASK_24REST_TIMER,
+       BIRD_TASK_LC_TJ_TIMER,
+       BIRD_TASK_POS_WAIT_TIMER,
+       BIRD_TASK_SLEEPPOS_WAIT_TIMER,
+       BIRD_TASK_ALARM_LOW_WAIT_TIMER,
+       BIRD_TASK_ALARM_POWEROFF_WAIT_TIMER,
+       BIRD_TASK_ALARM_MOVE_WAIT_TIMER,
+       BIRD_TASK_ALARM_RUN_WAIT_TIMER,
+       BIRD_TASK_SEAL_COUNT_WAIT_TIMER,
+       BIRD_TASK_HEART_WAIT_TIMER,
+       Bird_task_ringoff_timer,
+       BIRD_TASK_DELAY_SENDLC_TIMER,
+       BIRD_TASK_OC_MAIN_HEART_TIMER,
+       BIRD_TASK_OC_RUN_TIMER,
+
 	BIRD_GPRS_TIMER_MAX                  
 }Lima_plat_timer_id;
 
@@ -511,6 +549,12 @@ typedef enum{
 #define OC_TO_BE_EXEC 2
 #define OC_EXECUTED 3
 #define OC_ABNORMAL 4
+
+typedef struct{
+	U32 offset;
+	applib_time_struct data_time;
+	applib_time_struct cur_time;
+}BIRD_READPOS_STRUCT;
 
 extern RJ_Gps_User_Info rj_user_info;
 extern kal_bool  b_is_no_motion;                    /* GPS ¾²Ö¹ */

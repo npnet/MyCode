@@ -485,6 +485,7 @@ static void mmi_gpio_earphone_display_popup(MMI_BOOL is_plugin)
     {
         return;
     }
+#endif /* __MMI_ENGINEER_MODE__ */ 
 
 #ifdef __MMI_FACTORY_MODE__
     if (gCurrentMode == FACTORY_MODE)
@@ -492,7 +493,6 @@ static void mmi_gpio_earphone_display_popup(MMI_BOOL is_plugin)
         return;
     }
 #endif /* __MMI_FACTORY_MODE__ */ 
-#endif /* __MMI_ENGINEER_MODE__ */ 
 
 #if defined(__DM_LAWMO_SUPPORT__)
     if (mmi_dmui_is_phone_lock())

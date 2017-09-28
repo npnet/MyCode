@@ -31,6 +31,7 @@ extern void yd_tk001_defense_ini();
 extern void Yd_set_all_msg_handler();
 extern void Yd_main_factory();
 extern void Yd_main();
+extern void Yd_savedata();
 extern void yd_send_gps_open_msg();
 extern void Yd_readposfile();
 extern void Yd_heart();
@@ -48,7 +49,10 @@ extern U8 bird_get_ocin_state(void);
 extern U32 bird_get_oc_instruct(void);
 extern void bird_soc_set_param_res(U8 *paramcmd,U8 rtn,U32 sevice_order_id);
 extern void bird_soc_sendcalib();
-
+extern void txboxdecimal(U8*dec ,U8* hex);
+extern void can_data_reset();
+extern void bird_soc_send_tboxlogout();
+extern void bird_soc_send_tboxselfdefine();
 
 U8 bird_get_islogin()
 {
@@ -93,12 +97,12 @@ void Yd_logintxbox()
 		Bird_soc_conn();
 
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
-		Rj_start_timer(Bird_task_logintxbox_Timer, RJ_GPS_APP_1M, Yd_logintxbox,NULL);	
+		Rj_start_timer(Bird_task_logintxbox_Timer, bird_get_ser_res_time()*1000, Yd_logintxbox,NULL);	
 	}
 	else
 	{
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
-		Rj_start_timer(Bird_task_logintxbox_Timer, RJ_GPS_APP_1M, Yd_logintxbox,NULL);
+		Rj_start_timer(Bird_task_logintxbox_Timer, bird_get_ser_res_time()*1000, Yd_logintxbox,NULL);
 	}
 	g_n_conn_times++;
 	bird_soc_send_tboxlogin();
@@ -114,6 +118,7 @@ void Yd_login_res(U8 *datetime,U8 *flag)
 	kal_prompt_trace(MOD_SOC," Yd_login_res %d ",*flag);
 	//set time
 	yd_set_utility_time(datetime);
+	can_data_reset();
 	//login res
 	//login sucess
 	{
@@ -133,7 +138,7 @@ void Yd_login_res(U8 *datetime,U8 *flag)
 void Yd_tboxlogin_res(U8 *buf,U8 length)
 {
 	kal_prompt_trace(MOD_SOC," Yd_tboxlogin_res %d",length);
-			
+	if(g_n_ydislogin==0)		
 	{
       		g_n_ydislogin = 1;			
 		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
@@ -146,9 +151,13 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 		yd_send_save_nv_msg();	
 			
 		RJ_GPS_StartTimer(BIRD_SOS_STATE_timer, 400, Bird_acc);
-		
+
+		bird_soc_send_tboxselfdefine();
 		Rj_stop_timer(Bird_task_heart_Timer); 
 		Rj_start_timer(Bird_task_heart_Timer, 30*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
+		
+		Rj_stop_timer(Bird_task_savedata_Timer); 
+		Rj_start_timer(Bird_task_savedata_Timer, 30*1000, Yd_savedata,NULL);/*启动存储数据*/		
 
 		{
 			Rj_stop_timer(Bird_task_main_Timer); 
@@ -158,6 +167,13 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 	}
 }
 
+void Yd_logouttxbox()
+{	 
+
+	kal_prompt_trace(MOD_SOC,"Yd_logintxbox");
+
+	bird_soc_send_tboxlogout();
+}
 void Yd_24calib()
 {
 	int iRandomTime = 0;
@@ -190,6 +206,8 @@ void Yd_24calib()
 void Yd_calib_res(U8 *buf,U8 length)
 {
 	MYTIME currTime;
+	U8 time_rec[6]={0};
+	U8 time[6]={0};
 
 	double voltage;
 	voltage=bird_get_adc_channel_voltage();
@@ -199,12 +217,15 @@ void Yd_calib_res(U8 *buf,U8 length)
 	if(length<=8)
 		return;
 
-	currTime.nYear = (U16)(buf[2]+2000);
-	currTime.nMonth= buf[3] ;
-	currTime.nDay = buf[4];
-	currTime.nHour = buf[5] ;
-	currTime.nMin = buf[6];
-	currTime.nSec = buf[7] ;
+	memcpy(time_rec, buf,6);
+	txboxdecimal(time ,time_rec);
+
+	currTime.nYear = (U16)(time[0]+2000);
+	currTime.nMonth= time[1] ;
+	currTime.nDay = time[2];
+	currTime.nHour = time[3] ;
+	currTime.nMin = time[4];
+	currTime.nSec = time[5] ;
 	currTime.DayIndex= applib_dt_dow(currTime.nYear, currTime.nMonth, currTime.nDay);
 	mmi_dt_set_rtc_dt((MYTIME * )&currTime);
 

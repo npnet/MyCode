@@ -61,7 +61,8 @@ void Yd_mainini();
 void Yd_DinitSocket();
 void Yd_DiniSocketDelay();
 void Yd_set_all_msg_handler();
-void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt);
+void Bird_Tbox_savedata(Send_Info *_send,applib_time_struct dt);
+void Bird_Tbox_saveinfo(Send_Info *_send,applib_time_struct dt);
 
 extern volatile kal_int8 count_judge_gps_app_timer ;
 extern volatile kal_uint16 count_system_time;
@@ -72,6 +73,7 @@ extern U8 g_acc_close_gps;
 extern U8 g_acc_sleep_status;
 extern U8 g_n_sleepcount;
 extern U8 g_n_sleepposcount;
+extern Socket_Send g_socket_send_alarm;
 
 extern kal_uint32 bird_get_bat_channel_voltage(void);
 extern double bird_get_adc_channel_voltage();
@@ -436,7 +438,9 @@ U8* yd_save_bt_mac()
 }
 #endif
 
-void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
+applib_time_struct alarm_dt[30]={0};
+
+void yd_save_alarm()
 {
 	FS_HANDLE tboxdata_handle = -1;
 	FS_HANDLE tboxinfo_handle = -1;
@@ -445,23 +449,22 @@ void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
 	kal_wchar file_name[BIRD_FILE_PATH_LEN];
 	kal_wchar  file[BIRD_FILE_PATH_LEN];
 	char file_name_str[BIRD_FILE_PATH_LEN];
-	U8 time[30];
+	U8 time[30]={0};
 	U32  time_len;
-	kal_wchar tboxdata_file[BIRD_FILE_PATH_LEN];
-	kal_wchar tboxdata_filepath[BIRD_FILE_PATH_LEN];
-	U32 file_path_len = (BIRD_FILE_PATH_LEN + 1) * 2;
-	S32 file_count = 0;
 	U32  buflen;
 	U32  len;
-
+       U8 i=0;
+       U8 last=0;
+	   
 	//tbox data
 	memset(file, 0, sizeof(file));
-	kal_wsprintf(file,BIRD_TBOXDATA_PATH,(S16)MMI_CARD_DRV, dt.nYear, dt.nMonth, dt.nDay, dt.nHour);
+	kal_wsprintf(file,BIRD_TBOXDATA_PATH,(S16)MMI_CARD_DRV, alarm_dt[0].nYear, alarm_dt[0].nMonth, alarm_dt[0].nDay, alarm_dt[0].nHour);
 
 	memset(file_name_str, 0, sizeof(file_name_str));
 	mmi_wcs_to_asc(file_name_str, file);
 
-	kal_prompt_trace(MOD_SOC,"yd_save_alarm %d %d %d %d %d %d",dt.nYear, dt.nMonth, dt.nDay, dt.nHour,dt.nMin,dt.nSec); 
+	kal_prompt_trace(MOD_SOC,"yd_save_alarm data %d %d %d %d %d %d",alarm_dt[0].nYear, alarm_dt[0].nMonth, alarm_dt[0].nDay,
+		alarm_dt[0].nHour,alarm_dt[0].nMin,alarm_dt[0].nSec); 
 
 	tboxdata_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
 	kal_prompt_trace(MOD_SOC,"yd_save_alarm data_handle=%d %s",tboxdata_handle,file_name_str); 
@@ -472,11 +475,21 @@ void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
 	    if(buflen>=0)
 	    {
 		    FS_Seek(tboxdata_handle, buflen, FS_FILE_BEGIN);
-		    FS_Write(tboxdata_handle, _send->send_buf,_send->buf_len, &len);
+		    for (i=0;i<30;i++)
+		    {
+		        kal_prompt_trace(MOD_SOC,"yd_save_alarm data write %d %d %d %d %d %d",alarm_dt[i].nYear, alarm_dt[i].nMonth, alarm_dt[i].nDay,
+					alarm_dt[i].nHour,alarm_dt[i].nMin,alarm_dt[i].nSec); 
+
+		        if((alarm_dt[i].nYear!=0)&&(alarm_dt[i].nMonth!=0)&&(alarm_dt[i].nDay!=0)&&(alarm_dt[i].nHour==alarm_dt[0].nHour))
+		        {
+		            FS_Write(tboxdata_handle, g_socket_send_alarm.send_info[i].send_buf,g_socket_send_alarm.send_info[i].buf_len, &len);
+		            last++;
+		        }
+		    }
 		    FS_Close(tboxdata_handle);
 	    }
 	    else{
-		    kal_prompt_trace(MOD_SOC,"yd_save_alarm buflen<0");
+		    kal_prompt_trace(MOD_SOC,"yd_save_alarm data buflen<0");
 		    FS_Close(tboxdata_handle);
 		    return;
 	    }
@@ -488,15 +501,66 @@ void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
            FS_Close(tboxdata_handle);
            return;
        }
-       
 
+       if(last<30)
+       {
+           if((alarm_dt[last].nYear!=0)&&(alarm_dt[last].nMonth!=0)&&(alarm_dt[last].nDay!=0)&&(alarm_dt[last].nHour!=alarm_dt[0].nHour))
+           {
+           memset(file, 0, sizeof(file));
+           kal_wsprintf(file,BIRD_TBOXDATA_PATH,(S16)MMI_CARD_DRV, alarm_dt[last].nYear, alarm_dt[last].nMonth, alarm_dt[last].nDay, alarm_dt[last].nHour);
+
+           memset(file_name_str, 0, sizeof(file_name_str));
+           mmi_wcs_to_asc(file_name_str, file);
+
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 data %d %d %d %d %d %d",alarm_dt[last].nYear, alarm_dt[last].nMonth, alarm_dt[last].nDay,
+		alarm_dt[last].nHour,alarm_dt[last].nMin,alarm_dt[last].nSec); 
+
+           tboxdata_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 data_handle=%d %s",tboxdata_handle,file_name_str); 
+	
+           if(tboxdata_handle >= FS_NO_ERROR)
+           {
+	    FS_GetFileSize(tboxdata_handle,&buflen);
+	    if(buflen>=0)
+	    {
+		    FS_Seek(tboxdata_handle, buflen, FS_FILE_BEGIN);
+		    for (i=last;i<30;i++)
+		    {
+		        kal_prompt_trace(MOD_SOC,"yd_save_alarm2 data write %d %d %d %d %d %d",alarm_dt[i].nYear, alarm_dt[i].nMonth, alarm_dt[i].nDay,
+					alarm_dt[i].nHour,alarm_dt[i].nMin,alarm_dt[i].nSec); 
+
+		        if((alarm_dt[i].nYear!=0)&&(alarm_dt[i].nMonth!=0)&&(alarm_dt[i].nDay!=0)&&(alarm_dt[i].nHour==alarm_dt[last].nHour))
+		        {
+		            FS_Write(tboxdata_handle, g_socket_send_alarm.send_info[i].send_buf,g_socket_send_alarm.send_info[i].buf_len, &len);
+		        }
+		    }
+		    FS_Close(tboxdata_handle);
+           }
+	    else{
+		    kal_prompt_trace(MOD_SOC,"yd_save_alarm2 data buflen<0");
+		    FS_Close(tboxdata_handle);
+		    return;
+           }
+
+           }
+           else
+           {
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 data open fail"); 
+           FS_Close(tboxdata_handle);
+           return;
+           }  
+           }
+       }
+
+       last=0;
+	   
 	//tbox info
-	memset(file, 0, sizeof(file));
-	kal_wsprintf(file,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV, dt.nYear, dt.nMonth, dt.nDay, dt.nHour);
+	memset(file_name, 0, sizeof(file_name));
+	kal_wsprintf(file_name,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV,  alarm_dt[0].nYear, alarm_dt[0].nMonth, alarm_dt[0].nDay, alarm_dt[0].nHour);
 	memset(file_name_str, 0,sizeof(file_name_str));
-	mmi_wcs_to_asc(file_name_str, file);
+	mmi_wcs_to_asc(file_name_str, file_name);
 
-	tboxinfo_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
+	tboxinfo_handle = FS_Open(file_name, FS_CREATE | FS_READ_WRITE);
 	kal_prompt_trace(MOD_SOC,"yd_save_alarm info handle=%d %s",tboxinfo_handle,file_name_str); 
 	
 	if(tboxinfo_handle >= FS_NO_ERROR)
@@ -504,22 +568,21 @@ void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
 		FS_GetFileSize(tboxinfo_handle,&buflen);
 		if(buflen>=0)
 		{
-	 	        if(bird_get_can_time_30S(index)==NULL)
+		    FS_Seek(tboxinfo_handle, buflen, FS_FILE_BEGIN);
+		    for (i=0;i<30;i++)
+		    {
+		        kal_prompt_trace(MOD_SOC,"yd_save_alarm info write %d %d %d %d %d %d",alarm_dt[i].nYear, alarm_dt[i].nMonth, alarm_dt[i].nDay,
+					alarm_dt[i].nHour,alarm_dt[i].nMin,alarm_dt[i].nSec); 
+	 	        if((alarm_dt[i].nYear!=0)&&(alarm_dt[i].nMonth!=0)&&(alarm_dt[i].nDay!=0)&&(alarm_dt[i].nHour==alarm_dt[0].nHour))
 	 	        {
-				kal_prompt_trace(MOD_SOC,"yd_save_alarm time null");
-				FS_Close(tboxinfo_handle);
-	 	        }
-	 	        else
-	 	        {
-				Bird_infoformat(bird_get_can_time_30S(index),time,&time_len);
-				FS_Seek(tboxinfo_handle, buflen, FS_FILE_BEGIN);
+				Bird_infoformat(&alarm_dt[i],time,&time_len);
 				FS_Write(tboxinfo_handle, time,time_len, &len);
-				FS_Seek(tboxinfo_handle, buflen+time_len, FS_FILE_BEGIN);
 				FS_Write(tboxinfo_handle, "9",strlen("9"), &len);
-
-				kal_prompt_trace(MOD_SOC,"yd_save_alarm %d,%d,%d",buflen,len,time_len);
-				FS_Close(tboxinfo_handle);
-	 	        }
+                            last++;
+				kal_prompt_trace(MOD_SOC,"yd_save_alarm info %d,%d,%s",buflen,time_len,time);
+	 	        }				
+		    }
+		    FS_Close(tboxinfo_handle);
 		}
 		else
 		{
@@ -530,11 +593,86 @@ void yd_save_alarm(Send_Info *_send,applib_time_struct dt,U8 index)
        else
        {
            kal_prompt_trace(MOD_SOC,"yd_save_alarm info open fail"); 
-           FS_Close(tboxdata_handle);
+           FS_Close(tboxinfo_handle);
            return;
+       }
+
+       if(last<30) 
+       {
+           if((alarm_dt[last].nYear!=0)&&(alarm_dt[last].nMonth!=0)&&(alarm_dt[last].nDay!=0)&&(alarm_dt[last].nHour!=alarm_dt[0].nHour))
+           {
+           memset(file_name, 0, sizeof(file_name));
+           kal_wsprintf(file_name,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV, alarm_dt[last].nYear, alarm_dt[last].nMonth, alarm_dt[last].nDay, alarm_dt[last].nHour);
+
+           memset(file_name_str, 0, sizeof(file_name_str));
+           mmi_wcs_to_asc(file_name_str, file);
+
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info %d %d %d %d %d %d",alarm_dt[last].nYear, alarm_dt[last].nMonth, alarm_dt[last].nDay,
+		alarm_dt[last].nHour,alarm_dt[last].nMin,alarm_dt[last].nSec); 
+
+           tboxinfo_handle = FS_Open(file_name, FS_CREATE | FS_READ_WRITE);
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info_handle=%d %s",tboxinfo_handle,file_name_str); 
+	
+           if(tboxinfo_handle >= FS_NO_ERROR)
+           {
+	    FS_GetFileSize(tboxinfo_handle,&buflen);
+	    if(buflen>=0)
+	    {
+		    FS_Seek(tboxinfo_handle, buflen, FS_FILE_BEGIN);
+		    for (i=last;i<30;i++)
+		    {
+		        kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info write %d %d %d %d %d %d",alarm_dt[i].nYear, alarm_dt[i].nMonth, alarm_dt[i].nDay,
+					alarm_dt[i].nHour,alarm_dt[i].nMin,alarm_dt[i].nSec); 
+
+		        if((alarm_dt[i].nYear!=0)&&(alarm_dt[i].nMonth!=0)&&(alarm_dt[i].nDay!=0)&&(alarm_dt[i].nHour==alarm_dt[last].nHour))
+		        {
+				Bird_infoformat(&alarm_dt[i],time,&time_len);
+				FS_Write(tboxinfo_handle, time,time_len, &len);
+				FS_Write(tboxinfo_handle, "9",strlen("9"), &len);
+				kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info %d,%d,%s",buflen,time_len,time);
+		        }
+		    }
+		    FS_Close(tboxinfo_handle);
+           }
+	    else{
+		    kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info buflen<0");
+		    FS_Close(tboxinfo_handle);
+		    return;
+           }
+
+           }
+           else
+           {
+           kal_prompt_trace(MOD_SOC,"yd_save_alarm2 info open fail"); 
+           FS_Close(tboxinfo_handle);
+           return;
+           }  
+           }
        }
   
 	
+}
+
+Send_Info g_cur_send={0};	
+applib_time_struct g_cur_dt={0};
+void Yd_savedata()
+{	
+       U8 rtn=0;
+
+	memset(&g_cur_send, 0, sizeof(Send_Info));
+	memset(&g_cur_dt, 0, sizeof(applib_time_struct));
+	rtn=bird_soc_send_tboxrealinfo(&g_cur_send,&g_cur_dt);
+	kal_prompt_trace(MOD_SOC," Yd_savedata %d",rtn);
+	if(rtn==1)
+	{
+	    Bird_Tbox_savedata(&g_cur_send,g_cur_dt);
+	    can_data_reset();
+	    RJ_reset_GPS_flag();
+	}
+
+	Rj_stop_timer(Bird_task_savedata_Timer); 
+	Rj_start_timer(Bird_task_savedata_Timer, bird_get_savedata_ival(), Yd_savedata,NULL);
+
 }
 /***************************************************************************
   Function:    Yd_main   
@@ -561,20 +699,17 @@ void Yd_main()
 	kal_prompt_trace(MOD_SOC," bg Yd_main %d",g_third_alarm_flag);
 	count_judge_gps_app_timer=0;
 	StopTimer(BIRD_READ_FILE);
-	//bird_set_gpspositon(0);
-	rtn=bird_soc_send_tboxrealinfo(&_send);
-	if(rtn==1)
-	{
-	    TB_Soc_get_cantime(&dt);   
-	    Bird_Tbox_save(&_send,dt);
-	    can_data_reset();
-	}
 
 	if(g_third_alarm_flag==0)
 	{
+	    if(g_cur_dt.nYear!=0)
+	    {
+	        if(Lima_get_soc_conn_flag())
+	            Bird_soc_sendbufAdd2(&g_cur_send);
+	        Bird_Tbox_saveinfo(&g_cur_send,g_cur_dt);
+	    }
 	    ntimer = 1000*bird_get_nmal_main_ival();
 	    g_third_alarm_count=0;
-	    RJ_reset_GPS_flag();
 	    //非3级报警时开始处理离线    
 	    StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
 		
@@ -584,80 +719,48 @@ void Yd_main()
            //save 30s data
            if(g_third_alarm_count==0)
            {
-           for (i=0;i<30;i++)
-           {
-               memset(&_send, 0, sizeof(Send_Info));
-               rtn=bird_soc_send_resendinfo(&_send,i);
-               if(rtn==0)
+               memset(alarm_dt,0,sizeof(alarm_dt));
+               Bird_soc_send_alarm_clear();
+               for (i=0;i<30;i++)
                {
-                   kal_prompt_trace(MOD_SOC,"Yd_main alarm break %d",i); 
-                   break;
+                   memset(&_send, 0, sizeof(Send_Info));
+                   rtn=bird_soc_send_resendinfo(&_send,i,&alarm_dt[i]);
+                   if(rtn==0)
+                   {
+                       kal_prompt_trace(MOD_SOC,"Yd_main alarm break %d",i); 
+                       break;
+                   }       
+               }      
+           }
+	    else
+	    {
+               if(g_cur_dt.nYear!=0)
+               {
+                   if(Lima_get_soc_conn_flag())
+	                Bird_soc_sendbufAdd2(&g_cur_send);
+	            Bird_Tbox_saveinfo(&g_cur_send,g_cur_dt);
                }
-               TB_Soc_get_cantime_30S(&dt,i);
-               yd_save_alarm(&_send,dt,i);  
-           }
-	    can_data_30S_reset();
-           }
-		   
+	    }
 	    g_third_alarm_count++;
 	    kal_prompt_trace(MOD_SOC," Yd_main alarm %d",g_third_alarm_count);
-	    if(g_third_alarm_count>=30)
+	    if(g_third_alarm_count>30)
 	    {
 	        ntimer = 1000*bird_get_nmal_main_ival();
 	        g_third_alarm_flag=0;
-	        g_third_alarm_count;
+	        g_third_alarm_count=0;
+	        if(Lima_get_soc_conn_flag())
+	            Bird_soc_alarm_to_send();
+	        yd_save_alarm();
+	        can_data_30S_reset();
 	        StartTimer(BIRD_READ_FILE, 1000, Yd_readposfile);
 	    }
 	    else
 	    {
-	        ntimer = 1000*bird_get_alarm_main_ival();
+	        ntimer = bird_get_alarm_main_ival();
 	    }
 	}
 	Rj_stop_timer(Bird_task_main_Timer); 
 	Rj_start_timer(Bird_task_main_Timer, ntimer, Yd_main,NULL);
-}
-
-
-void Yd_main_factory(){	
-	kal_uint32 ntimer = 30000;
-	kal_prompt_trace(MOD_SOC," bg Yd_main_factory %d",rj_gps_stage);
-	count_judge_gps_app_timer=0;	
-	g_factory_test_count++;
-	 switch(rj_gps_stage)
-        {
-		case BIRD_STATUS_RUN: /* 如果当前行驶状态, 发送当前位置信息*/
-			 //清空静止心跳发位置计数
-			g_n_heart_send_gps = 0;
-
-                     bird_set_gpspositon(0);
-			//发位置T3
-                     bird_soc_sendpos();
-			if(g_save_status==0)
-			{
-				g_save_status=1;
-				yd_tk001_set_reboot_flag(0);
-				yd_send_save_nv_msg();		
-			}
-
-			ntimer = 1000*bird_get_main_interval_value();
-			break;
-		
-		default:
-			rj_gps_stage = BIRD_STATUS_RUN;
-                    break;			
-	 }
-
-	if(g_factory_test_count>=80)
-	{
-	    yd_tk001_set_reboot_flag(0);
-	    Rj_stop_timer(Bird_task_main_Timer); 
-	    Rj_start_timer(Bird_task_main_Timer, ntimer, Yd_main,NULL);
-	}
-	else
-	{
-	    Rj_stop_timer(Bird_task_main_Timer); 
-	    Rj_start_timer(Bird_task_main_Timer, ntimer, Yd_main_factory,NULL);
-	}
 }
 
 /***************************************************************************
@@ -751,21 +854,15 @@ void Bird_Tbox_Init(void)
 
 }
 
-void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
+void Bird_Tbox_savedata(Send_Info *_send,applib_time_struct dt)
 {
 	FS_HANDLE tboxdata_handle = -1;
-	FS_HANDLE tboxinfo_handle = -1;
 
-	FS_DOSDirEntry file_info;
 	kal_wchar file_name[BIRD_FILE_PATH_LEN];
 	kal_wchar  file[BIRD_FILE_PATH_LEN];
 	char file_name_str[BIRD_FILE_PATH_LEN];
 	U8 time[30]={0};
 	U32  time_len;
-	kal_wchar tboxdata_file[BIRD_FILE_PATH_LEN];
-	kal_wchar tboxdata_filepath[BIRD_FILE_PATH_LEN];
-	U32 file_path_len = (BIRD_FILE_PATH_LEN + 1) * 2;
-	S32 file_count = 0;
 	U32  buflen;
 	U32  len;
 
@@ -776,10 +873,10 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 	memset(file_name_str, 0, sizeof(file_name_str));
 	mmi_wcs_to_asc(file_name_str, file);
 
-	kal_prompt_trace(MOD_SOC,"Bird_Tbox_save %d %d %d %d %d %d",dt.nYear, dt.nMonth, dt.nDay, dt.nHour,dt.nMin,dt.nSec); 
+	kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata %d %d %d %d %d %d",dt.nYear, dt.nMonth, dt.nDay, dt.nHour,dt.nMin,dt.nSec); 
 
 	tboxdata_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
-	kal_prompt_trace(MOD_SOC,"Bird_Tbox_save data_handle=%d %s",tboxdata_handle,file_name_str); 
+	kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata handle=%d %s",tboxdata_handle,file_name_str); 
 	
 	if(tboxdata_handle >= FS_NO_ERROR)
 	{
@@ -790,7 +887,7 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 	    if(buflen>=0)
 	    {
 	 	FS_Seek(tboxdata_handle, buflen, FS_FILE_BEGIN);
-		kal_prompt_trace(MOD_SOC,"Bird_soc_save_file %d %d %d",buflen,_send->buf_len,_send->send_buf[2]);	
+		kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata %d %d %d",buflen,_send->buf_len,_send->send_buf[2]);	
 		{
 			//_send->send_buf[2]=0x03;
 			FS_Write(tboxdata_handle, _send->send_buf,_send->buf_len, &len);
@@ -798,7 +895,7 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 		}
 	    }
 	    else{
-		kal_prompt_trace(MOD_SOC,"Bird_soc_save_file buflen<0");
+		kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata buflen<0");
 		FS_Close(tboxdata_handle);
 		return;
 	    }
@@ -806,46 +903,25 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 	}
        else
        {
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_save data open fail"); 
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata open fail"); 
            FS_Close(tboxdata_handle);
            return;
        }
 	   
-       {
-           memset(tboxdata_filepath, 0, sizeof(tboxdata_filepath));
-           kal_wsprintf(tboxdata_filepath,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);	
+}
 
-           file_count=FS_Count(tboxdata_filepath, FS_FILE_TYPE, NULL, 0);
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_save data file not exist %d",file_count); 
-		   
-           if(file_count>8*24)
-           {
-		   memset(tboxdata_file, 0, sizeof(tboxdata_file));
-		   kal_wsprintf(tboxdata_file,BIRD_TBOXDATA_FILE,(S16)MMI_CARD_DRV);	
-		   
-		   memset(file_name, 0,sizeof(file_name));
-		   tboxdata_handle = FS_FindFirst(tboxdata_file, 0, 0, &file_info, file_name, file_path_len);
-		   if (tboxdata_handle >= 0)
-		   {
-		       memset(file, 0, sizeof(file));
-		       kal_wsprintf(file,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);
-		       mmi_wcscat(file, L"\\");
-		       mmi_wcscat(file, file_name);
-			   
-		       memset(file_name_str, 0,sizeof(file_name_str));
-		       mmi_wcs_to_asc(file_name_str, file);
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_save data data file=%s", file_name_str); 
+void Bird_Tbox_saveinfo(Send_Info *_send,applib_time_struct dt)
+{
+	FS_HANDLE tboxinfo_handle = -1;
 
-		   }
-		   else
-		   {
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_save data else"); 
-		   }
-		   FS_FindClose(tboxdata_handle);
-		   FS_Delete(file);
-           }
-       }
-
+	kal_wchar file_name[BIRD_FILE_PATH_LEN];
+	kal_wchar  file[BIRD_FILE_PATH_LEN];
+	char file_name_str[BIRD_FILE_PATH_LEN];
+	U8 time[30]={0};
+	U32  time_len;
+	U32  buflen;
+	U32  len;
+	   
 	//tbox info
 	memset(file, 0, sizeof(file));
 	kal_wsprintf(file,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV, dt.nYear, dt.nMonth, dt.nDay, dt.nHour);
@@ -853,7 +929,7 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 	mmi_wcs_to_asc(file_name_str, file);
 
 	tboxinfo_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
-	kal_prompt_trace(MOD_SOC,"Bird_Tbox_save info handle=%d %s",tboxinfo_handle,file_name_str); 
+	kal_prompt_trace(MOD_SOC,"Bird_Tbox_saveinfo handle=%d %s",tboxinfo_handle,file_name_str); 
 	
 	if(tboxinfo_handle >= FS_NO_ERROR)
 	{
@@ -863,73 +939,118 @@ void Bird_Tbox_save(Send_Info *_send,applib_time_struct dt)
 	    FS_GetFileSize(tboxinfo_handle,&buflen);
 	    if(buflen>=0)
 	    {
-	        if(bird_get_can_time()==NULL)
 	        {
-			kal_prompt_trace(MOD_SOC,"Bird_soc_save_info time null");
-			FS_Close(tboxinfo_handle);
-	        }
-	        else
-	        {
-			Bird_infoformat(bird_get_can_time(),time,&time_len);
+			Bird_infoformat(&dt,time,&time_len);
 			FS_Seek(tboxinfo_handle, buflen, FS_FILE_BEGIN);
 			FS_Write(tboxinfo_handle, time,time_len, &len);
 			FS_Seek(tboxinfo_handle, buflen+time_len, FS_FILE_BEGIN);
 			FS_Write(tboxinfo_handle, "9",strlen("9"), &len);
 
-			kal_prompt_trace(MOD_SOC,"Bird_soc_save_info %d %d %s",buflen,time_len,time);
+			kal_prompt_trace(MOD_SOC,"Bird_Tbox_saveinfo %d %d %s",buflen,time_len,time);
 			FS_Close(tboxinfo_handle);
 	        }
 	    }
 	    else{
-		    kal_prompt_trace(MOD_SOC,"Bird_soc_save_info buflen<0");
+		    kal_prompt_trace(MOD_SOC,"Bird_Tbox_saveinfo buflen<0");
 		    FS_Close(tboxinfo_handle);
 	    }
 
        }
        else
        {
-           kal_prompt_trace(MOD_SOC,"Bird_soc_save_info data open fail"); 
-           FS_Close(tboxdata_handle);
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_saveinfo open fail"); 
+           FS_Close(tboxinfo_handle);
            return;
-       }
-
-       {
-           memset(tboxdata_filepath, 0, sizeof(tboxdata_filepath));
-           kal_wsprintf(tboxdata_filepath,BIRD_TBOXINFO_DIR,(S16)MMI_CARD_DRV);	
-
-           file_count=FS_Count(tboxdata_filepath, FS_FILE_TYPE, NULL, 0);
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_save info not exist %d",file_count); 
-		   
-           if(file_count>8*24)
-           {
-                 
-		   memset(tboxdata_file, 0, sizeof(tboxdata_file));
-		   kal_wsprintf(tboxdata_file,BIRD_TBOXINFO_FILE,(S16)MMI_CARD_DRV);
-		   
-		   memset(file_name, 0,sizeof(file_name));
-		   tboxinfo_handle = FS_FindFirst(tboxdata_file, 0, 0, &file_info, file_name, file_path_len);
-		   if (tboxinfo_handle >= 0)
-		   {
-		       memset(file, 0, sizeof(file));
-		       kal_wsprintf(file,BIRD_TBOXINFO_DIR,(S16)MMI_CARD_DRV);
-		       mmi_wcscat(file, L"\\");
-		       mmi_wcscat(file, file_name);
-			   
-		       memset(file_name_str, 0,sizeof(file_name_str));
-		       mmi_wcs_to_asc(file_name_str, file);
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_save info=%s", file_name_str); 
-		   }
-		   else
-		   {
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_save info else"); 
-		   }
- 		   FS_FindClose(tboxinfo_handle);
-		   FS_Delete(file);
-           }
        }
 	
 }
+#define BIRD_DATE_FORMAT       "rec_2017-05-12"
 
+void Bird_Tbox_delete()
+{
+	FS_HANDLE tboxdata_handle = -1;
+	FS_HANDLE tboxinfo_handle = -1;
+
+	FS_DOSDirEntry file_info;
+	char file_date[10][11];
+	char tmp_date[11];
+	kal_wchar file_hour[24][6]={L"-00",L"-01",L"-02",L"-03",L"-04",L"-05",L"-06",L"-07",L"-08",L"-09",L"-10",L"-11",
+		L"-12",L"-13",L"-14",L"-15",L"-16",L"-17",L"-18",L"-19",L"-20",L"-21",L"-22",L"-23"};
+	char char_name[BIRD_FILE_PATH_LEN];
+	kal_wchar file_name[BIRD_FILE_PATH_LEN];
+	kal_wchar first_name[BIRD_FILE_PATH_LEN];
+	kal_wchar  file[BIRD_FILE_PATH_LEN];
+	char file_name_str[BIRD_FILE_PATH_LEN];
+	kal_wchar tboxdata_file[BIRD_FILE_PATH_LEN];
+	kal_wchar tboxdata_filepath[BIRD_FILE_PATH_LEN];
+	U32 file_path_len = (BIRD_FILE_PATH_LEN + 1) * 2;
+	U8 i=0;
+       U8 count=0;
+	   
+       {
+           memset(tboxdata_file, 0, sizeof(tboxdata_file));
+           kal_wsprintf(tboxdata_file,BIRD_TBOXDATA_FILE,(S16)MMI_CARD_DRV);	
+		   
+           memset(file_name, 0,sizeof(file_name));
+           tboxdata_handle = FS_FindFirst(tboxdata_file, 0, 0, &file_info, file_name, file_path_len);
+		   
+           memset(char_name, 0, sizeof(char_name));
+           mmi_wcs_to_asc(char_name,file_name);
+
+           memset(file_date, 0, sizeof(file_date));
+           memcpy(file_date[0],char_name,10);
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data %d %s",tboxdata_handle,file_date);
+	    count=1;
+		
+           if (tboxdata_handle >= 0)   
+           {
+		   memset(first_name, 0, sizeof(first_name));
+		   while (FS_FindNext(tboxdata_handle, &file_info, first_name, file_path_len) == FS_NO_ERROR)
+		   {
+		       memset(char_name, 0, sizeof(char_name));
+		       mmi_wcs_to_asc(char_name,first_name);
+		       memset(tmp_date, 0, sizeof(tmp_date));
+		       memcpy(tmp_date,char_name,10);
+
+		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %s",tmp_date);
+		       if((strcmp(file_date[count-1], tmp_date) != 0)&&(tmp_date[0]!=0))
+		       {
+		           memcpy(file_date[count],tmp_date,10);
+		           count++;
+		       }
+		   };
+		   
+		   FS_FindClose(tboxdata_handle);
+           }
+           else
+           {
+		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data nofile");
+		   FS_FindClose(tboxdata_handle);	   	
+           }
+       }
+	   
+       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete count %d",count);
+	   
+       if(count>8)
+       {
+           for(i=0;i<24;i++)
+           {
+		   memset(file, 0, sizeof(file));
+		   kal_wsprintf(file,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);
+		   mmi_wcscat(file, L"\\");
+		   mmi_wcsncat(file, file_name,mmi_wcslen((kal_wchar*)BIRD_DATE_FORMAT));
+		   mmi_wcscat(file, file_hour[i]);
+		   
+		   memset(char_name, 0, sizeof(char_name));
+		   mmi_wcs_to_asc(char_name,file);
+		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete %s",char_name);
+
+		   FS_Delete(file);
+           }
+       }       
+       StopTimer(BIRD_DELETE_FILE_TIMER);
+       StartTimer(BIRD_DELETE_FILE_TIMER, 10*60*1000, Bird_Tbox_delete);
+}
 void yd_can_alarm()
 {	
 	kal_prompt_trace(MOD_SOC," yd_can_alarm");

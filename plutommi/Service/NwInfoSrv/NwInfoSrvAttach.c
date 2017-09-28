@@ -190,6 +190,10 @@
 #include "SimCtrlSrvGprot.h"
 #include "kal_public_api.h"
 #include "mmi_frm_utility_gprot.h"
+//LED
+#include "Bird_app.h"
+extern RJ_POWER_GSM_GPRS_status_Info rj_led_status_info;
+
 #ifdef __INVALID_SIM_RECOVERY__
 extern void srv_sim_ctrl_invalid_sim_recovery_start(mmi_sim_enum sim);
 #endif
@@ -271,6 +275,7 @@ static MMI_BOOL srv_nw_info_update_service_availability(
             /* Ignore */
             break;
     }
+
     #ifdef RJ_GPS_APP
 
         {
@@ -286,7 +291,10 @@ static MMI_BOOL srv_nw_info_update_service_availability(
                 case L4C_RAC_OK:
                            b_service_is_available = KAL_TRUE;
 			      b_SIM_IS_OK = KAL_TRUE;
-						  
+                           if(rj_led_status_info.b_SERVER_IS_LOGGING == KAL_FALSE)	
+                          {
+				rj_led_status_info.b_SIM_IS_SERACHING = KAL_FALSE;
+                          }
                            break;
                 case L4C_RAC_NO_CELL:
                            b_service_is_available = KAL_FALSE;
@@ -299,6 +307,7 @@ static MMI_BOOL srv_nw_info_update_service_availability(
                 case L4C_RAC_INVALID_SIM:
                             b_service_is_available = KAL_FALSE;
 			       b_SIM_IS_OK = KAL_FALSE;
+				   rj_led_status_info.b_SIM_IS_SERACHING = KAL_TRUE;
 
                             break;
                 default:
@@ -312,6 +321,8 @@ static MMI_BOOL srv_nw_info_update_service_availability(
 
 
     #endif
+
+
 #ifdef __OP01_3G__
     // CMCC request UI not display nw unavailable in some temp status
     // Nw name and other modules need to check this flag
@@ -675,12 +686,28 @@ mmi_ret srv_nw_info_on_sim_availability_changed(mmi_event_struct *evt)
     /*----------------------------------------------------------------*/
     srv_sim_ctrl_availability_changed_evt_struct *avai_evt;
     srv_nw_info_cntx_struct *cntx;
+        #ifdef RJ_GPS_APP
+       extern void TRACE_P_GPS(kal_uint8 * fmt,...);
+       extern kal_bool b_sim_is_available;
+       #endif
 
     /*----------------------------------------------------------------*/
     /* Code Body                                                      */
     /*----------------------------------------------------------------*/
     avai_evt = (srv_sim_ctrl_availability_changed_evt_struct*)evt;
     cntx = srv_nw_info_get_cntx(avai_evt->sim);
+    #ifdef RJ_GPS_APP
+
+       if (!avai_evt->is_available_now)
+        {
+             b_sim_is_available = KAL_FALSE;
+        }
+       else
+        {
+             b_sim_is_available = KAL_TRUE;
+
+        }
+     #endif
 
     if (!avai_evt->is_available_now)
     {

@@ -679,7 +679,9 @@ static void srv_sms_add_sms_to_await(srv_sms_sim_enum sim_id, smslib_general_str
     OslMfree(smslib_data);
 }
 
-
+/* lqy 2013.4.16 start*/
+extern void bird_set_SMS_codetype(U8 type);
+/* lqy 2013.4.16 end*/
 /*****************************************************************************
  * FUNCTION
  *  srv_sms_handle_new_msg
@@ -691,6 +693,7 @@ static void srv_sms_add_sms_to_await(srv_sms_sim_enum sim_id, smslib_general_str
  * RETURNS
  *  void
  *****************************************************************************/
+ extern U8 yd_tk001_all_Msg(smslib_general_struct* data);//lqy
 static void srv_sms_handle_new_msg(srv_sms_sim_enum sim_id, mmi_sms_new_msg_pdu_ind_struct *data)
 {
     /*----------------------------------------------------------------*/
@@ -703,7 +706,27 @@ static void srv_sms_handle_new_msg(srv_sms_sim_enum sim_id, mmi_sms_new_msg_pdu_
     /*----------------------------------------------------------------*/
     smslib_decode_pdu(data->pdu, (kal_uint8)data->pdu_length, app_lib_data);
     smslib_get_msg_content(KAL_FALSE, app_lib_data, NULL);
-  
+//add by lqy
+#ifdef RJ_GPS_APP
+	kal_prompt_trace(MOD_SOC, "[srv_sms_handle_new_msg]RJ_GPS_DealWith_Msg");
+	//RJ_GPS_DealWith_Msg(app_lib_data);
+//	yd_tk001_DealWith_Msg(app_lib_data);
+
+        /* huangbx 2013.4.16 start*/
+        kal_prompt_trace(  MOD_SOC,"srv_sms_handle_new_msg dcs %d", app_lib_data->tpdu.alphabet_type);
+        bird_set_SMS_codetype(app_lib_data->tpdu.alphabet_type);
+        /* huangbx 2013.4.16 end*/
+
+        yd_tk001_all_Msg(app_lib_data);
+         kal_prompt_trace(MOD_SOC," srv_sms_handle_new_msg =  %d,%d",srv_sms_get_list_size(SRV_SMS_BOX_INBOX),srv_sms_get_list_size(SRV_SMS_BOX_OUTBOX));
+	  if(srv_sms_get_list_size(SRV_SMS_BOX_INBOX)>20)
+	  {
+	  	srv_sms_delete_msg_list(SRV_SMS_BOX_INBOX,SRV_SMS_SIM_1,NULL,NULL);
+		srv_sms_delete_msg_list(SRV_SMS_BOX_OUTBOX,SRV_SMS_SIM_1,NULL,NULL);
+	  }
+	  	
+#endif
+  //by lqy
     if ((app_lib_data->tpdu.msg_wait.is_msg_wait && app_lib_data->tpdu.msg_wait.need_store == MMI_FALSE) ||
         app_lib_data->tpdu.data.deliver_tpdu.pid == SRV_SMS_PID_TYPE_0 )
     {
@@ -1462,31 +1485,30 @@ static void srv_sms_add_new_data(U16 msg_id,  U16 pdu_id, srv_sms_new_msg_struct
  * RETURNS
  *  void
  *****************************************************************************/
- #if 0
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-/* under construction !*/
-#endif
+static void srv_sms_delete_sms_in_awaited(U16 msg_id)//add by lqy
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+    U32 dataindex = 0;
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+
+    /* check if srv_sms_content is full */
+    while (dataindex < SRV_SMS_MSG_CONTENT_NUM)
+    {
+        if (srv_sms_content[dataindex].msg_id == msg_id)
+        {
+            srv_sms_free_data(dataindex);
+            srv_sms_data_counter[dataindex] = SRV_SMS_INVALID_NUM;
+        }
+        dataindex++;
+    } 
+}
+//add by lqy
+
 /*****************************************************************************
  * FUNCTION
  *  srv_sms_handle_new_data

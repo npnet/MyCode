@@ -406,6 +406,33 @@ void bird_set_test_time_afert(U8 * address )
 
 }
 
+void txboxdecimal(U8*dec ,U8* hex)
+{   
+    dec[0]=hex[0]/16*10+hex[0]%16;
+    dec[1]=hex[1]/16*10+hex[1]%16;
+    dec[2]=hex[2]/16*10+hex[2]%16;
+    dec[3]=hex[3]/16*10+hex[3]%16;
+    dec[4]=hex[4]/16*10+hex[4]%16;
+    dec[5]=hex[5]/16*10+hex[5]%16;
+	
+}
+
+U8* txboxhex(U8* hex)
+{   
+    U8 time[6]=0;
+	
+    memcpy(time, hex,6);
+	
+    time[0]=hex[0]/10*16+hex[0]%10;
+    time[1]=hex[1]/10*16+hex[1]%10;
+    time[2]=hex[2]/10*16+hex[2]%10;
+    time[3]=hex[3]/10*16+hex[3]%10;
+    time[4]=hex[4]/10*16+hex[4]%10;
+    time[5]=hex[5]/10*16+hex[5]%10;
+	
+    return time;
+}
+
 /*---------------------------------------------
                          错误码写入文件
                          重开机后上传

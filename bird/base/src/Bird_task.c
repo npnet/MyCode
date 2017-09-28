@@ -74,7 +74,7 @@ void rj_gps_main(ilm_struct *ilm_ptr)
     }
     
 }
-kal_uint8 uart3_buf_temp[100];
+kal_uint8 uart3_buf_temp[30];
 void mtk_bird_uart3_poll(void)   // Port i/o interface object  hejulang
 {
     kal_uint32 result_count, actual_written_len;
@@ -85,13 +85,13 @@ void mtk_bird_uart3_poll(void)   // Port i/o interface object  hejulang
         do
         {
             data.u4OwenrId = MOD_BIRD;
-	        data.u2Length = 100;
+	        data.u2Length = 30;
 	        data.puBuffaddr = &uart3_buf_temp[0];
             data.pustatus = &status;	
 	        handle = DclSerialPort_Open(2, 0);
 	        DclSerialPort_Control(handle, SIO_CMD_GET_BYTES, (DCL_CTRL_DATA_T*)&data);
 	        result_count = data.u2RetSize;	
-        } while (result_count == 100);        
+        } while (result_count == 30);        
 
 }
 
@@ -237,7 +237,7 @@ static void rj_timer_expiry_callback(void *arg)
  * RETURNS
  *  void
  *****************************************************************************/
-void Rj_start_timer(kal_uint8 timer_id, kal_uint32 period, kal_timer_func_ptr timer_expiry, void *arg)
+void Rj_start_timer(U16 timer_id, U32 period, oslTimerFuncPtr timer_expiry, void *arg)
 {
     /*----------------------------------------------------------------*/
     /* Local Variables                                                */
@@ -248,13 +248,16 @@ void Rj_start_timer(kal_uint8 timer_id, kal_uint32 period, kal_timer_func_ptr ti
     /* Code Body                                                      */
     /*----------------------------------------------------------------*/
 //	TRACE_P_3D("Rj_start_timer");
+/*
     rj_timer_table[timer_id].callback_func = timer_expiry;
     rj_timer_table[timer_id].arg = arg;
     rj_timer_table[timer_id].event_id = evshed_set_event(
                                             rj_context_p->event_scheduler_ptr,
                                             (kal_timer_func_ptr) rj_timer_expiry_callback,
                                             (void*)timer_id,
-                                            temp /** KAL_TICKS_10_MSEC */ );
+                                            temp );
+*/
+    StartTimerEx(timer_id, period, timer_expiry,arg);
 }
 
 
@@ -268,7 +271,7 @@ void Rj_start_timer(kal_uint8 timer_id, kal_uint32 period, kal_timer_func_ptr ti
  * RETURNS
  *  void
  *****************************************************************************/
-void Rj_stop_timer(kal_uint8 timer_id)
+void Rj_stop_timer(U16 timer_id)
 {
     /*----------------------------------------------------------------*/
     /* Local Variables                                                */
@@ -277,11 +280,14 @@ void Rj_stop_timer(kal_uint8 timer_id)
     /*----------------------------------------------------------------*/
     /* Code Body                                                      */
     /*----------------------------------------------------------------*/
+    /*
     if (rj_timer_table[timer_id].event_id != NULL)
     {
         evshed_cancel_event(rj_context_p->event_scheduler_ptr, &(rj_timer_table[timer_id].event_id));
         rj_timer_table[timer_id].event_id = NULL;
     }
+    */
+     StopTimer(timer_id);
 }
 #endif
 

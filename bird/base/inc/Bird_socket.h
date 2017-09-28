@@ -70,7 +70,7 @@ typedef struct
 #define LIMA_SOC_TASKS_CFG_FILE 	  "%c:\\limadl.cfg"
 #endif
 
-#define MAX_BIRD_SND_BUFFER_SIZE    1000
+#define MAX_BIRD_SND_BUFFER_SIZE    2000//1000
 #define MAX_BIRD_RCV_BUFFER_SIZE    4*1024
 #define MAX_BIRD_SOC_MEMORY_SIZE    20*1024 //100*1024 by lqy
 #define MAX_BIRD_URL_LEN            512//1024
@@ -78,7 +78,7 @@ typedef struct
 #define MAX_BIRD_SENDBUF_LEN       100
 #define MAX_BIRD_POSSAVE_COUNT       310
 #define MAX_BIRD_NUMBER_PERLINE 160//150//140//130
-#define MAX_BIRD_SENDBUF_SIZE       600//360
+#define MAX_BIRD_SENDBUF_SIZE       1600//600//360
 #define BIRD_DYNAMIC_URL_LEN   512//256
 #define BIRD_UNICOM_HOME_NUMBER_1			"46001"
 
@@ -94,7 +94,7 @@ typedef struct
 #define BIRD_READ_DATA_LEN 1024
 
 #define RECEIVE_DATA_LENGTH 1000
-#define MAX_LIMA_SND_BUFFER_SIZE    1000
+#define MAX_LIMA_SND_BUFFER_SIZE    2000//1000
 #define MAX_LIMA_RCV_BUFFER_SIZE    4*1024
 #define MAX_LIMA_SOC_MEMORY_SIZE    100*1024
 #define MAX_LIMA_URL_LEN            512//1024

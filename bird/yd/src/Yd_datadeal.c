@@ -390,8 +390,12 @@ void YD_soc_set_common_head(U8* sendBuffer,U16* len){
 	memcpy(sendBuffer+send_len, (S8 *)dt, 1);
 	send_len=send_len+1;
 	//id
-	memcpy(sendBuffer+send_len, (S8 *)rj_user_info.u_id, 9);
-	send_len = send_len + 9;
+	memcpy(sendBuffer+send_len, (const void *)YD_TK001_SW_FLAG, strlen((const char *)YD_TK001_SW_FLAG));
+	send_len = send_len + strlen((const char *)YD_TK001_SW_FLAG);
+
+	memcpy(sendBuffer+send_len, (const void *)(rj_user_info.u_imei+8),6);
+	send_len = send_len + 6;
+
 	memcpy(sendBuffer+send_len, (S8 *)dt, 1);
 	send_len=send_len+1;
 	*len = send_len;

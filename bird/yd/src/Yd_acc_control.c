@@ -27,7 +27,9 @@ extern void bird_oilcut_accsleep_handler();
 extern void Bird_LED_Identify_Wink(void);
 #endif
 extern void RJ_GPS_Gsmled_LightWink();
-
+extern void Yd_logouttxbox();
+extern void Yd_tbox_heart();
+extern void Yd_main();
 
 void yd_init_acc_control_param()
 {
@@ -177,21 +179,23 @@ void yd_tk001_post_alarm_key_off()
 	}	
 }
 
+void yd_acc_key_open()
+{
+	kal_prompt_trace(MOD_SOC,"yd_acc_key_open"); 
+
+	Rj_stop_timer(Bird_task_heart_Timer); 
+	Rj_start_timer(Bird_task_heart_Timer, 1*1000, Yd_tbox_heart,NULL);
+	Rj_stop_timer(Bird_task_main_Timer); 
+	Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);
+}
+
 void yd_acc_key_closed()
 {
-	kal_uint32 ntimer = 30000;	
 	kal_prompt_trace(MOD_SOC,"yd_acc_key_closed"); 
 
-	if((bird_get_acc_state()==1))
-	{
-		bird_set_acc_state(0);
-		yd_send_save_nv_msg();		
-		bird_soc_sendpos();
-	}
-
-	ntimer = bird_get_defense_delay_value()*1000;
-	Rj_stop_timer(BIRD_TASK_SET_DEFENSE_DELAY_TIMER);
-	Rj_start_timer(BIRD_TASK_SET_DEFENSE_DELAY_TIMER, ntimer, yd_tk001_post_alarm_key_off,NULL);       
+	Rj_stop_timer(Bird_task_heart_Timer); 
+	Rj_stop_timer(Bird_task_main_Timer); 
+	Yd_logouttxbox();
 }
 
 

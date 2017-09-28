@@ -706,11 +706,21 @@ void bird_At_test_flag()
 {
 	bird_at_test_flag = 1;
 }
+#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
+void can_simulate_timer()
+{
+	can1_send_data();
+	can2_send_data();
+
+	StartTimer(BIRD_CAN_SIMULATE_SEND_TIMER, 10000, can_simulate_timer);	
+}
+#endif
 extern void bird_watchdog_control();
 
 extern void rmmi_write_to_uart(kal_uint8 * buffer, kal_uint16 length, kal_bool stuff); 
 extern void ECU_UART_INIT(void);
-extern void BD_UART_INIT(void);
+extern void Bird_Tbox_delete();
+
 void Bird_start()
 {	
 	char gpio_data = 0;
@@ -765,6 +775,11 @@ void Bird_start()
 	StartTimer(RJ_GPS_TIMER_YELLOLIGHT, 200, RJ_GPS_Gsmled_LightWink);
 #endif
 	StartTimer(BIRD_AT_TEST_TIMER, 2000, bird_At_test_flag);
+#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
+	StartTimer(BIRD_CAN_SIMULATE_SEND_TIMER, 10000, can_simulate_timer);
+#endif
+
+	StartTimer(BIRD_DELETE_FILE_TIMER, 10*60*1000, Bird_Tbox_delete);
 
 /*Added by Huangwenjian for dw11 board production 20160530 begin*/
        gpio_data = GPIO_ReadIO(18);
@@ -776,9 +791,10 @@ void Bird_start()
        }
 /*Added by Huangwenjian for dw11 board production 20160530 end*/
 
-	//Bird_Log_print(MOD_SOC, "Bird_start");
+	Bird_Log_print(MOD_SOC, "Bird_start");
 ECU_UART_INIT();
-#if 0//def BIRD_BT_SUPPORT
+
+#ifdef BIRD_BT_SUPPORT
 	Vcama_Supply();
 	//GPIO_ModeSetup(3, 0);		
 	//GPIO_InitIO(1, 3);      
@@ -788,7 +804,7 @@ ECU_UART_INIT();
 #endif
 
 
-#if 0//def BIRD_BT_SUPPORT
+#ifdef BIRD_BT_SUPPORT
 	SetProtocolEventHandler(get_bluetooth_data,MSG_ID_YD_TK001_MSG_GET_BT_DATA);  //add by ryc
 	SetProtocolEventHandler(yd_save_bt_mac,MSG_ID_BT_MAC_DATA_ALARM);  
 #endif

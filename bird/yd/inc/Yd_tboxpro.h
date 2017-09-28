@@ -27,7 +27,7 @@
 #define ENCRYPT_ERROR 0xfe
 #define ENCRYPT_INVALID 0xff
 
-void bird_soc_send_tboxsearch(U8 count, U8* param, U8 rtn);
-void bird_soc_send_tboxset(U8 count, U8* param, U8 rtn);
-void bird_soc_send_tboxcontrol(U8 count, U8* param, U8 rtn);
+void bird_soc_send_tboxsearch(U8* time,U8 count, U8* param, U8 rtn);
+void bird_soc_send_tboxset(U8* time,U8 count, U8* param, U8 rtn);
+void bird_soc_send_tboxcontrol(U8* time,U8 count, U8* param, U8 rtn);
 

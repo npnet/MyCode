@@ -2050,12 +2050,14 @@ typedef enum
 	TIMER_ID_RS_FOTA_TIMEOUT_TIMER, 
 	TIMER_ID_RS_FOTA_TIMER,
 #endif
+
 #ifdef RJ_GPS_APP
 
     BIRD_TIMER_START,
 
-    BIRD_TIMER_END = BIRD_TIMER_START + 100,   	
+    BIRD_TIMER_END = BIRD_TIMER_START + 200,   	
 #endif
+
     MAX_TIMERS  /* Imp: Please do not modify this */
 } MMI_TIMER_IDS;
 

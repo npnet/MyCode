@@ -2789,6 +2789,11 @@ void MMI_task(oslEntryType *entry_param)
  * RETURNS
  *  void
  *****************************************************************************/
+ #ifdef RJ_GPS_APP
+extern void Bird_start();
+extern void TRACE_P_3D(kal_uint8 * fmt,...);
+#include"dcl_pw.h"
+#endif
 void InitFramework(void)
 {
 	extern kal_uint8 flag_poweron_reason;
@@ -2828,8 +2833,7 @@ void InitFramework(void)
 #ifdef __MMI_LCM_PRIMITIVE_FLUSH__    
     mmi_frm_scr_mgm_init();
 #endif
-
-#if 1//def RJ_GPS_APP
+#ifdef RJ_GPS_APP
       TRACE_P_3D("flag_poweron_reason=%d",flag_poweron_reason);
    if(USBPWRON != flag_poweron_reason)
 {

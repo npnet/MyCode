@@ -12,6 +12,7 @@ SRC_LIST = bird\base\src\Bird_socket.c \
                    bird\yd\src\Yd_sms.c \
                    bird\yd\src\Yd_datadeal.c \
                    bird\yd\src\Yd_tboxpro.c \
+                   bird\yd\src\Yd_aes128.c \
                    bird\yd\src\Yd_uart_main.c \
                    bird\yd\src\Yd_move_alarm.c \
                    bird\yd\src\Yd_vibration_alarm.c \

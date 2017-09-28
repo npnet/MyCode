@@ -1810,6 +1810,14 @@ typedef struct
     MMI_ID group_id[LAYER_SPACE_TOTAL];
     MMI_ID scrn_id[LAYER_SPACE_TOTAL];
 } key_cntx_struct;
+
+/*****************************************************************************
+* extend Function & varible                                                          
+*****************************************************************************/
+MMI_BOOL power_key_distinguish = MMI_FALSE;
+extern U8 g_n_ydislogin;
+extern BOOL b_SIM_IS_OK;
+
 /*****************************************************************************
 * Local Function                                                              
 *****************************************************************************/
@@ -4579,6 +4587,22 @@ static MMI_BOOL is_volume_key(U8 mmi_key_code)
     return MMI_FALSE;
     
 }
+
+#ifdef DW02_PROJECT
+/*****************************************yanchunhai 20130411 shutdown begin********************************************************************/
+static BOOL b_shutdown = KAL_FALSE;
+void set_shutdown_progress(BOOL is_shutdown)
+{
+         b_shutdown = is_shutdown;
+}
+BOOL is_shutdown_progress(void)
+{
+
+    return b_shutdown;
+}
+/*****************************************yanchunhai 20130411 shutdown end********************************************************************/
+#endif
+
 /*****************************************************************************
  * FUNCTION
  *  mmi_key_handle
@@ -4675,6 +4699,44 @@ static void mmi_key_handle(mmi_key_evt_struct *mmi_evt_p)
 #ifdef __KBD_2STEP_KEY_SUPPORT__
     post_update_2step_key_state(mmi_evt_p->cvt_code, mmi_evt_p->mmi_key_type);
 #endif /* __KBD_2STEP_KEY_SUPPORT__ */    
+/*****************************************yanchunhai 20130411 shutdown begin********************************************************************/
+      
+        {
+
+              extern void TRACE_P_GPS(kal_uint8 * fmt,...);
+              extern void RJ_GPS_LEDDISABLE(); //lrf add
+
+              set_shutdown_progress(KAL_FALSE);
+
+             // TRACE_P_GPS("mmi_evt_p->mmi_key_type = %d",mmi_evt_p->mmi_key_type); 
+
+		if((mmi_evt_p->cvt_code == KEY_POWER)&&( mmi_evt_p->mmi_key_type == KEY_EVENT_DOWN))   //
+		{
+			kal_prompt_trace(MOD_SOC,"sos_key_press_down");
+			power_key_distinguish = MMI_FALSE;
+		    //TRACE_P_GPS("KEY_POWER "); 	
+                 //RJ_GPS_LEDENABLE();//lrf add
+
+		}
+		else if((mmi_evt_p->cvt_code == KEY_POWER)&&( mmi_evt_p->mmi_key_type == KEY_LONG_PRESS))
+		{
+			kal_prompt_trace(MOD_SOC,"sos_key_long_press,SIM = %d",b_SIM_IS_OK);
+			power_key_distinguish = MMI_TRUE;
+			{
+				set_shutdown_progress(KAL_TRUE);
+				kal_prompt_trace(MOD_SOC," bg power_off");
+				//cus_leds_red_light(KAL_TRUE);
+				//RJ_GPS_RedLight();
+
+				//TRACE_P_GPS("KEY_POWER LONG PRESS "); 
+				//RJ_GPS_LEDDISABLE();
+				power_off();
+			}
+		}		
+
+	   }
+
+     /*****************************************yanchunhai 20130411 shutdown end********************************************************************/
     post_update_key_data_buf();
     post_update_end_call_state(&key_data);
 }
