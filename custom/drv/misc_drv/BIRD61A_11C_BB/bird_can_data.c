@@ -29,6 +29,7 @@
 
 #include "bird_app.h"
 #include    "dcl_adc.h"
+#include "bird_can_data_shanshan.h"
 
 
 
@@ -37,12 +38,17 @@ kal_uint8 insulation_alarm_flag = 0;
 kal_uint8 dc2dc_alarm_flag = 0;
 kal_uint8 alarm_flag = 0;
 
+kal_uint8 cell_nun=0;
+kal_uint16 charging_data_num=0;
+
 kal_uint8 car_data_index = 0;
 kal_uint8 car_data[car_data_num]={0}; //整车数据
 kal_uint8 motor_data[motor_data_num]={0}; //驱动电机
 kal_uint8 extreme_value_data[extreme_value_data_nun]={0}; //极值数据
 kal_uint8 alarm_data[alarm_data_nun]={0}; //报警数据
-kal_uint8 charging_device_data[charging_device_data_nun]={0};
+kal_uint8 charging_device_voltage_data[charging_device_data_nun]={0};/*可充电储能装置电压数据*/
+kal_uint8 charging_device_temperature_data[charging_device_data_nun]={0};/*可充电储能装置温度数据*/
+
 
 /*
 kal_uint8 car_data_30S[car_data_num*30]={0}; //整车数据
@@ -63,7 +69,6 @@ can_data_save_struct car_can_data_30s[30];
 can_data_save_struct car_can_data_temp_30s[30];
 
 extern kal_uint8 can_rx_buf[][12];
-extern kal_uint16 ECU_UART_Write( kal_uint8 *buffer, kal_uint16 length);
 kal_uint8 bird_set_byte_bit(kal_uint8 bytenum,kal_uint8 bitnum, kal_uint8 pos)
 {
 	kal_uint16 i=0;
@@ -71,6 +76,7 @@ kal_uint8 bird_set_byte_bit(kal_uint8 bytenum,kal_uint8 bitnum, kal_uint8 pos)
 	bitparam = (bytenum>>pos)&((1<<bitnum)-1);
 	return bitparam;
 }
+#ifndef  CAN_SHANSHAN_SUPPORT
 void can1_rx_id180128D0_data_check()
 {
 	car_data[18]=can_rx_buf[0][4+2];
@@ -89,7 +95,7 @@ void can1_rx_id180328D0_data_check()
 	speed = can_rx_buf[2][4] *10;
 	car_data[3] =speed%256;
 	car_data[4] =speed/256;
-	alarm_data[15] = bird_set_byte_bit(can_rx_buf[2][9],1,6);
+	alarm_data[3] |= (bird_set_byte_bit(can_rx_buf[2][9],1,6))<<4;
 	alarm_data[1] |= (bird_set_byte_bit(can_rx_buf[2][10],1,0))<<2;
 	alarm_data[1] |= (bird_set_byte_bit(can_rx_buf[2][10],1,1))<<3;
 	alarm_data[3] |= (bird_set_byte_bit(can_rx_buf[2][9],1,6))<<1;
@@ -161,10 +167,10 @@ void can1_rx_id1803D0F3_data_check()
 {
 	car_data[16]=can_rx_buf[7][11];
 	car_data[17]=0;
-	extreme_value_data[3]=can_rx_buf[7][5];
-	extreme_value_data[4]=can_rx_buf[7][4];
-	extreme_value_data[7]=can_rx_buf[7][7];
-	extreme_value_data[8]=can_rx_buf[7][6];	
+	extreme_value_data[2]=can_rx_buf[7][5];
+	extreme_value_data[3]=can_rx_buf[7][4];
+	extreme_value_data[6]=can_rx_buf[7][7];
+	extreme_value_data[7]=can_rx_buf[7][6];	
 
 }
 void can1_rx_id1800D028_data_check()
@@ -204,10 +210,10 @@ void can1_rx_id1801D08F_data_check()
 }
 void can1_rx_id180228F3_data_check(kal_uint8* data)
 {
-	charging_device_data[2]=*data;
-	charging_device_data[3]=*(data+1);
-	charging_device_data[4]=*(data+2);
-	charging_device_data[5]=*(data+3);
+	charging_device_voltage_data[2]=*data;
+	charging_device_voltage_data[3]=*(data+1);
+	charging_device_voltage_data[4]=*(data+2);
+	charging_device_voltage_data[5]=*(data+3);
 }
 void can1_rx_id181B28F3_data_check()
 {
@@ -225,12 +231,12 @@ void can1_rx_id181D28F3_data_check()
 {
 	extreme_value_data[0]=can_rx_buf[12][4];
 	extreme_value_data[1]=can_rx_buf[11][5];
-	extreme_value_data[5]=can_rx_buf[11][6];	
-	extreme_value_data[6]=can_rx_buf[11][7];
-	extreme_value_data[9]=can_rx_buf[11][8];
-	extreme_value_data[10]=can_rx_buf[11][9];
-	extreme_value_data[12]=can_rx_buf[11][10];
-	extreme_value_data[13]=can_rx_buf[11][11];		
+	extreme_value_data[4]=can_rx_buf[11][6];	
+	extreme_value_data[5]=can_rx_buf[11][7];
+	extreme_value_data[8]=can_rx_buf[11][8];
+	extreme_value_data[9]=can_rx_buf[11][9];
+	extreme_value_data[11]=can_rx_buf[11][10];
+	extreme_value_data[12]=can_rx_buf[11][11];		
 	
 }
 void can1_rx_idC00D0EF_data_check()
@@ -249,54 +255,54 @@ void can1_rx_id180028E5_data_check()
 }
 void can1_rx_id181C28F3_data_check()
 {
-	extreme_value_data[11]=can_rx_buf[5][8];
-	extreme_value_data[14]=can_rx_buf[5][9];
+	extreme_value_data[10]=can_rx_buf[5][8];
+	extreme_value_data[13]=can_rx_buf[5][9];
 }
+
 
 can1_rx_charging_device_data_check(kal_uint8* data,kal_uint16 index)
 {
-static kal_uint8 cell_nun=0;
 	if(index ==0)
 	{
 		if(cell_nun != 0)
 		{
-			charging_device_data[6]=0x00;
-			charging_device_data[7]=cell_nun;
-			charging_device_data[10]=cell_nun;
+			charging_device_voltage_data[6]=0x00;
+			charging_device_voltage_data[7]=cell_nun;
+			charging_device_voltage_data[10]=cell_nun;
 			cell_nun = 0;
 		}
-		charging_device_data[8]=0x00;
-		charging_device_data[9]=*(data)>>1;
-		charging_device_data[11+8*index]=*(data)&0x01;
-		charging_device_data[12+8*index]=*(data+1);
+		charging_device_voltage_data[8]=0x00;
+		charging_device_voltage_data[9]=*(data)>>1;
+		charging_device_voltage_data[11+8*index]=*(data)&0x01;
+		charging_device_voltage_data[12+8*index]=*(data+1);
 		cell_nun++;
 	}
 	else if(*data != 0)
 	{
-		charging_device_data[11+8*index]=*(data)&0x01;
-		charging_device_data[12+8*index]=*(data+1);
+		charging_device_voltage_data[11+8*index]=*(data)&0x01;
+		charging_device_voltage_data[12+8*index]=*(data+1);
 		cell_nun++;
 	}
 	if(*(data+2)!=0)
 	{
-		charging_device_data[13+8*index]=*(data+2)&0x01;
-		charging_device_data[14+8*index]=*(data+3);
+		charging_device_voltage_data[13+8*index]=*(data+2)&0x01;
+		charging_device_voltage_data[14+8*index]=*(data+3);
 		cell_nun++;
 	}
 	if(*(data+4)!=0)
 	{
-		charging_device_data[15+8*index]=*(data+4)&0x01;
-		charging_device_data[16+8*index]=*(data+5);	
+		charging_device_voltage_data[15+8*index]=*(data+4)&0x01;
+		charging_device_voltage_data[16+8*index]=*(data+5);	
 		cell_nun++;
 	}
 	if(*(data+6)!=0)
 	{
-		charging_device_data[17+8*index]=*(data+6)&0x01;
-		charging_device_data[18+8*index]=*(data+7);
+		charging_device_voltage_data[17+8*index]=*(data+6)&0x01;
+		charging_device_voltage_data[18+8*index]=*(data+7);
 		cell_nun++;
 	}
 }
-
+#endif
 
 void can_rx_data_check()
 {
@@ -306,7 +312,9 @@ void can_rx_data_check()
 	kal_uint32 temp_id0,temp_id1,temp_id2,temp_id3,temp_id4,temp_id5,temp_id6,temp_id7,temp_id8,temp_id9,temp_id10,temp_id11,temp_id12,temp_id13,temp_id14,temp_id15;	
 
 kal_prompt_trace(MOD_SOC, "can_rx_data_check,");	
-
+#ifdef CAN_SHANSHAN_SUPPORT
+	can_rx_data_check_shanshan();
+#else
 	i=0;
 	temp_id0=(can_rx_buf[i][0]<<24)|(can_rx_buf[i][1]<<16)|(can_rx_buf[i][2]<<8)|can_rx_buf[i][3];
 	if(temp_id0== 0x180128D0)
@@ -420,14 +428,15 @@ kal_prompt_trace(MOD_SOC, "can_rx_data_check,");
 		cell_device_index++;
 	}
 
-
-
-
+	charging_data_num=11+2*cell_nun;
+	charging_device_voltage_data[0]=0x01;
+	charging_device_voltage_data[1]=0x01;
 	memcpy(car_can_data.car,car_data,car_data_num);
 	memcpy(car_can_data.motor,motor_data,motor_data_num);
 	memcpy(car_can_data.extreme_value,extreme_value_data,extreme_value_data_nun);
 	memcpy(car_can_data.alarm,alarm_data,alarm_data_nun);
-	memcpy(car_can_data.charging_device,charging_device_data,charging_device_data_nun);
+	memcpy(car_can_data.charging_device_voltage,charging_device_voltage_data,charging_device_data_nun);	
+#endif
 
 	memcpy((kal_uint8*)&car_can_data_temp_30s[car_data_index],(kal_uint8*)&car_can_data,can_save_data_len);
 	if(alarm_flag == 1)
@@ -456,17 +465,30 @@ kal_prompt_trace(MOD_SOC, "can_rx_data_check,");
 	}
 */
 }
-
+kal_uint16 bird_charging_data_num()
+{
+#ifdef CAN_SHANSHAN_SUPPORT
+	return charging_device_data_nun;
+#else
+	return charging_data_num;
+#endif
+}
 void can_data_reset()
 {
 	kal_prompt_trace(MOD_SOC, "can_data_reset");	
-	memset(&car_can_data,0x00,sizeof(car_can_data));
+	memset(&car_can_data.date,0x00,sizeof(car_can_data.date));
+	can_data_shanshan_init();
 }
 
 void can_data_30S_reset()
 {
+	U8 i=0;
+	
 	kal_prompt_trace(MOD_SOC, "can_data_30S_reset");	
-	car_data_index=0;
-	memset(&car_can_data_temp_30s,0x00,sizeof(car_can_data_temp_30s));
-	memset(&car_can_data_30s,0x00,sizeof(car_can_data_30s));		
+	//car_data_index=0;
+	for(i=0;i<30;i++)
+	{
+	    memset(&car_can_data_temp_30s[i].date,0x00,sizeof(car_can_data.date));
+	    memset(&car_can_data_30s[i].date,0x00,sizeof(car_can_data.date));		
+	}
 }

@@ -19,6 +19,7 @@ extern volatile kal_int8 count_judge_gps_app_timer;
 extern U8 g_n_ydischangesim;
 extern U8 rj_gps_stage;
 extern U16 g_login_count;
+extern kal_bool  b_acc_switch_status;
 
 extern void RJ_GPS_iccid(void);/*获取ICCID*/
 extern void RJ_SYS_ReStart(void);
@@ -53,6 +54,7 @@ extern void txboxdecimal(U8*dec ,U8* hex);
 extern void can_data_reset();
 extern void bird_soc_send_tboxlogout();
 extern void bird_soc_send_tboxselfdefine();
+extern void Bird_Tbox_delete();
 
 U8 bird_get_islogin()
 {
@@ -72,7 +74,10 @@ void Yd_login()
 		Rj_stop_timer(Bird_task_login_Timer); 
 		Rj_start_timer(Bird_task_login_Timer, RJ_GPS_APP_1M, Yd_login,NULL);
 	}
-	bird_soc_sendlogin();
+	if(Lima_get_soc_conn_flag())
+	{
+	    bird_soc_sendlogin();
+	}
 }
 
 void Yd_logintxbox()
@@ -82,12 +87,12 @@ void Yd_logintxbox()
 	U8 nrestresion = 0;
 
 	count_judge_gps_app_timer=0;
-	g_n_ydislogin = 0;
-
 	rj_led_status_info.b_SERVER_IS_LOGGING = KAL_TRUE;//LED闪烁
 
-	kal_prompt_trace(MOD_SOC,"Yd_logintxbox %d",g_n_conn_times);
-
+	kal_prompt_trace(MOD_SOC,"Yd_logintxbox %d %d",g_n_conn_times,b_acc_switch_status);
+       if(!b_acc_switch_status)
+	   	return;
+	   
 	if(g_n_conn_times>=3)
 	{
 		g_n_conn_times=0;
@@ -104,8 +109,11 @@ void Yd_logintxbox()
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
 		Rj_start_timer(Bird_task_logintxbox_Timer, bird_get_ser_res_time()*1000, Yd_logintxbox,NULL);
 	}
-	g_n_conn_times++;
-	bird_soc_send_tboxlogin();
+	if(Lima_get_soc_conn_flag())
+	{
+	    g_n_conn_times++;
+	    bird_soc_send_tboxlogin();
+	}
 }
 
 extern void Bird_acc();
@@ -128,51 +136,57 @@ void Yd_login_res(U8 *datetime,U8 *flag)
 		Lima_Soc_Dinit();
 		Bird_clear_soc_conn();
 		Bird_soc_conn();
+		g_n_ydislogin = 3;
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
-		Rj_start_timer(Bird_task_logintxbox_Timer, 10*1000, Yd_logintxbox,NULL);
-
-
+		Rj_start_timer(Bird_task_logintxbox_Timer, 1*1000, Yd_logintxbox,NULL);
 	}
 }
 
 void Yd_tboxlogin_res(U8 *buf,U8 length)
 {
-	kal_prompt_trace(MOD_SOC," Yd_tboxlogin_res %d",length);
+	kal_prompt_trace(MOD_SOC," Yd_tboxlogin_res %d",g_n_ydislogin);
 	if(g_n_ydislogin==0)		
 	{
-      		g_n_ydislogin = 1;			
+		g_n_ydislogin = 1;			
 		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
 		g_n_conn_times=0;
-		g_login_count++;
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
 
 		//设置消息句柄
 		Yd_set_all_msg_handler();
 		yd_send_save_nv_msg();	
 			
-		RJ_GPS_StartTimer(BIRD_SOS_STATE_timer, 400, Bird_acc);
-
 		bird_soc_send_tboxselfdefine();
 		Rj_stop_timer(Bird_task_heart_Timer); 
-		Rj_start_timer(Bird_task_heart_Timer, 30*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
+		Rj_start_timer(Bird_task_heart_Timer, 10*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
 		
+		Rj_stop_timer(Bird_task_main_Timer); 
+		Rj_start_timer(Bird_task_main_Timer, 10*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
 		Rj_stop_timer(Bird_task_savedata_Timer); 
-		Rj_start_timer(Bird_task_savedata_Timer, 30*1000, Yd_savedata,NULL);/*启动存储数据*/		
+		Rj_start_timer(Bird_task_savedata_Timer, 1*1000, Yd_savedata,NULL);/*启动存储数据*/	
+		StartTimer(BIRD_DELETE_FILE_TIMER, 1*60*1000, Bird_Tbox_delete);
 
-		{
-			Rj_stop_timer(Bird_task_main_Timer); 
-			Rj_start_timer(Bird_task_main_Timer, 30*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
-		}
 
 	}
+	else if(g_n_ydislogin==2)
+	{
+		g_n_ydislogin = 1;			
+		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
+		g_n_conn_times=0;
+		Rj_stop_timer(Bird_task_logintxbox_Timer); 
+
+		bird_soc_send_tboxselfdefine();
+	}
+
 }
 
 void Yd_logouttxbox()
 {	 
 
-	kal_prompt_trace(MOD_SOC,"Yd_logintxbox");
+	kal_prompt_trace(MOD_SOC,"Yd_logintxbox %d",g_login_count);
 
 	bird_soc_send_tboxlogout();
+	g_login_count++;
 }
 void Yd_24calib()
 {

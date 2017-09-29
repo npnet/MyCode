@@ -13009,6 +13009,14 @@ ifeq ($(strip $(BIRD_CAN_ENABLE)),TRUE)
        COM_DEFS += BIRD_CAN_SUPPORT     
 endif
 
+ifeq ($(strip $(BIRD_CAN_SIMULATE_SEND_ENABLE)),TRUE)
+       COM_DEFS += BIRD_CAN_SIMULATE_SEND_SUPPORT     
+endif
+
+ifeq ($(strip $(CAN_SHANSHAN_ENABLE)),TRUE)
+       COM_DEFS += CAN_SHANSHAN_SUPPORT     
+endif
+
 ifeq ($(strip $(BIRD_RJ_EN_ENSUPPORT_ENABLE)),TRUE)
        COM_DEFS += BIRD_RJ_EN_UNSUPPORT
 endif

@@ -83,13 +83,6 @@ U8 RJ_GPS_is_working(void)
     return ret;
 }
 
-void RJ_reset_GPS_flag(void)
-{
-    g_n_saltllite_snr_isvalid = 0;
-    rj_position.satellite_num = 0;
-    gps_remove_timer=0;
-}
-
 S8 RJ_GPS_get_satellite_num()
 {
     return rj_position.satellite_num;
@@ -434,6 +427,15 @@ static void RJ_GPS_nmea_txt_callback(mdi_gps_nmea_txt_struct *param)
 U8 g_pos_data_num=0;
 U8 g_pos_data[9]={0};
 U8 g_pos_data_30S[9*30]={0};
+U8 g_gpscheck=0;
+void RJ_reset_GPS_flag(void)
+{
+    g_n_saltllite_snr_isvalid = 0;
+    rj_position.satellite_num = 0;
+    gps_remove_timer=0;
+    memset(&g_pos_data,0,sizeof(g_pos_data));
+}
+
 static void RJ_GPS_nmea_gga_callback(mdi_gps_nmea_gga_struct *param) 
 {
 #if BIRD_GPS_DEBUG
@@ -448,7 +450,7 @@ S8 fjchar1[16];
 	kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback enter");	
 	kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gga_data->satellites =%d",gga_data->sat_in_view);	
        kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gga_data->quality  =%d",gga_data->quality);
-       kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gga_data->altitude  =%d",(U16)gga_data->altitude);
+       kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gga_data =%d %d",gga_data->east_west,gga_data->north_south);
        kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback gga_data->latitude  =%d %d",(U16)gga_data->latitude,gps_remove_timer);
 	  
 	  if((gga_data->quality==1|| gga_data->quality==2)&&(gga_data->sat_in_view!=0)&&((U16)(gga_data->latitude)!=0))
@@ -505,13 +507,14 @@ S8 fjchar1[16];
 
 	  }
 	 kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback g_n_saltllite_snr_isvalid=%d,rj_position.satellite_num= %d",g_n_saltllite_snr_isvalid,rj_position.satellite_num);	
-
+	 g_gpscheck=1;
 	 g_pos_data[0]=0x00;	 
 	 g_pos_data[0]=(0x01&!RJ_GPS_is_working());	 
 	 if(RJ_GPS_is_working())
 	 {
 	     g_pos_data[0]=(0x01&(rj_position.north_south!=78))<<1;	 
-	     g_pos_data[0]=(0x01&(rj_position.east_west!=69))<<2;	 
+	     g_pos_data[0]=(0x01&(rj_position.east_west!=69))<<2;
+		 kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback g_pos_data %d,%d,%d",rj_position.north_south,rj_position.east_west);
 	 }
 	 g_pos_data[1]=(U8)((U32)(rj_position.lg*1000000)/0x1000000);	 
 	 g_pos_data[2]=(U8)(((U32)(rj_position.lg*1000000)/0x10000)%0x100);	 
@@ -927,7 +930,7 @@ static void RJ_GPS_nmea_gsv_callback(mdi_gps_nmea_gsv_struct *param)
 	memcpy(gpsinfo+n2, fjchar, sizeof(fjchar));
 	*/
 	  // rj_position.satellite_num = gsv_data->num_sv_trk;
-	kal_prompt_trace( MOD_USB, "RJ_GPS_nmea_gsv_callback SNR=%s,x=%d,snrsalnum=%d,num_sv_trk=%d", gpsinfo,RJ_GPS_get_satellite_num(),gsv_data->sates_in_view,gsv_data->num_sv_trk);	
+	kal_prompt_trace( MOD_SOC, "RJ_GPS_nmea_gsv_callback SNR=%s,x=%d,snrsalnum=%d,num_sv_trk=%d", gpsinfo,RJ_GPS_get_satellite_num(),gsv_data->sates_in_view,gsv_data->num_sv_trk);	
 	//nsnryxnum1 = n;
 	//nsnryxnum2 = n2;
 
@@ -1157,7 +1160,8 @@ void RJ_GPS_Stop(void)
         g_n_saltllite_snr_isvalid = 0;
         yd_tk001_set_record_from_NV();
 	rj_led_status_info.b_GPS_IS_SERACHING = KAL_FALSE;
-	rj_led_status_info.b_GPS_IS_CLOSE= KAL_TRUE;		
+	rj_led_status_info.b_GPS_IS_CLOSE= KAL_TRUE;	
+	g_gpscheck=0;
 	StopTimer(BIRD_GPS_COLD_RESTART_TIMER);
 }
 

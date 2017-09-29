@@ -27,6 +27,9 @@ extern void bird_oilcut_accsleep_handler();
 extern void Bird_LED_Identify_Wink(void);
 #endif
 extern void RJ_GPS_Gsmled_LightWink();
+
+extern U8 g_n_ydislogin;
+extern void Yd_logintxbox();
 extern void Yd_logouttxbox();
 extern void Yd_tbox_heart();
 extern void Yd_main();
@@ -181,21 +184,32 @@ void yd_tk001_post_alarm_key_off()
 
 void yd_acc_key_open()
 {
-	kal_prompt_trace(MOD_SOC,"yd_acc_key_open"); 
-
-	Rj_stop_timer(Bird_task_heart_Timer); 
-	Rj_start_timer(Bird_task_heart_Timer, 1*1000, Yd_tbox_heart,NULL);
-	Rj_stop_timer(Bird_task_main_Timer); 
-	Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);
+	kal_prompt_trace(MOD_SOC,"yd_acc_key_open %d",g_n_ydislogin); 
+       if(g_n_ydislogin==2)
+       {
+	    Rj_stop_timer(Bird_task_heart_Timer); 
+	    Rj_start_timer(Bird_task_heart_Timer, 1*1000, Yd_tbox_heart,NULL);
+	    Rj_stop_timer(Bird_task_main_Timer); 
+	    Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);
+	
+	    Yd_logintxbox();
+       }
+	else if(g_n_ydislogin==3)
+	{
+	    Yd_logintxbox();
+	}
 }
 
 void yd_acc_key_closed()
 {
-	kal_prompt_trace(MOD_SOC,"yd_acc_key_closed"); 
-
+	kal_prompt_trace(MOD_SOC,"yd_acc_key_closed %d",g_n_ydislogin); 
+       if(g_n_ydislogin!=1)
+	   	return;
+	   
 	Rj_stop_timer(Bird_task_heart_Timer); 
 	Rj_stop_timer(Bird_task_main_Timer); 
 	Yd_logouttxbox();
+	g_n_ydislogin=2;
 }
 
 
@@ -223,7 +237,7 @@ void yd_set_ECU_key_off_msg()
 
 void yd_set_aux_key_on_msg()
 {
-	SetProtocolEventHandler(yd_tk001_post_alarm_key_on,MSG_ID_AUX_KEY_OPEN);
+	SetProtocolEventHandler(yd_acc_key_open,MSG_ID_AUX_KEY_OPEN);
 }
 
 void yd_set_aux_key_off_msg()

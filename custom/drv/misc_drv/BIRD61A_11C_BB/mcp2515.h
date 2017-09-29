@@ -369,6 +369,7 @@ U8 spi_rcv();
 U8 MCP2515_byte_read(U8 adr);
 void MCP2515_byte_write(U8 adr,U8 dat);
 //from hgx  for spi Simulation
-
+void MCP2515_can1_rts_tx0(void);
+void MCP2515_can2_rts_tx0(void);
 #endif // _MCP2515_H_
 

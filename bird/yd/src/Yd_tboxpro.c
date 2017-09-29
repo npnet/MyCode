@@ -27,12 +27,17 @@ extern U8 g_pos_data[9];
 extern U8 g_pos_data_30S[9*30];
 
 extern RJ_Gps_User_Info rj_user_info;
+extern U8 g_gpscheck;
 
 extern U8* txboxhex(U8* hex);
 extern void yd_tk001_receive_reboot_msg_handler();
 extern void yd_tk001_power_off_handler();
 extern void yd_tk005_set_default_record_to_NV();
 extern void Bird_heart_return();
+extern kal_uint8 bird_can_selfcheck_main();
+extern kal_uint16 bird_charging_data_num();
+extern U8 RJ_GPS_is_working(void);
+extern void Yd_disconnect_socket();
 
 //数据单元加密方式:
 U8 bird_get_encryption()
@@ -269,29 +274,29 @@ U8* bird_get_alarm_30S(U8 index)
 //可充电储能装置电压数据
 U8* bird_get_rech_vol()
 {
-    return car_can_data.charging_device;
+    return car_can_data.charging_device_voltage;
 }
 U16 bird_get_rech_vol_length()
 {
-    return charging_device_data_nun;
+    return bird_charging_data_num();
 }
 U8* bird_get_rech_vol_30S(U8 index)
 {
-    return car_can_data_30s[index].charging_device;
+    return car_can_data_30s[index].charging_device_voltage;
 }
 
 //可充电储能装置温度数据
 U8* bird_get_temp()
 {
-    return NULL;
+    return car_can_data.charging_device_temperature;
 }
 U8 bird_get_temp_length()
 {
-    return 0;
+    return charging_device_temperature_length;
 }
 U8* bird_get_temp_30S(U8 index)
 {
-    return NULL;
+    return car_can_data_30s[index].charging_device_temperature;
 }
 
 U8* TB_Soc_set_time()
@@ -343,9 +348,56 @@ void TB_Soc_get_cantime_30S(applib_time_struct *dt,U8 index)
 
 U16 bird_get_realinfo_length()
 {
-        return 6+bird_get_vehicle_length()+bird_get_drivemotor_length()+bird_get_fuel_length()+bird_get_engine_length()+
-	    bird_get_vehicle_pos_length()+bird_get_extremum_length()+bird_get_alarm_length()+
-	    bird_get_rech_vol_length()+bird_get_temp_length()+6;
+      U16 realinfo_len=0;
+	  
+      realinfo_len=6; //time
+      if(bird_get_vehicle_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_vehicle_length();
+          realinfo_len++;
+      }
+      if(bird_get_drivemotor_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_drivemotor_length();
+          realinfo_len++;
+      }
+      if(bird_get_fuel_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_fuel_length();
+          realinfo_len++;
+      }
+      if(bird_get_engine_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_engine_length();
+          realinfo_len++;
+      }
+      if(bird_get_vehicle_pos_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_vehicle_pos_length();
+          realinfo_len++;
+      }
+      if(bird_get_extremum_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_extremum_length();
+          realinfo_len++;
+      }
+      if(bird_get_alarm_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_alarm_length();
+          realinfo_len++;
+      }
+      if(bird_get_rech_vol_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_rech_vol_length();
+          realinfo_len++;
+      }
+      if(bird_get_temp_length()!=0)
+      {
+          realinfo_len=realinfo_len+bird_get_temp_length();
+          realinfo_len++;
+      }
+	  
+      return realinfo_len;
 }
 
 U16 bird_get_real_send_buf_length()
@@ -505,9 +557,9 @@ void TB_Soc_Send_selfdefine_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,U8* nfl
 	memcpy(sendBuffer+send_len,TB_Soc_set_time(),6);	
 	send_len = send_len + 6;
 	//自检结果
-	if(1)
+	if(g_gpscheck==0)
 		nresult |= 1<<1;
-	if(1)
+	if(!bird_can_selfcheck_main())
 		nresult |= 1;
 	sendBuffer[send_len]=nresult;
 	send_len = send_len + 1;
@@ -637,6 +689,7 @@ U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,applib_time
 	send_len = send_len + 1;
 	sendBuffer[send_len]=(U8)(length%256);
 	send_len = send_len + 1;
+	kal_prompt_trace(MOD_SOC,"TB_Soc_Send_realinfo_ReqBuffer length=%d",length);
 	//数据采集时间
 	if(txbox_can_time(dt)!=NULL)
 	{
@@ -1110,7 +1163,7 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 		{    
 			memcpy(server_addr, (S8 *)bird_get_server_address()+7,strlen((S8 *)bird_get_server_address())-7);
 			sscanf(server_addr, "%100[^:]:%100[^:]",domain,port);
-			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res %s %s",domain,port);
+			kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res %s %s",domain,port);
 			
 			memset(sgchar,0,sizeof(sgchar));
 			sgchar[0]=buf[t];
@@ -1122,7 +1175,7 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 		{
 			memcpy(server_addr, (S8 *)bird_get_server_address()+7,strlen((S8 *)bird_get_server_address())-7);
 			sscanf(server_addr, "%100[^:]:%100[^:]",domain,port);
-			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res %s %s",domain,port);
+			kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res %s %s",domain,port);
 			
 			memcpy(param+param_pos, buf+t,1);
 			param_pos=param_pos+1;
@@ -1133,7 +1186,7 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 		{
 			memcpy(server_addr, (S8 *)bird_get_server_address()+7,strlen((S8 *)bird_get_server_address())-7);
 			sscanf(server_addr, "%100[^:]:%100[^:]",domain,port);
-			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res %s %s",domain,port);
+			kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res %s %s",domain,port);
 			
 			wordchar[0]=buf[t];
 			wordchar[1]=atol(port)/256;
@@ -1314,6 +1367,7 @@ void bird_tbox_set_param_res(U8* rest_buf, U32 length)
 			memcpy(sgchar, buf+buf_pos,1);
 			seradd_len=sgchar[0];
 			buf_pos=buf_pos+1;
+			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res seradd_len=%d",seradd_len);
 		}
 		else if(buf[buf_pos]==0x05)
 		{
@@ -1324,8 +1378,10 @@ void bird_tbox_set_param_res(U8* rest_buf, U32 length)
 			if(seradd_len!=0)
 			{
 			    memset(tk002_info.server_address,0,sizeof(tk002_info.server_address));
-			    memcpy(tk002_info.server_address, buf+buf_pos,seradd_len);
-			    memcpy(tk002_info.server_address+seradd_len, port,strlen(port));
+			    memcpy(tk002_info.server_address, "http://", strlen("http://"));
+			    memcpy(tk002_info.server_address+strlen("http://"), buf+buf_pos,seradd_len);
+			    memcpy(tk002_info.server_address+strlen("http://")+seradd_len, ":", strlen(":"));
+			    memcpy(tk002_info.server_address+strlen("http://")+seradd_len+strlen(":"), port,strlen(port));
 			    buf_pos=buf_pos+seradd_len;
 			}
 		}
@@ -1344,6 +1400,8 @@ void bird_tbox_set_param_res(U8* rest_buf, U32 length)
 			memset(tk002_info.server_address,0,sizeof(tk002_info.server_address));
 			memcpy(tk002_info.server_address, (S8 *)bird_get_server_address(),strlen(domain)+8);
 			memcpy(tk002_info.server_address+strlen(domain)+8, bird_itoa(port_recv),strlen(bird_itoa(port_recv)));
+			seradd_len=strlen((S8 *)bird_get_server_address());
+			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res %s",bird_itoa(port_recv));
 		}
 		else if(buf[buf_pos]==0x09)
 		{
@@ -1492,10 +1550,11 @@ void bird_tbox_control_param_res(U8* rest_buf, U32 length)
 			kal_prompt_trace(MOD_SOC,"bird_tbox_control_param_res resetnv");
 			yd_tk005_set_default_record_to_NV();
 		}
-		/*
 		else if(buf[buf_pos]==0x05)
 		{
+			Yd_disconnect_socket();
 		}
+		/*
 		else if(buf[buf_pos]==0x06)
 		{
 		}
@@ -1518,7 +1577,7 @@ void bird_soc_send_tboxlogin(void)
 	nflag = Bird_soc_get_loginflag();
        if(nflag==1)
        {
-       	return;
+       	//return;
        }
 	
 	_send.buf_len=0;

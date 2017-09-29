@@ -27,13 +27,14 @@ extern U16 bird_get_real_send_buf_length();
 S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2)
 {	
     U8 i=0;
-    char name1_char[30];
-    char name2_char[30];
+    char name1_char[30]={0};
+    char name2_char[30]={0};
 
     mmi_wcs_to_asc(name1_char,name1);
     mmi_wcs_to_asc(name2_char,name2);	
 
-    for(i=0;i<14;i++)
+    kal_prompt_trace(MOD_SOC,"Bird_comp_filename %s",name1_char,name2_char);
+    for(i=0;i<17;i++)
     {
        if(name1_char[i]>name2_char[i])
 	   	return 1;
@@ -44,7 +45,8 @@ S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2)
     return 0;
 }
 
-S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
+kal_wchar g_find_name[30]=0;
+S32 Bird_soc_getlast_unsend(S8* unsendtime)
 {
     FS_HANDLE  handle=-1;
     FS_HANDLE  findfist_hdl=-1;	
@@ -57,7 +59,7 @@ S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
     U32  len;
     U32 lenper;
     U32  buflen;
-    S8 buf[MAX_BIRD_SENDBUF_SIZE];
+    S8 buf[30];
     S32 nresult=-1;
     Send_Info _send;	
     U32 off=0;
@@ -74,10 +76,10 @@ S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
     memset(file_patten, 0, sizeof(file_patten));
     kal_wsprintf(file_patten,BIRD_TBOXINFO_FILE,(S16)MMI_CARD_DRV);
 
-    findfist_hdl=FS_FindFirst(file_patten, 0, 0, &file_info, name, file_path_len);
+    findfist_hdl=FS_FindFirst(file_patten, 0, 0, &file_info, g_find_name, file_path_len);
 	
     memset(file_name, 0, sizeof(file_name));
-    mmi_wcs_to_asc(file_name,name);
+    mmi_wcs_to_asc(file_name,g_find_name);
     kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend1 %d %s",findfist_hdl,file_name);
 
     if (findfist_hdl >= 0)
@@ -89,13 +91,16 @@ S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
             mmi_wcs_to_asc(file_name,first_name);
   
             kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend3 %s",file_name);
-            if(Bird_comp_filename(first_name,name)<0)
-                wcscpy(name,first_name);		
+            if(Bird_comp_filename(first_name,g_find_name)<0)
+            {
+                memset(g_find_name, 0, sizeof(g_find_name));
+                wcscpy(g_find_name,first_name);
+            }
         }; 
         memset(file, 0, sizeof(file));
         kal_wsprintf(file,BIRD_TBOXINFO_DIR,(S16)MMI_CARD_DRV);
         mmi_wcscat(file, L"\\");
-        mmi_wcscat(file, name);
+        mmi_wcscat(file, g_find_name);
 
         memset(file_name, 0, sizeof(file_name));
         mmi_wcs_to_asc(file_name,file);
@@ -158,7 +163,10 @@ S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
 				    g_readpos.cur_time.nDay=curtime.nDay;
 				    g_readpos.cur_time.nHour=curtime.nHour;
 				    g_readpos.cur_time.nMin=curtime.nMin+bird_get_ser_res_time()/60+1;
-				    memcpy(unsendtime, (S8 *)&buf, 14);
+				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend offset=%d",g_readpos.offset);
+				    memcpy(unsendtime, buf, 14);
+				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend offset %s",unsendtime);
+				    FS_Close(handle);
 				    return off/lenper;
 				}
 				else
@@ -199,7 +207,7 @@ S32 Bird_soc_getlast_unsend(kal_wchar *name, U8* unsendtime)
     return nresult;
 }
 
-U8 bird_busend_handle(U8* unsendtime, kal_wchar* file_name)
+U8 bird_busend_handle(U8* unsendtime)
 {
     FS_HANDLE  handle=-1;
     U32  len;
@@ -211,7 +219,7 @@ U8 bird_busend_handle(U8* unsendtime, kal_wchar* file_name)
     U8 nresult=0;
     Send_Info _send;	
     U32 noff=0;
-    U16 i=0; 
+    U16 i=0,j=0;
     U8 check_code=0; 
     S8 comp_buf[15]={0};
     applib_time_struct nfind={0};
@@ -220,7 +228,7 @@ U8 bird_busend_handle(U8* unsendtime, kal_wchar* file_name)
     memset(name, 0, sizeof(name));
     kal_wsprintf(name,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);
     mmi_wcscat(name, L"\\");
-    mmi_wcscat(name, file_name);
+    mmi_wcscat(name, g_find_name);
 
     memset(pr_name, 0, sizeof(pr_name));
     mmi_wcs_to_asc(pr_name,name);
@@ -242,9 +250,10 @@ U8 bird_busend_handle(U8* unsendtime, kal_wchar* file_name)
 			comp_buf[0]='2';
 			comp_buf[1]='0';
 
-			for(i=0;i<14;i++)
+			for(i=0,j=0;j<6;i=i+2,j++)
 			{
-                         comp_buf[i+2]=buf[24+i]+0x30;
+                         comp_buf[i+2]=buf[24+j]/16+0x30;
+                         comp_buf[i+3]=buf[24+j]%16+0x30;
 			}
 			kal_prompt_trace(MOD_SOC,"bird_busend_handle %s %s",comp_buf,unsendtime);
 	              if(strncmp(comp_buf, unsendtime,14) == 0) 
@@ -304,9 +313,8 @@ U8 bird_busend_handle(U8* unsendtime, kal_wchar* file_name)
 void Yd_readposfile()
 {
        S32 nresult=-1;
-	U8* unsend_time = 0;
+	S8 unsend_time[30]={0};
 	U8 busend = 0;	
-	kal_wchar file_name[BIRD_FILE_PATH_LEN];
 
 	if(!Lima_get_soc_conn_flag())
 	{
@@ -314,11 +322,11 @@ void Yd_readposfile()
 	}		
 
 	{
-	    nresult = Bird_soc_getlast_unsend(file_name,unsend_time);
+	    nresult = Bird_soc_getlast_unsend(unsend_time);
 	    kal_prompt_trace(MOD_SOC,"Yd_readposfile_handle nresult = %d",nresult);
 	    if(nresult>=0)
 	    {
-	        busend=bird_busend_handle(unsend_time,file_name);
+	        busend=bird_busend_handle(unsend_time);
 	        kal_prompt_trace(MOD_SOC,"Yd_readposfile_handle busend %d",busend);
 	        if(busend==1)
 	        {

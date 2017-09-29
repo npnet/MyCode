@@ -146,9 +146,15 @@
 
 #define car_data_num 20    
 #define motor_data_num 13
-#define extreme_value_data_nun 15
-#define alarm_data_nun 16
+#define extreme_value_data_nun 14
+#define alarm_data_nun 9
+#ifdef CAN_SHANSHAN_SUPPORT
+#define charging_device_data_nun 89
+#define charging_device_temperature_length 14
+#else
 #define charging_device_data_nun 411
+#define charging_device_temperature_length 0
+#endif
 
 typedef struct
 {
@@ -157,7 +163,8 @@ typedef struct
 	kal_uint8 motor[motor_data_num];
 	kal_uint8 extreme_value[extreme_value_data_nun];
 	kal_uint8 alarm[alarm_data_nun];
-	kal_uint8 charging_device[charging_device_data_nun];
+	kal_uint8 charging_device_voltage[charging_device_data_nun];
+	kal_uint8 charging_device_temperature[charging_device_data_nun];
 }can_data_save_struct;
 #define can_save_data_len sizeof(can_data_save_struct)
 

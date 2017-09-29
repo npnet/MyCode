@@ -63,6 +63,7 @@ void Yd_DiniSocketDelay();
 void Yd_set_all_msg_handler();
 void Bird_Tbox_savedata(Send_Info *_send,applib_time_struct dt);
 void Bird_Tbox_saveinfo(Send_Info *_send,applib_time_struct dt);
+void Yd_savedata();
 
 extern volatile kal_int8 count_judge_gps_app_timer ;
 extern volatile kal_uint16 count_system_time;
@@ -666,8 +667,8 @@ void Yd_savedata()
 	if(rtn==1)
 	{
 	    Bird_Tbox_savedata(&g_cur_send,g_cur_dt);
-	    can_data_reset();
-	    RJ_reset_GPS_flag();
+	    //can_data_reset();
+	    //RJ_reset_GPS_flag();
 	}
 
 	Rj_stop_timer(Bird_task_savedata_Timer); 
@@ -707,6 +708,8 @@ void Yd_main()
 	        if(Lima_get_soc_conn_flag())
 	            Bird_soc_sendbufAdd2(&g_cur_send);
 	        Bird_Tbox_saveinfo(&g_cur_send,g_cur_dt);
+	        can_data_reset();
+	        RJ_reset_GPS_flag();
 	    }
 	    ntimer = 1000*bird_get_nmal_main_ival();
 	    g_third_alarm_count=0;
@@ -793,6 +796,15 @@ void Yd_DiniSocketDelay()
 	Rj_start_timer(Bird_task_sleep_dinisocket_Timer, RJ_GPS_APP_1M*4, Yd_DinitSocket,NULL); 
 }
 
+void Yd_disconnect_socket()
+{
+		Lima_set_soc_init_flag(FALSE);
+		Lima_Soc_Dinit();
+		Bird_clear_soc_conn();
+		Rj_stop_timer(BIRD_TASK_SOCKET_SEND); //Í£Ö¹·¢ËÍ¶¨Ê±Æ÷
+		Rj_stop_timer(Bird_task_sleep_dinisocket_Timer);
+		Rj_start_timer(Bird_task_sleep_dinisocket_Timer, RJ_GPS_APP_1M*5, Bird_soc_conn,NULL); 
+}
 void  yd_upload_call_handler(U8* caller, U16 len)
 {
 	kal_prompt_trace(MOD_SOC,"yd_upload_call_handler %s",caller);  
@@ -972,8 +984,8 @@ void Bird_Tbox_delete()
 	FS_HANDLE tboxinfo_handle = -1;
 
 	FS_DOSDirEntry file_info;
-	char file_date[10][11];
-	char tmp_date[11];
+	char file_date[10][18];
+	char tmp_date[18];
 	kal_wchar file_hour[24][6]={L"-00",L"-01",L"-02",L"-03",L"-04",L"-05",L"-06",L"-07",L"-08",L"-09",L"-10",L"-11",
 		L"-12",L"-13",L"-14",L"-15",L"-16",L"-17",L"-18",L"-19",L"-20",L"-21",L"-22",L"-23"};
 	char char_name[BIRD_FILE_PATH_LEN];
@@ -998,8 +1010,8 @@ void Bird_Tbox_delete()
            mmi_wcs_to_asc(char_name,file_name);
 
            memset(file_date, 0, sizeof(file_date));
-           memcpy(file_date[0],char_name,10);
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data %d %s",tboxdata_handle,file_date);
+           memcpy(file_date[0],char_name,14);
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data %d %d %s",tboxdata_handle,mmi_wcslen((kal_wchar*)BIRD_DATE_FORMAT),file_date);
 	    count=1;
 		
            if (tboxdata_handle >= 0)   
@@ -1010,12 +1022,13 @@ void Bird_Tbox_delete()
 		       memset(char_name, 0, sizeof(char_name));
 		       mmi_wcs_to_asc(char_name,first_name);
 		       memset(tmp_date, 0, sizeof(tmp_date));
-		       memcpy(tmp_date,char_name,10);
+		       memcpy(tmp_date,char_name,14);
 
 		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %s",tmp_date);
 		       if((strcmp(file_date[count-1], tmp_date) != 0)&&(tmp_date[0]!=0))
 		       {
-		           memcpy(file_date[count],tmp_date,10);
+		           memcpy(file_date[count],tmp_date,14);
+		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data222 %s",file_date[count]);
 		           count++;
 		       }
 		   };
@@ -1038,18 +1051,19 @@ void Bird_Tbox_delete()
 		   memset(file, 0, sizeof(file));
 		   kal_wsprintf(file,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);
 		   mmi_wcscat(file, L"\\");
-		   mmi_wcsncat(file, file_name,mmi_wcslen((kal_wchar*)BIRD_DATE_FORMAT));
+		   mmi_wcsncat(file, file_name,14);
 		   mmi_wcscat(file, file_hour[i]);
+		   mmi_wcscat(file, L".txt");
 		   
 		   memset(char_name, 0, sizeof(char_name));
 		   mmi_wcs_to_asc(char_name,file);
-		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete %s",char_name);
+		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete333 %s",char_name);
 
 		   FS_Delete(file);
            }
        }       
        StopTimer(BIRD_DELETE_FILE_TIMER);
-       StartTimer(BIRD_DELETE_FILE_TIMER, 10*60*1000, Bird_Tbox_delete);
+       StartTimer(BIRD_DELETE_FILE_TIMER, 60*60*1000, Bird_Tbox_delete);
 }
 void yd_can_alarm()
 {	

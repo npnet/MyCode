@@ -447,13 +447,13 @@ void yd_tk005_set_default_record_to_NV()
 	
 	/*NVÄ¬ÈÏÖµ*/
 	memcpy((void *)yd_tk005_info.nvbatch, (const void *)YD_NV_BATCH, strlen((const char *)YD_NV_BATCH));
-	yd_tk005_info.savedata_ival=1000;
+	yd_tk005_info.savedata_ival=2000;
 	yd_tk005_info.nmal_main_ival=10;
 	yd_tk005_info.alarm_main_ival=1000;
 	yd_tk005_info.heart_ival=120;
 	yd_tk005_info.ter_res_time=60;
 	yd_tk005_info.ser_res_time=60;
-	yd_tk005_info.conn_interval=30;
+	yd_tk005_info.conn_interval=1;
 
 	WriteRecord(NVRAM_EF_TD_TK005_SETTING,
 				1,

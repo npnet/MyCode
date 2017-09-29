@@ -51,6 +51,7 @@ extern void bird_watchdog_control();
 extern void yd_set_power_off_msg();
 extern void can_rx_data_check();
 extern void Bird_Tbox_Init(void);
+extern void Bird_acc();
 
 /*-------------------------------------------------------
                       获取传感器状态
@@ -749,7 +750,10 @@ void Bird_start()
 	SetProtocolEventHandler(can2_hw_rx, MSG_ID_CAN2_HW_RX); 
 	SetProtocolEventHandler(can_rx_data_check, MSG_ID_CAN_RX_CHECK); 
 	
-	
+	yd_set_aux_key_on_msg();
+	yd_set_acc_key_closed_msg();
+	RJ_GPS_StartTimer(BIRD_SOS_STATE_timer, 400, Bird_acc);
+
 	//RJ_GPS_StartTimer(BIRD_ACC_ECU_CHECK_TIMER, 15*1000, can2_eint_hisr); 
 	//RJ_GPS_Simled_LightWink();
 	//RJ_GPS_Gsmled_LightWink();
@@ -778,8 +782,6 @@ void Bird_start()
 #ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
 	StartTimer(BIRD_CAN_SIMULATE_SEND_TIMER, 10000, can_simulate_timer);
 #endif
-
-	StartTimer(BIRD_DELETE_FILE_TIMER, 10*60*1000, Bird_Tbox_delete);
 
 /*Added by Huangwenjian for dw11 board production 20160530 begin*/
        gpio_data = GPIO_ReadIO(18);

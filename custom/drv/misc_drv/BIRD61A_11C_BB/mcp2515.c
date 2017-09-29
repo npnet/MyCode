@@ -372,6 +372,13 @@ void MCP2515_byte_write1(U8 adr,U8 dat)
 	
 }
 
+void MCP2515_can1_rts_tx0(void)
+{
+	GPIO_WriteIO(0,SPI_CS_PORT1);	//CS=0;
+	spi_send(SPI_RTS_TXB0);
+	GPIO_WriteIO(1,SPI_CS_PORT1);	//CS=1;	
+}
+
 U8 MCP2515_byte_read2(U8 adr)
 {
 	U8 temp;
@@ -393,7 +400,12 @@ void MCP2515_byte_write2(U8 adr,U8 dat)
 	spi_send(dat);
 	GPIO_WriteIO(1,SPI_CS_PORT2);	//CS=1;
 }
-
+void MCP2515_can2_rts_tx0(void)
+{
+	GPIO_WriteIO(0,SPI_CS_PORT2);	//CS=0;
+	spi_send(SPI_RTS_TXB0);
+	GPIO_WriteIO(1,SPI_CS_PORT2);	//CS=1;	
+}
 //from hgx  for spi Simulation
 
 //**********************************************************// 
@@ -923,8 +935,11 @@ void mcp2515_init_gpio_spi(void)
 
 	//开通RX1的接收中断和错误中断
 	//mcp2515_write_register(CANINTE,0x22);	//ERRIE and RX1IE enabled
-	MCP2515_byte_write2(CANINTE,0x01);	//RX0IE  enabled  here must 0x01  or int can not effective
-	data = MCP2515_byte_read2(CANINTE);
+#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT	
+	MCP2515_byte_write2(CANINTE,0x04);	//RX0IE  enabled  here must 0x01  or int can not effective
+#else
+	MCP2515_byte_write2(CANINTE,0x01);
+#endif
 	kal_prompt_trace(MOD_SOC, "CANINTE = %x", data);  
 	
 	MCP2515_byte_write2(CANCTRL,REQOP_NORMAL | CLKOUT_ENABLED | CLKOUT_PRE_8);
@@ -1050,7 +1065,11 @@ void mcp2515_init_gpio_spi(void)
 
 	//开通RX1的接收中断和错误中断
 	//mcp2515_write_register(CANINTE,0x22);	//ERRIE and RX1IE enabled
-	MCP2515_byte_write1(CANINTE,0x01);	//RX0IE  enabled  here must 0x01  or int can not effective
+#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT	
+	MCP2515_byte_write1(CANINTE,0x04);	//RX0IE  enabled  here must 0x01  or int can not effective
+#else
+	MCP2515_byte_write1(CANINTE,0x01);
+#endif
 	data = MCP2515_byte_read1(CANINTE);
 	kal_prompt_trace(MOD_SOC, "CAN1 CANINTE = %x", data);  
 	

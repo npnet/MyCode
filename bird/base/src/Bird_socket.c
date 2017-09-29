@@ -86,6 +86,8 @@ extern U8 g_gettime_flag;
 extern U8 g_third_alarm_flag;
 
 extern void Yd_logintxbox();
+extern U8 g_n_ydislogin;
+extern U16 g_login_count;
 
 BOOL Lima_get_soc_init_flag()
 {
@@ -975,13 +977,14 @@ void Bird_alarm_low_return(){
 
 void Bird_heart_return()
 {
-	kal_prompt_trace(MOD_SOC,"Bird_heart_return");
-
+	kal_prompt_trace(MOD_SOC,"Bird_heart_return %d",Lima_get_soc_conn_flag());
+	if(Lima_get_soc_conn_flag())
+	{
 	Lima_set_soc_init_flag(FALSE);
 	Lima_Soc_Dinit();
 	Bird_clear_soc_conn();
 	Bird_soc_conn();
-	Yd_logintxbox();
+	}
 	
 }
 /***************************************************************************
@@ -2853,12 +2856,12 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 {
     U8 nrestresion=0;
     app_soc_notify_ind_struct       *soc_notify = (app_soc_notify_ind_struct*) inMsg;
-    kal_prompt_trace(MOD_USB, "[Lima_Soc_Socket_Notify]Entry");
-    kal_prompt_trace(MOD_USB, "[Lima_Soc_Socket_Notify]soc_notify->event_type = %d", soc_notify->event_type);
+    kal_prompt_trace(MOD_SOC, "[Lima_Soc_Socket_Notify]Entry");
+    kal_prompt_trace(MOD_SOC, "[Lima_Soc_Socket_Notify]soc_notify->event_type = %d", soc_notify->event_type);
     //添加异步处理2009-06-11
     if ((NULL == g_lima_gp_socket)||(soc_notify->socket_id != g_lima_gp_socket->socket_id))
     {//假如是已经处理完的socket,不在处理
-        kal_prompt_trace(MOD_USB, "[Lima_Soc_Socket_Notify]notify->socket_id = %d, g_lima_gp_socket->socket_id = %d", soc_notify->socket_id, g_lima_gp_socket->socket_id);
+        kal_prompt_trace(MOD_SOC, "[Lima_Soc_Socket_Notify]notify->socket_id = %d, g_lima_gp_socket->socket_id = %d", soc_notify->socket_id, g_lima_gp_socket->socket_id);
         return FALSE;
     }
 
@@ -2879,6 +2882,12 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 		   if(nrestresion!=0){
 			  Bird_set_reseterr(BIRD_NORMAL);
 			  yd_send_save_nv_msg();
+		   }
+		   if(g_n_ydislogin!=0)
+		   {
+			  g_n_ydislogin=2;
+			  g_login_count++;
+			  Yd_logintxbox();
 		   }
 		   Bird_save_ip();		   
 		   g_n_reconn = 0;
