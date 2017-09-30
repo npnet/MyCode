@@ -981,11 +981,11 @@ void DclPW_PowerInit(void)
 	DclHKBD_Control(pw_KeypadHandler,HKBD_CMD_GET_POWER_KEY_STATUS , (DCL_CTRL_DATA_T*)&powerkeyStatus);
 	
 	// check power key pressed
-    #if defined(__FAST_LOGO__)
-    if (powerkeyStatus.fgPKP || (power_detect_reason_bl & PWR_FACTOR_BL_POWER_KEY))
-    #else
-	if (powerkeyStatus.fgPKP)
-    #endif    
+   // #if defined(__FAST_LOGO__)
+  //  if (powerkeyStatus.fgPKP || (power_detect_reason_bl & PWR_FACTOR_BL_POWER_KEY))
+  //  #else
+//	if (powerkeyStatus.fgPKP)
+ //   #endif    
 	{
 		factors[PWR_FACTOR_POWER_KEY] = KAL_TRUE;
 	}
