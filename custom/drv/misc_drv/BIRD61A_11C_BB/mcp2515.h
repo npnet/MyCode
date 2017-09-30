@@ -295,7 +295,7 @@ Reference:   "mcp2515.h" of Fabian Greif
 #define CAN_STBY_PORT2  3
 
 #define SPI_CS_PORT1     30
-#define SPI_CS_PORT2     26
+#define SPI_CS_PORT2     15
 #define SPI_SCK_PORT   27
 #define SPI_MOSI_PORT 28
 #define SPI_MISO_PORT 29
