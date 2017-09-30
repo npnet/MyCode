@@ -670,6 +670,7 @@ extern kal_uint8 get_smart_seal_status(void);
 #endif
 kal_bool custom_cfg_gpio_set_level(kal_uint8 gpio_dev_type, kal_uint8 gpio_dev_level )
 {
+#ifdef SMART_SEAL_SUPPORT
     DCL_HANDLE pwm_handle;
     PWM_LEVEL_T level;
 	PMU_CTRL_KPLED_SET_EN val_kpled;
@@ -687,48 +688,29 @@ kal_bool custom_cfg_gpio_set_level(kal_uint8 gpio_dev_type, kal_uint8 gpio_dev_l
 	switch(gpio_dev_type)
 	{
 		case GPIO_DEV_LED_MAINLCD:
-			#ifdef LQT_SUPPORT /* Please don't remove LQT code segments */
-			if(!(lcd_at_mode == LCD_AT_RELEASE_MODE))
-			{
-				gpio_dev_level = 5;
-			}
-			#endif /* LQT_SUPPORT */
 
-			/*if( gpio_dev_level == LED_LIGHT_LEVEL0)
-				GPIO_WriteIO(GPIO_OFF, gpio_led_mainbl_en_pin);
-			else
-				GPIO_WriteIO(GPIO_ON, gpio_led_mainbl_en_pin);
-			*/           
-
-			level.pwm_level = gpio_dev_level;
-			pwm_handle= DclPWM_Open(DCL_MAIN_LCD_BL, MOD_UEM);
-			DclPWM_Control(pwm_handle, PWM_CMD_SET_LEVEL,(DCL_CTRL_DATA_T*)&level);
-			DclPWM_Close(pwm_handle);  
-
-			if( gpio_dev_level == LED_LIGHT_LEVEL0)
-			{
-			    Backlight_Enable(KAL_FALSE);
-			}
-			else
-			{
-			    Backlight_Enable(KAL_TRUE);
-			}
         	break;
 
 		case GPIO_DEV_LED_SUBLCD:
 			break;
 
 		case GPIO_DEV_LED_STATUS_1:
+#ifdef SMART_SEAL_SUPPORT			
+			if (get_smart_seal_status() == KAL_TRUE)
+				break;
+#endif			
+			if( gpio_dev_level == LED_LIGHT_LEVEL0)
+			{
+			    Open_Islink(KAL_FALSE);
+			}
+			else
+			{
+			    Open_Islink(KAL_TRUE);
+			}
 			break;
 
 		case GPIO_DEV_LED_STATUS_2:
-			break;
 
-		case GPIO_DEV_LED_STATUS_3:
-			break;
-
-		case GPIO_DEV_LED_KEY:
-		#if 0
 			level.pwm_level = gpio_dev_level;
 			pwm_handle= DclPWM_Open(DCL_LED_KP, MOD_UEM);
 			DclPWM_Control(pwm_handle, PWM_CMD_SET_LEVEL,(DCL_CTRL_DATA_T*)&level);
@@ -750,33 +732,29 @@ kal_bool custom_cfg_gpio_set_level(kal_uint8 gpio_dev_type, kal_uint8 gpio_dev_l
 				DclPMU_Control(handle, KPLED_SET_EN, (DCL_CTRL_DATA_T *)&val_kpled);
 				DclPMU_Close(handle);
 			}
-			#endif
 			break;
-#if 0
+
+		case GPIO_DEV_LED_STATUS_3:
+		{		
+			;
+		}
+			break;
+
+		case GPIO_DEV_LED_KEY:
+
+			break;
+
 		case GPIO_DEV_VIBRATOR:
-			{
-				DCL_HANDLE handle;
-				PMU_CTRL_LDO_BUCK_SET_EN ldoSetEn;
-				handle = DclPMU_Open(DCL_PMU, FLAGS_NONE);
-				ldoSetEn.mod = VIBR;
-				if(gpio_dev_level != LED_LIGHT_LEVEL0)
-				{
-					ldoSetEn.enable = DCL_TRUE;
-				}
-				else // VIBRATOR_OFF: Vibrator off
-				{
-					ldoSetEn.enable = DCL_FALSE;
-				}
-				DclPMU_Control(handle, LDO_BUCK_SET_EN, (DCL_CTRL_DATA_T *)&ldoSetEn);
-				DclPMU_Close(handle);
-			}
+			
 			break;
-#endif
+
 		default:
 			/* error undefine */
 			return KAL_FALSE;
 	}
 
+	return KAL_TRUE;
+#endif	
 	return KAL_TRUE;
 }
 
