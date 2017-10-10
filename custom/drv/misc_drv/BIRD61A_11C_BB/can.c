@@ -37,6 +37,7 @@ typedef struct
 }can_data_struct;
 #ifdef CAN_SHANSHAN_SUPPORT
 #define CAN_DATA_NUM 37
+
 can_data_struct can_send_data_normal[CAN_DATA_NUM] = {
 	{0x18F1FB27, 0x8, {0x48, 0x0, 0x0, 0x0, 0xB8, 0xB, 0x0, 0x85}},/*车辆状态 DCDC 加速踏板行程值 制动踏板状态*/
 	{0x1818D0F3, 0x8, {0x57, 0x6, 0x4A, 0x7D, 0xFA, 0x0, 0x0, 0x0}},/*总电压 总电流 SOC SOC过高报警 绝缘报警 储能装置电压/电流*/
@@ -294,10 +295,37 @@ void can_unit_fill(kal_uint32 id, kal_uint8 *data)
 	id_value[2] = (id & 0xff00)>>8;
 	id_value[3] = (id & 0xff);
 
-	kal_prompt_trace(MOD_USB, "can_unit_fill,");	
-	for(i = 0; i< CAN_ID_NUM; i++)
+	kal_prompt_trace(MOD_USB, "can_unit_fill id_value[0] = %x, id_value[1]= %x, id_value[2]= %x, id_value[3]= %x", id_value[0], id_value[1], id_value[2], id_value[3]);	
+#ifdef CAN_SHANSHAN_SUPPORT	
+	if (id == 0x18FF97D2)
 	{
-	
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[0] = %d", data[0]);
+		memcpy(&can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][4], data, CAN_DATA_LENGTH);
+#if	SHANSHAN_CAN_DEBUG	
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[5] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][5]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[6] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][6]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[7] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][7]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[8] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][8]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[9] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][9]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[10] = %x", can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][10]);
+#endif		
+	}
+	else if (id == 0x18FF98D2)
+	{
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[0] = %d", data[0]);
+		memcpy(&can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][4], data, CAN_DATA_LENGTH);
+#if SHANSHAN_CAN_DEBUG		
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[5] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][5]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[6] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][6]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[7] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][7]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[8] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][8]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[9] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][9]);
+		kal_prompt_trace(MOD_USB, "can_unit_fill data[10] = %x", can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][10]);
+#endif		
+	}	
+#endif
+	for(i = 0; i< CAN_SINGLE_UNIT_NUM; i++)
+	{
 		if((can_rx_temp_buf[i][0] == id_value[0]) && (can_rx_temp_buf[i][1] == id_value[1]) 
 			&& (can_rx_temp_buf[i][2] == id_value[2]) && (can_rx_temp_buf[i][3] == id_value[3]))
 		{

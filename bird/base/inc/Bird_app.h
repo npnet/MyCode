@@ -131,7 +131,7 @@
 	#define YD_TK001_HTTP2 "http://sk.gpslink.cn:8090/"
 	#define YD_TK001_IP2 "139.129.87.204:8090"
 	#define YD_TK001_YD_ADMIN_PSW "bdws"
-	#define YD_NV_BATCH "Y4.0"	
+	#define YD_NV_BATCH "Y4.1"	
 #else 
 	#define RJ_GPS_VERSION			"V1.01_NBBD_20170727_DW11OTA_MT6261"
 	/*ƒ¨»œ√‹¬Î*/
@@ -267,10 +267,12 @@ typedef enum   //all timer
        BIRD_PWM_CONTROL_TIMER,
        BIRD_TRACECAR_TIMER,
        BIRD_LEARN_TIMER,
+       BIRD_DISCON_SOCK_TIMER,       
        BIRD_DELETE_FILE_TIMER,
  
 	Bird_task_login_Timer,
 	Bird_task_logintxbox_Timer,
+	Bird_task_connlogin_Timer,
 	Bird_task_calibtime_Timer,
 	Bird_task_24calib_Timer,
        Bird_task_main_Timer,

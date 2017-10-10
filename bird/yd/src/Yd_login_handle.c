@@ -80,6 +80,16 @@ void Yd_login()
 	}
 }
 
+void Yd_conn_logintxbox()
+{	 
+	kal_prompt_trace(MOD_SOC,"Yd_conn_logintxbox %d",b_acc_switch_status);
+       if(!b_acc_switch_status)
+	   	return;
+	   
+       g_login_count++;
+       bird_soc_send_tboxlogin();
+}
+
 void Yd_logintxbox()
 {	 
 	U8 nrestarttimes = 0;
@@ -111,6 +121,7 @@ void Yd_logintxbox()
 	}
 	if(Lima_get_soc_conn_flag())
 	{
+	    Rj_stop_timer(Bird_task_connlogin_Timer);
 	    g_n_conn_times++;
 	    bird_soc_send_tboxlogin();
 	}
@@ -142,16 +153,20 @@ void Yd_login_res(U8 *datetime,U8 *flag)
 	}
 }
 
+applib_time_struct g_login_time={0};
 void Yd_tboxlogin_res(U8 *buf,U8 length)
 {
 	kal_prompt_trace(MOD_SOC," Yd_tboxlogin_res %d",g_n_ydislogin);
-	if(g_n_ydislogin==0)		
+	applib_dt_get_rtc_time(&g_login_time); 
+	g_login_time.nMin++;
+	
+	if((g_n_ydislogin==0)||(g_n_ydislogin==3))		
 	{
 		g_n_ydislogin = 1;			
 		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
 		g_n_conn_times=0;
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
-
+		Rj_stop_timer(Bird_task_connlogin_Timer); 
 		//设置消息句柄
 		Yd_set_all_msg_handler();
 		yd_send_save_nv_msg();	
@@ -161,7 +176,7 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 		Rj_start_timer(Bird_task_heart_Timer, 10*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
 		
 		Rj_stop_timer(Bird_task_main_Timer); 
-		Rj_start_timer(Bird_task_main_Timer, 10*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
+		Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
 		Rj_stop_timer(Bird_task_savedata_Timer); 
 		Rj_start_timer(Bird_task_savedata_Timer, 1*1000, Yd_savedata,NULL);/*启动存储数据*/	
 		StartTimer(BIRD_DELETE_FILE_TIMER, 1*60*1000, Bird_Tbox_delete);
@@ -174,8 +189,17 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
 		g_n_conn_times=0;
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
+		Rj_stop_timer(Bird_task_connlogin_Timer); 
 
 		bird_soc_send_tboxselfdefine();
+	}
+	else
+	{
+		g_n_ydislogin = 1;			
+		rj_led_status_info.b_SERVER_IS_LOGGING = KAL_FALSE;	
+		g_n_conn_times=0;
+		Rj_stop_timer(Bird_task_logintxbox_Timer); 
+		Rj_stop_timer(Bird_task_connlogin_Timer); 
 	}
 
 }
@@ -183,7 +207,7 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 void Yd_logouttxbox()
 {	 
 
-	kal_prompt_trace(MOD_SOC,"Yd_logintxbox %d",g_login_count);
+	kal_prompt_trace(MOD_SOC,"Yd_logouttxbox %d",g_login_count);
 
 	bird_soc_send_tboxlogout();
 	g_login_count++;

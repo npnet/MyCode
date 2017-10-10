@@ -89,6 +89,7 @@ extern U8* bird_get_can_time_30S(U8 index);
 extern void can_data_reset();
 extern void can_data_30S_reset();
 extern void TB_Soc_get_cantime(applib_time_struct *dt);
+extern void Yd_tbox_heart();
 
 #ifndef BIRD_ACC_UNSUPPORT
 extern kal_bool get_Acc_onoff2();
@@ -796,14 +797,22 @@ void Yd_DiniSocketDelay()
 	Rj_start_timer(Bird_task_sleep_dinisocket_Timer, RJ_GPS_APP_1M*4, Yd_DinitSocket,NULL); 
 }
 
+void yd_start_con_socket()
+{
+		kal_prompt_trace(MOD_SOC,"yd_start_con_socket");   
+		Bird_soc_conn();
+		Rj_stop_timer(Bird_task_heart_Timer); 
+		Rj_start_timer(Bird_task_heart_Timer, 1000, Yd_tbox_heart,NULL);
+}
 void Yd_disconnect_socket()
 {
 		Lima_set_soc_init_flag(FALSE);
 		Lima_Soc_Dinit();
 		Bird_clear_soc_conn();
-		Rj_stop_timer(BIRD_TASK_SOCKET_SEND); //Í£Ö¹·¢ËÍ¶¨Ê±Æ÷
-		Rj_stop_timer(Bird_task_sleep_dinisocket_Timer);
-		Rj_start_timer(Bird_task_sleep_dinisocket_Timer, RJ_GPS_APP_1M*5, Bird_soc_conn,NULL); 
+		Rj_stop_timer(BIRD_TASK_HEART_WAIT_TIMER);
+		Rj_stop_timer(Bird_task_heart_Timer); 
+		StopTimer(BIRD_DISCON_SOCK_TIMER);
+		StartTimer(BIRD_DISCON_SOCK_TIMER, RJ_GPS_APP_1M*5, yd_start_con_socket); 
 }
 void  yd_upload_call_handler(U8* caller, U16 len)
 {

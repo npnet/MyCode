@@ -49,6 +49,11 @@ RJ_Gps_Position gps_position = {0};
 RJ_Gps_Position heart_position = {0};
 RJ_Gps_Position alarm_position = {0};
 RJ_Gps_Position rj_position;
+U8 g_pos_data_num=0;
+U8 g_pos_data[9]={0};
+U8 g_pos_data_30S[9*30]={0};
+U8 g_gpscheck=0;
+
 RJ_gps_engineer_satinfo engineer_satinfo[MDI_GPS_NMEA_MAX_SVVIEW];              /* 工程模式数据数组 */
 #ifdef MTK_SLEEP_ENABLE
 kal_uint8 gps_signal_handle;
@@ -101,6 +106,7 @@ void RJ_GPS_Init(void)
 {
         kal_prompt_trace( MOD_SOC,"[RJ_GPS_Gps_Init]");
         memset(&RJ_Gps_Info, 0, sizeof(RJ_Gps_User_Info));
+        g_pos_data[0]=0x01;
         //memset(&rj_position, 0, sizeof(RJ_Gps_Position));
         //RJ_GPS_SetGpsModule(RJ_GPS_STATUS_ON);
 }
@@ -424,10 +430,6 @@ static void RJ_GPS_nmea_txt_callback(mdi_gps_nmea_txt_struct *param)
 	}
 }
 
-U8 g_pos_data_num=0;
-U8 g_pos_data[9]={0};
-U8 g_pos_data_30S[9*30]={0};
-U8 g_gpscheck=0;
 void RJ_reset_GPS_flag(void)
 {
     g_n_saltllite_snr_isvalid = 0;
@@ -514,7 +516,7 @@ S8 fjchar1[16];
 	 {
 	     g_pos_data[0]=(0x01&(rj_position.north_south!=78))<<1;	 
 	     g_pos_data[0]=(0x01&(rj_position.east_west!=69))<<2;
-		 kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback g_pos_data %d,%d,%d",rj_position.north_south,rj_position.east_west);
+		 kal_prompt_trace(MOD_SOC," RJ_GPS_nmea_gga_callback g_pos_data %d,%d",rj_position.north_south,rj_position.east_west);
 	 }
 	 g_pos_data[1]=(U8)((U32)(rj_position.lg*1000000)/0x1000000);	 
 	 g_pos_data[2]=(U8)(((U32)(rj_position.lg*1000000)/0x10000)%0x100);	 

@@ -47,7 +47,7 @@ U8 bird_get_encryption()
 
 void bird_encryp_aes128(U8* sendBuffer,U16 *sendBuffer_len)
 {
-	U8 zero[16]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+	U8 zero[16];
 	U8 i;
 	U16 t;
 	U16 h;
@@ -56,10 +56,12 @@ void bird_encryp_aes128(U8* sendBuffer,U16 *sendBuffer_len)
 	
 	h=(*sendBuffer_len-25)/16+1;
 	t=h*16-(*sendBuffer_len-25);
-	
+	kal_prompt_trace(MOD_SOC,"bird_encryp_aes128:h=%d,t=%d",h,t);
+	for(i=0;i<t;i++)
+		zero[i]=t;
 	memset(data,0,sizeof(data));
 	memcpy(data,sendBuffer+24,*sendBuffer_len-25);
-	memcpy(data,zero,t);
+	memcpy(data+*sendBuffer_len-25,zero,t);
 
 	bird_set_aes128_encode(data,h);
 	memcpy(sendBuffer+24,data,h*16);
@@ -689,7 +691,6 @@ U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,applib_time
 	send_len = send_len + 1;
 	sendBuffer[send_len]=(U8)(length%256);
 	send_len = send_len + 1;
-	kal_prompt_trace(MOD_SOC,"TB_Soc_Send_realinfo_ReqBuffer length=%d",length);
 	//数据采集时间
 	if(txbox_can_time(dt)!=NULL)
 	{
@@ -1552,7 +1553,10 @@ void bird_tbox_control_param_res(U8* rest_buf, U32 length)
 		}
 		else if(buf[buf_pos]==0x05)
 		{
-			Yd_disconnect_socket();
+			kal_prompt_trace(MOD_SOC,"bird_tbox_control_param_res disc");
+			bird_soc_send_tboxcontrol(time_rec,length-6, rest_buf+6, 1);
+			Rj_stop_timer(Bird_task_sleep_dinisocket_Timer);
+			Rj_start_timer(Bird_task_sleep_dinisocket_Timer,10*1000, Yd_disconnect_socket,NULL);
 		}
 		/*
 		else if(buf[buf_pos]==0x06)
@@ -1600,6 +1604,8 @@ void bird_soc_send_tboxlogout(void)
 	_send.send_type=BIRD_SOC_SEND_OTHER;
 	memset(_send.send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
 	TB_Soc_Send_logout_ReqBuffer(_send.send_buf,&_send.buf_len,&_send.send_flow);
+	if(bird_get_encryption()==ENCRYPT_AES)
+	bird_encryp_aes128(_send.send_buf,&_send.buf_len);
 	Bird_soc_sendbufAdd2(&_send);
 }
 
@@ -1612,6 +1618,8 @@ void bird_soc_send_tboxselfdefine(void)
 	_send.send_type=BIRD_SOC_SEND_OTHER;
 	memset(_send.send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
 	TB_Soc_Send_selfdefine_ReqBuffer(_send.send_buf,&_send.buf_len,&_send.send_flow);
+	if(bird_get_encryption()==ENCRYPT_AES)
+	bird_encryp_aes128(_send.send_buf,&_send.buf_len);
 	Bird_soc_sendbufAdd2(&_send);
 }
 
@@ -1652,6 +1660,8 @@ U8 bird_soc_send_tboxrealinfo(Send_Info *sendinfo,applib_time_struct *dt)
 	}
 	if(Lima_get_soc_conn_flag())
 	{
+	if(bird_get_encryption()==ENCRYPT_AES)
+	bird_encryp_aes128(sendinfo->send_buf,&sendinfo->buf_len);
 	    //Bird_soc_sendbufAdd2(sendinfo);
 	}
 	return rtn;
@@ -1671,6 +1681,8 @@ U8 bird_soc_send_resendinfo(Send_Info *sendinfo,U8 index,applib_time_struct *dt)
 	    kal_prompt_trace(MOD_SOC,"bird_soc_send_resendinfo time not get");
 		return 0;
 	}
+	if(bird_get_encryption()==ENCRYPT_AES)
+	bird_encryp_aes128(sendinfo->send_buf,&sendinfo->buf_len);
 	Bird_soc_alarm_sendbufAdd2(sendinfo);
 	return rtn;
 }

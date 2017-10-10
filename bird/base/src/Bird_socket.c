@@ -85,7 +85,7 @@ U8 g_sleeppos_times = 0;
 extern U8 g_gettime_flag;
 extern U8 g_third_alarm_flag;
 
-extern void Yd_logintxbox();
+extern void Yd_conn_logintxbox();
 extern U8 g_n_ydislogin;
 extern U16 g_login_count;
 
@@ -978,7 +978,7 @@ void Bird_alarm_low_return(){
 void Bird_heart_return()
 {
 	kal_prompt_trace(MOD_SOC,"Bird_heart_return %d",Lima_get_soc_conn_flag());
-	if(Lima_get_soc_conn_flag())
+	if(!Lima_get_soc_conn_flag())
 	{
 	Lima_set_soc_init_flag(FALSE);
 	Lima_Soc_Dinit();
@@ -2852,10 +2852,13 @@ static MMI_BOOL Lima_Soc_Get_Host_By_Name_Ind(void *inMsg)
 
 }
 
+extern applib_time_struct g_login_time;
 static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 {
     U8 nrestresion=0;
     app_soc_notify_ind_struct       *soc_notify = (app_soc_notify_ind_struct*) inMsg;
+    applib_time_struct curtime={0};
+
     kal_prompt_trace(MOD_SOC, "[Lima_Soc_Socket_Notify]Entry");
     kal_prompt_trace(MOD_SOC, "[Lima_Soc_Socket_Notify]soc_notify->event_type = %d", soc_notify->event_type);
     //添加异步处理2009-06-11
@@ -2874,7 +2877,17 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
             	//LED闪烁
 		rj_led_status_info.b_SOC_IS_CONNECTED = KAL_TRUE;
 		rj_led_status_info.b_SOC_IS_CONNECTING = KAL_FALSE;
-		
+
+		   if((g_n_ydislogin!=0)&&(g_n_ydislogin!=3)&&!Lima_get_soc_conn_flag())
+		   {
+		         applib_dt_get_rtc_time(&curtime);
+		         if((applib_dt_compare_time(&curtime,&g_login_time,NULL)!= DT_TIME_LESS))
+		         {
+		         Rj_stop_timer(Bird_task_connlogin_Timer); 
+		         Rj_start_timer(Bird_task_connlogin_Timer, 60*1000, Yd_conn_logintxbox,NULL);
+		         }
+		   }
+		   
                  Lima_set_soc_init_flag(TRUE);	
   		   Lima_set_soc_conn_flag(TRUE);
 		   Lima_set_soc_send_flag(BIRD_SOC_NULL);
@@ -2883,12 +2896,7 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 			  Bird_set_reseterr(BIRD_NORMAL);
 			  yd_send_save_nv_msg();
 		   }
-		   if(g_n_ydislogin!=0)
-		   {
-			  g_n_ydislogin=2;
-			  g_login_count++;
-			  Yd_logintxbox();
-		   }
+
 		   Bird_save_ip();		   
 		   g_n_reconn = 0;
 		   //StartTimer(BIRD_SOCKET_SEND, RJ_GPS_APP_10S, Bird_soc_send);

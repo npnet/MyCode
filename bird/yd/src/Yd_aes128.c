@@ -274,7 +274,7 @@ void aes128_encode(U8 *in,U8 * w)
 	U8 d1[200];
 	U16 j;
 	memset(d1,0,sizeof(d1));
-	kal_prompt_trace(  MOD_SOC,"start encode ");
+	
 	for(i=0;i<4;i++)
 	{
 	    for(j=0;j<Nb;j++)
@@ -300,14 +300,49 @@ void aes128_encode(U8 *in,U8 * w)
 	    	in[i+4*j]=d1[i*Nb+j];//¾ØÕóÖÃ»»
     	}
 	}
-	kal_prompt_trace(  MOD_SOC,"end encode ");
+	
 }
+void aes128_encodece(U8 *in,U8 * w)
+{
+	U16 i;
+	U8 d1[200];
+	U16 j;
+	memset(d1,0,sizeof(d1));
+	
+	for(i=0;i<4;i++)
+	{
+	    for(j=0;j<Nb;j++)
+	    {
+	    	d1[Nb*i+j]=in[i+4*j];//¾ØÕóÖÃ»»
+    	}
+	}
+    //addroundkey(d1,0,w);
+    for(i=0;i<Nr-1;i++)
+    {
+		subbytes(d1);
+		shiftrows(d1);
+	    mixcolumns(d1);
+		//addroundkey(d1,i+1,w);
+    }
+	subbytes(d1);
+	shiftrows(d1);
+	//addroundkey(d1,Nr,w);
+	for(i=0;i<4;i++)
+	{
+	    for(j=0;j<Nb;j++)
+	    {
+	    	in[i+4*j]=d1[i*Nb+j];//¾ØÕóÖÃ»»
+    	}
+	}
+	
+}
+
 void bird_set_aes128_encode(U8 *data,U16 l)
 {
-    U8 w[500];
+    U8 w[600];
 	U16 i;
 	U16 j;
-	U8 in[16];
+	U8 in[100];
 	// 128 bit key 
 	U8 key[] = {
 		 0xd6, 0x23, 0x43, 0xaa, 
@@ -320,6 +355,7 @@ void bird_set_aes128_encode(U8 *data,U16 l)
 		 0xa9,0xd8,0x25,0x17,
 		 0xc8,0x17,0xdf,0x4b}; //²¹Âë
 	memset(w,0,sizeof(w));
+	kal_prompt_trace(  MOD_SOC,"start encode ");
     key_expansion(key, w);
 	for(i=0;i<l;i++)
 	{
@@ -335,6 +371,7 @@ void bird_set_aes128_encode(U8 *data,U16 l)
 			iv[j]=in[j];
     	}
 	}
+	kal_prompt_trace(  MOD_SOC,"end encode ");
 }
 
 //½âÃÜ 
@@ -405,7 +442,7 @@ void aes128_inv_encode(U8 *in,U8 * w)
 	U8 d1[200];
 	U16 j;
 	memset(d1,0,sizeof(d1));
-	kal_prompt_trace(  MOD_SOC,"start inv_encode ");
+
 	for(i=0;i<4;i++)
 	{
 	    for(j=0;j<Nb;j++)
@@ -432,14 +469,14 @@ void aes128_inv_encode(U8 *in,U8 * w)
 	    	in[i+4*j]=d1[i*Nb+j];
     	}
 	}
-	kal_prompt_trace(  MOD_SOC,"end inv_encode ");
+	
 }
 void bird_set_inv_aes128_encode(U8 *data,U16 l)
 {
-    U8 w[500];
+    U8 w[600];
 	U8 i;
 	U8 j;
-	U8 in[200];
+	U8 in[100];
 	// 128 bit key 
 	U8 key[] = {
 		 0xd6, 0x23, 0x43, 0xaa, 
@@ -452,6 +489,7 @@ void bird_set_inv_aes128_encode(U8 *data,U16 l)
 		 0xa9,0xd8,0x25,0x17,
 		 0xc8,0x17,0xdf,0x4b};
 	memset(w,0,sizeof(w));
+	kal_prompt_trace(  MOD_SOC,"start inv_encode ");
     key_expansion(key, w);
 	for(i=0;i<l;i++)
 	{
@@ -468,6 +506,6 @@ void bird_set_inv_aes128_encode(U8 *data,U16 l)
 			
     	}
 	}
+	kal_prompt_trace(  MOD_SOC,"end inv_encode ");
 }
-
 

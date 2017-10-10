@@ -30,6 +30,7 @@
 #include "bird_app.h"
 #include    "dcl_adc.h"
 #include "can.h"
+#include "bird_can_data_shanshan.h"
 
 
 #define VALTAGE_SPACE  3
@@ -117,11 +118,14 @@ void can1_rx_id1818D0F3_data_check()
 	/*整车数据 总电压*/
 	car_data[9]=can_rx_buf[1][1+4];
 	car_data[10]=can_rx_buf[1][0+4];
+	kal_prompt_trace(MOD_SOC, "car_data[9] = %x, car_data[10] = %x", car_data[9], car_data[10]);	
 	/*整车数据 总电流*/
 	car_data[11]=can_rx_buf[1][3+4];
 	car_data[12]=can_rx_buf[1][2+4];
+	kal_prompt_trace(MOD_SOC, "car_data[11] = %x, car_data[12] = %x", car_data[11], car_data[12]);	
 	/*整车数据 SOC*/
-	car_data[13]=can_rx_buf[1][4+4];
+	car_data[13]=(can_rx_buf[1][4+4])*4/10;
+	kal_prompt_trace(MOD_SOC, "car_data[13] = %x", car_data[13]);	
 
 	/*通用报警标志 SOC过高报警*/
 	alarm_data[1] |= (bird_set_byte_bit(can_rx_buf[1][5+4],1,2))<<7;
@@ -611,53 +615,66 @@ void can1_rx_id18FDFF1A_data_check()
 
 void can1_rx_id18FF97D2_data_check()
 {
-	kal_uint8 value = 0;
+	kal_uint8 value = 0, i = 0;
 
-	value = can_rx_buf[21][0+4];
-	if ((value >25) || (((value + VALTAGE_SPACE- 1) / VALTAGE_SPACE) != 0))
+	for (i = CAN_VOLTAGE_NUM;  i<CAN_VOLTAGE_NUM+CAN_VOLTAGE_UNIT_LENGTH; i++)
 	{
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list value error!");	
-		return;
+		value = can_rx_buf[i][0+4];
+#if SHANSHAN_CAN_DEBUG  	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list i = %d value = %d", i, value);	
+#endif
+		if ((value >0x25) || (((value + VALTAGE_SPACE- 1) % VALTAGE_SPACE) != 0))
+		{
+			kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list value error! value = %d", value);	
+			return;
+		}
+
+		charging_device_voltage_data[11+(value-1)*2] = can_rx_buf[i][2+4];
+		charging_device_voltage_data[12+(value-1)*2] = can_rx_buf[i][1+4];
+		charging_device_voltage_data[13+(value-1)*2] = can_rx_buf[i][4+4];
+		charging_device_voltage_data[14+(value-1)*2] = can_rx_buf[i][3+4];
+		charging_device_voltage_data[15+(value-1)*2] = can_rx_buf[i][6+4];
+		charging_device_voltage_data[16+(value-1)*2] = can_rx_buf[i][5+4];	
+#if SHANSHAN_CAN_DEBUG 		
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[11+(value-1)*2]);	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[12+(value-1)*2]);	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[13+(value-1)*2]);	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[14+(value-1)*2]);	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[15+(value-1)*2]);	
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[16+(value-1)*2]);	
+#endif		
 	}
 
-	charging_device_voltage_data[11+(value-1)*2] = can_rx_buf[21][2+4];
-	charging_device_voltage_data[12+(value-1)*2] = can_rx_buf[21][1+4];
-	charging_device_voltage_data[13+(value-1)*2] = can_rx_buf[21][4+4];
-	charging_device_voltage_data[14+(value-1)*2] = can_rx_buf[21][3+4];
-	charging_device_voltage_data[15+(value-1)*2] = can_rx_buf[21][6+4];
-	charging_device_voltage_data[16+(value-1)*2] = can_rx_buf[21][5+4];	
 }
 
 
 void can1_rx_id18FF98D2_data_check()
 {
-	kal_uint8 value = 0;
+	kal_uint8 value = 0, i = 0;
 
-	value = can_rx_buf[22][0+4];
-	if ((value >7) || (((value + TEMPERATURE_SPACE -1) / TEMPERATURE_SPACE) != 0))
+	value = can_rx_buf[34][0+4];
+	
+	charging_device_temperature_data[4+(value-1)] = can_rx_buf[34][1+4];
+	charging_device_temperature_data[5+(value-1)] = can_rx_buf[34][2+4];
+	charging_device_temperature_data[6+(value-1)] = can_rx_buf[34][3+4];
+	charging_device_temperature_data[7+(value-1)] = can_rx_buf[34][4+4];
+	charging_device_temperature_data[8+(value-1)] = can_rx_buf[34][5+4];
+	charging_device_temperature_data[9+(value-1)] = can_rx_buf[34][6+4];	
+
+	value = can_rx_buf[35][0+4];
+	
+	charging_device_temperature_data[4+(value-1)] = can_rx_buf[35][1+4];
+	charging_device_temperature_data[5+(value-1)] = can_rx_buf[35][2+4];
+	charging_device_temperature_data[6+(value-1)] = can_rx_buf[35][3+4];
+	charging_device_temperature_data[7+(value-1)] = can_rx_buf[35][4+4];
+	charging_device_temperature_data[8+(value-1)] = can_rx_buf[35][5+4];
+	charging_device_temperature_data[9+(value-1)] = can_rx_buf[35][6+4];	
+#if SHANSHAN_CAN_DEBUG 
+	for(i = 4; i<14; i++)
 	{
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF98D2_data_check temperature list value error!");	
-		return;
-	}	
-	switch(value)
-	{
-		case 1:
-		charging_device_temperature_data[4+(value-1)] = can_rx_buf[22][1+4];
-		charging_device_temperature_data[5+(value-1)] = can_rx_buf[22][2+4];
-		charging_device_temperature_data[6+(value-1)] = can_rx_buf[22][3+4];
-		charging_device_temperature_data[7+(value-1)] = can_rx_buf[22][4+4];
-		charging_device_temperature_data[8+(value-1)] = can_rx_buf[22][5+4];
-		charging_device_temperature_data[9+(value-1)] = can_rx_buf[22][6+4];	
-		break;
-		case 7:
-		charging_device_temperature_data[4+(value-1)] = can_rx_buf[22][1+4];
-		charging_device_temperature_data[5+(value-1)] = can_rx_buf[22][2+4];
-		charging_device_temperature_data[6+(value-1)] = can_rx_buf[22][3+4];
-		charging_device_temperature_data[7+(value-1)] = can_rx_buf[22][4+4];
-		break;
-		default:
-			break;
+		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF98D2_data_check temperature list value = %x", charging_device_temperature_data[i]);	
 	}
+#endif	
 }
 
 
@@ -825,7 +842,7 @@ void can_rx_data_check_shanshan()
 		can1_rx_id18FF97D2_data_check();
 	}
 
-	i++; // 22
+	i = 34; // 34
 	id=(can_rx_buf[i][0]<<24)|(can_rx_buf[i][1]<<16)|(can_rx_buf[i][2]<<8)|can_rx_buf[i][3];
 
 	if(id == 0x18FF98D2)
@@ -833,7 +850,7 @@ void can_rx_data_check_shanshan()
 		can1_rx_id18FF98D2_data_check();
 	}
 
-	i++; // 22
+	i = 36; // 36
 	id=(can_rx_buf[i][0]<<24)|(can_rx_buf[i][1]<<16)|(can_rx_buf[i][2]<<8)|can_rx_buf[i][3];
 
 	if(id == 0x1806E5F4)
@@ -906,9 +923,24 @@ void can_table_create_shanshan(void)
 	can_id_fill(can_rx_temp_buf[18],	0x18FDFF1E);
 	can_id_fill(can_rx_temp_buf[19],	0x18FDFF13);
 	can_id_fill(can_rx_temp_buf[20],	0x18FDFF1A);
+	
 	can_id_fill(can_rx_temp_buf[21],	0x18FF97D2);
-	can_id_fill(can_rx_temp_buf[22],	0x18FF98D2);
-	can_id_fill(can_rx_temp_buf[23],	0x1806E5F4);
+	can_id_fill(can_rx_temp_buf[22],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[23],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[24],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[25],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[26],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[27],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[28],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[29],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[30],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[31],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[32],	0x18FF97D2);
+	can_id_fill(can_rx_temp_buf[33],	0x18FF97D2);
+	
+	can_id_fill(can_rx_temp_buf[34],	0x18FF98D2);
+	can_id_fill(can_rx_temp_buf[35],	0x18FF98D2);
+	can_id_fill(can_rx_temp_buf[36],	0x1806E5F4);
 }
 
 #endif

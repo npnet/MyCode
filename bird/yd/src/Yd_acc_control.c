@@ -185,18 +185,27 @@ void yd_tk001_post_alarm_key_off()
 void yd_acc_key_open()
 {
 	kal_prompt_trace(MOD_SOC,"yd_acc_key_open %d",g_n_ydislogin); 
+	if(!Lima_get_soc_conn_flag())
+	{
+		Lima_set_soc_init_flag(FALSE);
+		Lima_Soc_Dinit();
+		Bird_clear_soc_conn();
+		Bird_soc_conn();
+	}
        if(g_n_ydislogin==2)
        {
 	    Rj_stop_timer(Bird_task_heart_Timer); 
-	    Rj_start_timer(Bird_task_heart_Timer, 1*1000, Yd_tbox_heart,NULL);
+	    Rj_start_timer(Bird_task_heart_Timer, 10*1000, Yd_tbox_heart,NULL);
 	    Rj_stop_timer(Bird_task_main_Timer); 
-	    Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);
+	    Rj_start_timer(Bird_task_main_Timer, 10*1000, Yd_main,NULL);
 	
-	    Yd_logintxbox();
+	    Rj_stop_timer(Bird_task_logintxbox_Timer); 
+	    Rj_start_timer(Bird_task_logintxbox_Timer, 5*1000, Yd_logintxbox,NULL);	
        }
 	else if(g_n_ydislogin==3)
 	{
-	    Yd_logintxbox();
+	    Rj_stop_timer(Bird_task_logintxbox_Timer); 
+	    Rj_start_timer(Bird_task_logintxbox_Timer, 5*1000, Yd_logintxbox,NULL);	
 	}
 }
 
