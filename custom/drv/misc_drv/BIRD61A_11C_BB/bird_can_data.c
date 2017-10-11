@@ -303,7 +303,7 @@ can1_rx_charging_device_data_check(kal_uint8* data,kal_uint16 index)
 	}
 }
 #endif
-
+extern kal_uint8 can_selfcheck_flag;
 void can_rx_data_check()
 {
 	kal_int16 i,j;
@@ -311,7 +311,8 @@ void can_rx_data_check()
 	kal_uint32 temp_id;
 	kal_uint32 temp_id0,temp_id1,temp_id2,temp_id3,temp_id4,temp_id5,temp_id6,temp_id7,temp_id8,temp_id9,temp_id10,temp_id11,temp_id12,temp_id13,temp_id14,temp_id15;	
 
-kal_prompt_trace(MOD_SOC, "can_rx_data_check,");	
+kal_prompt_trace(MOD_SOC, "can_rx_data_check,");
+can_selfcheck_flag =1;
 #ifdef CAN_SHANSHAN_SUPPORT
 	can_rx_data_check_shanshan();
 #else
