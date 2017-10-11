@@ -743,6 +743,19 @@ void Bird_start()
 	rj_led_status_info.b_SERVER_IS_LOGGING = KAL_TRUE;	
 	rj_led_status_info.b_GPS_IS_CLOSE = KAL_FALSE;
 #endif
+	yd_tk001_get_record_from_NV();//从NV中读取已存数据 Bird_nv_info
+	yd_tk002_get_record_from_NV();
+#ifdef BIRD_BT_SUPPORT  
+	yd_tk003_get_record_from_NV();
+#endif
+        yd_tk004_get_record_from_NV();
+        yd_tk005_get_record_from_NV();
+#ifdef __BIRD_LED_IDENTIFY_WINK__
+	StartTimer(RJ_GPS_TIMER_YELLOLIGHT, 200, Bird_LED_Identify_Wink);
+#else
+	StartTimer(RJ_GPS_TIMER_YELLOLIGHT, 200, RJ_GPS_Gsmled_LightWink);
+#endif
+
 	//Bird_Log_Init();
 	Bird_Tbox_Init();
 	can_start();
@@ -759,13 +772,6 @@ void Bird_start()
 	//RJ_GPS_Gsmled_LightWink();
  	sprintf(buffer, "DW11_OPEN");
  	rmmi_write_to_uart((kal_uint8*)buffer, strlen(buffer), KAL_TRUE);	
-	yd_tk001_get_record_from_NV();//从NV中读取已存数据 Bird_nv_info
-	yd_tk002_get_record_from_NV();
-#ifdef BIRD_BT_SUPPORT  
-	yd_tk003_get_record_from_NV();
-#endif
-        yd_tk004_get_record_from_NV();
-        yd_tk005_get_record_from_NV();
 
 	Gps_get_handle();
 	//bird_ocin_init();
@@ -773,11 +779,6 @@ void Bird_start()
 	//Rj_stop_timer(BIRD_TASK_24REST_TIMER); 
 	//Rj_start_timer(BIRD_TASK_24REST_TIMER, 120*1000, Yd_24reset,NULL);
 	RJ_GPS_StartTimer(BIRD_WDG_timer, 1*1000, bird_watchdog_control); 
-#ifdef __BIRD_LED_IDENTIFY_WINK__
-	StartTimer(RJ_GPS_TIMER_YELLOLIGHT, 200, Bird_LED_Identify_Wink);
-#else
-	StartTimer(RJ_GPS_TIMER_YELLOLIGHT, 200, RJ_GPS_Gsmled_LightWink);
-#endif
 	StartTimer(BIRD_AT_TEST_TIMER, 2000, bird_At_test_flag);
 #ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
 	StartTimer(BIRD_CAN_SIMULATE_SEND_TIMER, 10000, can_simulate_timer);

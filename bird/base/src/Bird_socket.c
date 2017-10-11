@@ -2802,7 +2802,7 @@ static void Lima_Soc_Get_Host_By_Name(const S8 *hostname)
     }
     else if (SOC_WOULDBLOCK == ret)
     { /* waits for APP_SOC_GET_HOST_BY_NAME_IND */
-        SetProtocolEventHandler(Lima_Soc_Get_Host_By_Name_Ind, MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND);
+        mmi_frm_set_protocol_event_handler(MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND,Lima_Soc_Get_Host_By_Name_Ind, MMI_TRUE);
     }
     else
     {
@@ -2884,7 +2884,7 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 		         if((applib_dt_compare_time(&curtime,&g_login_time,NULL)!= DT_TIME_LESS))
 		         {
 		         Rj_stop_timer(Bird_task_connlogin_Timer); 
-		         Rj_start_timer(Bird_task_connlogin_Timer, 60*1000, Yd_conn_logintxbox,NULL);
+		         Rj_start_timer(Bird_task_connlogin_Timer, 2*1000, Yd_conn_logintxbox,NULL);
 		         }
 		   }
 		   
@@ -2902,7 +2902,8 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 		   //StartTimer(BIRD_SOCKET_SEND, RJ_GPS_APP_10S, Bird_soc_send);
 		   Rj_stop_timer(BIRD_TASK_SOCKET_SEND);
 		   Rj_start_timer(BIRD_TASK_SOCKET_SEND, 1000, Bird_soc_send,NULL);
-		   ClearProtocolEventHandler(MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND);
+		   //ClearProtocolEventHandler(MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND);
+		   mmi_frm_clear_protocol_event_handler(MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND, Lima_Soc_Get_Host_By_Name_Ind);
             }
             else
             {//ÊÖ»ú¿¨Óà¶î²»×ãerror_cause = -14£¬detail_cause = 3183

@@ -1255,6 +1255,13 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 		{
 		}
 		*/
+		else if(buf[t]==0x80)
+		{
+			memcpy(param+param_pos, buf+t,1);
+			param_pos=param_pos+1;
+			memcpy(param+param_pos, (S8 *)RJ_GPS_VERSION2,strlen((S8 *)RJ_GPS_VERSION2));
+			param_pos=param_pos+strlen((S8 *)RJ_GPS_VERSION2);
+		}
 		else
 		{
 		    kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res param error");

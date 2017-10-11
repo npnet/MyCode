@@ -179,6 +179,8 @@ static void gngga_callout(nmeap_context_t *context,void *data,void *user_data)
     gga_data.latitude = 	pgga->latitude;
     gga_data.longitude = pgga->longitude;
     gga_data.altitude = pgga->altitude;
+    gga_data.east_west= pgga->east_west;
+    gga_data.north_south= pgga->north_south;
     gga_data.h_precision = pgga->hdop;
     //kal_prompt_trace(MOD_SOC," gngga_callout pgga->satellites =%d",pgga->satellites);
     //kal_prompt_trace(MOD_SOC," gngga_callout gga_data->sat_in_view =%d",gga_data.sat_in_view);	

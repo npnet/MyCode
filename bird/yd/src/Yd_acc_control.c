@@ -185,6 +185,9 @@ void yd_tk001_post_alarm_key_off()
 void yd_acc_key_open()
 {
 	kal_prompt_trace(MOD_SOC,"yd_acc_key_open %d",g_n_ydislogin); 
+	if(KAL_FALSE == b_SIM_IS_OK)
+		return;
+	
 	if(!Lima_get_soc_conn_flag())
 	{
 		Lima_set_soc_init_flag(FALSE);

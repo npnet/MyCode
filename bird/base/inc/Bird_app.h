@@ -123,6 +123,7 @@
 #elif defined(BIRD_DW60)
 	#define RJ_GPS_VERSION			"V1.01"
 	#define RJ_HW_VERSION			"DW60"
+	#define RJ_GPS_VERSION2			"V1.01_NBBD_20171011_DW60"
 	/*默认密码*/
 	#define YD_TK001_PW "123456"
 	/*默认服务器地址*/

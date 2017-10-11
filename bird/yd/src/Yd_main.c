@@ -90,6 +90,7 @@ extern void can_data_reset();
 extern void can_data_30S_reset();
 extern void TB_Soc_get_cantime(applib_time_struct *dt);
 extern void Yd_tbox_heart();
+extern S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2);
 
 #ifndef BIRD_ACC_UNSUPPORT
 extern kal_bool get_Acc_onoff2();
@@ -1040,6 +1041,12 @@ void Bird_Tbox_delete()
 		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data222 %s",file_date[count]);
 		           count++;
 		       }
+		       if(Bird_comp_filename(first_name,file_name)<0)
+		       {
+		           memset(file_name, 0, sizeof(file_name));
+		           wcscpy(file_name,first_name);
+		       }
+
 		   };
 		   
 		   FS_FindClose(tboxdata_handle);

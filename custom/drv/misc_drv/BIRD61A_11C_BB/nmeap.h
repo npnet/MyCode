@@ -133,6 +133,8 @@ struct nmeap_gga {
 	unsigned long time;
 	int           satellites;
 	int           quality;
+	kal_int8 east_west;
+	kal_int8 north_south;
 	double        hdop;
 	double        geoid;
 };

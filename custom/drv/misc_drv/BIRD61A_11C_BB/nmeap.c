@@ -610,6 +610,8 @@ int nmeap_gngga(nmeap_context_t *context,nmeap_sentence_t *sentence)
 		gga->time       = atoi(context->token[1]);
 		gga->satellites = atoi(context->token[7]);
 		gga->quality    = atoi(context->token[6]);
+		gga->east_west = (kal_int8)*context->token[5];
+		gga->north_south = (kal_int8)*context->token[3];	
 		gga->hdop       = atof(context->token[8]);
 		gga->geoid      = nmeap_altitude(context->token[11],context->token[12]);
 	}
