@@ -183,7 +183,7 @@ void pmu6261_customization_init(void)
 
 		//isinks to set pwm/register mode
 		isinkCtrlMode.isink = ISINKS;
-		isinkCtrlMode.mode = ISINK_PWM_MODE;
+               isinkCtrlMode.mode = ISINK_REGISTER_CTRL_MODE; 
 		DclPMU_Control(handle, ISINK_SET_MODE, (DCL_CTRL_DATA_T *)&isinkCtrlMode);
 
 		//isink 0 
