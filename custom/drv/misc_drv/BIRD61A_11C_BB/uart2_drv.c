@@ -73,7 +73,7 @@ void ECU_UART_INIT(void)
         kal_prompt_trace(MOD_SOC," SIO_CMD_OPEN status = %d",status);
    }	
    bddata.u4OwenrId = MOD_BIRD2;  
-   bddata.rUARTConfig.u4Baud = UART_BAUD_9600;
+   bddata.rUARTConfig.u4Baud = UART_BAUD_115200;
    bddata.rUARTConfig.u1DataBits = LEN_8;
    bddata.rUARTConfig.u1StopBits = SB_1;
    bddata.rUARTConfig.u1Parity = PA_NONE;
