@@ -129,23 +129,17 @@ extern void get_time_check_can_data(void);
 extern kal_uint8 can_rx_buf[][12];
 void ECU_UART_READ_HANDLE(kal_uint8 *Buffaddr, kal_uint16 Length)
 {
-	static index = 0;
+	static kal_uint8 index = 0;
        kal_prompt_trace(MOD_SOC," ECU_UART_READ_HANDLE Length = %d",Length);	
-	//kal_prompt_trace(MOD_SOC," ECU_UART_READ_HANDLE Buffaddr = %s",Buffaddr);	
-	/*
-	#ifdef BIRD_ECU_SUPPORT
-	BD_ECU_INIT(Buffaddr,Length);
-	#endif
-*/
 if(Length == 100)
 {
 	
-	memcpy(can_rx_buf+100*index,Buffaddr, Length);
+	memcpy((kal_uint8 *)(&can_rx_buf[0][0])+100*index,Buffaddr, Length);
 	index ++;
 }
 else
 {
-	memcpy(can_rx_buf+100*index,Buffaddr, Length);
+	memcpy((kal_uint8 *)(&can_rx_buf[0][0])+100*index,Buffaddr, Length);
 	get_time_check_can_data();	
 	index = 0;
 }

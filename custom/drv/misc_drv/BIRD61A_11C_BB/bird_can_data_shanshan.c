@@ -74,23 +74,13 @@ void can1_rx_id18F1FB27_data_check()
 
 	/*整车数据 车辆状态*/
 	value = (bird_set_byte_bit(can_rx_buf[0][0+4],2,6));
-	switch (value)
+	if(value == 0x03)
 	{
-		case 0x01:
 			car_data[0] = 0x01;
-			break;
-		case 0x02:
+	}
+	else
+	{
 			car_data[0] = 0x02;
-			break;
-		case 0x03:
-			car_data[0] = 0x03;
-			break;
-		case 0x0E:
-			car_data[0] = 0xFE;
-			break;	
-		case 0x0F:
-			car_data[0] = 0xFF;
-			break;				
 	}
 	/*整车数据 运行模式 定值0x01*/
 	car_data[2] = 0x01;
