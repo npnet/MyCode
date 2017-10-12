@@ -816,6 +816,13 @@ U8 * bird_get_sim_iccid_from_nvram( )
     else
         return NULL;
 }
+
+/*******OTA Current Version*******/
+void Bird_Get_OTA_Version(kal_uint8 *ver)
+{
+	memcpy(ver, BIRD_OTA_VRESION, strlen(BIRD_OTA_VRESION));
+}
+
 /*-------------------------------------------------------*/
 
 /*-------------------------------------------------------

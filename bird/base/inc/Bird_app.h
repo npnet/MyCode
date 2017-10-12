@@ -144,6 +144,9 @@
 	#define YD_NV_BATCH "Y3.4"
 #endif
 
+/*********OTA Current Version*********/
+#define BIRD_OTA_VRESION "BIRD_DW60_OTA_V1.00"
+
 #define RJ_GPS_LOG_ON
 #define RJ_GPS_LEN					32
 #define RJ_GPS_PNONE_NUM			16

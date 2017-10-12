@@ -98,12 +98,16 @@ static void get_OEMCurrentVersion(char *buf)
 {
 
 	char *ptr = NULL;
+	extern void Bird_Get_OTA_Version(kal_uint8 *ver);
+	Bird_Get_OTA_Version(buf);
+	dbg_print("%s, verno[%s]\n\r", __func__, buf);
+	kal_prompt_trace( MOD_SOC, "%s, verno[%s]\n\r", __func__, buf);
 
-	ptr = "DW60_OTA_V1.00";//release_verno();
-	dbg_print("%s, verno[%s]\n\r", __func__, ptr);
-	kal_prompt_trace( MOD_SOC, "%s, verno[%s]\n\r", __func__, ptr);
+	//ptr = "DW60_OTA_V1.00";//release_verno();
+	//dbg_print("%s, verno[%s]\n\r", __func__, ptr);
+	//kal_prompt_trace( MOD_SOC, "%s, verno[%s]\n\r", __func__, ptr);
 	
-	rs_strcpy(buf, ptr);
+	//rs_strcpy(buf, ptr);
 
 }
 
