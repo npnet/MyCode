@@ -87,6 +87,7 @@ void Yd_conn_logintxbox()
 	   	return;
 	   
        g_login_count++;
+       g_n_ydislogin=2;
        bird_soc_send_tboxlogin();
 }
 
@@ -173,10 +174,10 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 			
 		bird_soc_send_tboxselfdefine();
 		Rj_stop_timer(Bird_task_heart_Timer); 
-		Rj_start_timer(Bird_task_heart_Timer, 10*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
+		Rj_start_timer(Bird_task_heart_Timer, 2*60*1000, Yd_tbox_heart,NULL);/*启动发心跳过程*/		
 		
 		Rj_stop_timer(Bird_task_main_Timer); 
-		Rj_start_timer(Bird_task_main_Timer, 1*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
+		Rj_start_timer(Bird_task_main_Timer, 2*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
 		Rj_stop_timer(Bird_task_savedata_Timer); 
 		Rj_start_timer(Bird_task_savedata_Timer, 1*1000, Yd_savedata,NULL);/*启动存储数据*/	
 		StartTimer(BIRD_DELETE_FILE_TIMER, 1*60*1000, Bird_Tbox_delete);

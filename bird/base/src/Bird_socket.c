@@ -2883,8 +2883,9 @@ static MMI_BOOL Lima_Soc_Socket_Notify(void *inMsg)
 		         applib_dt_get_rtc_time(&curtime);
 		         if((applib_dt_compare_time(&curtime,&g_login_time,NULL)!= DT_TIME_LESS))
 		         {
-		         Rj_stop_timer(Bird_task_connlogin_Timer); 
-		         Rj_start_timer(Bird_task_connlogin_Timer, 2*1000, Yd_conn_logintxbox,NULL);
+		         Yd_conn_logintxbox();
+		         //Rj_stop_timer(Bird_task_connlogin_Timer); 
+		         //Rj_start_timer(Bird_task_connlogin_Timer, 2*1000, Yd_conn_logintxbox,NULL);
 		         }
 		   }
 		   

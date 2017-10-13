@@ -1112,6 +1112,7 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 	U8 sgchar[2];
 	U8 time_rec[6]={0};
 	U8 time[6]={0};
+	S8 softversion[32]={0};
 
 	kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res %d",length);
 	if(length<7)
@@ -1261,6 +1262,8 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 			param_pos=param_pos+1;
 			memcpy(param+param_pos, (S8 *)RJ_GPS_VERSION2,strlen((S8 *)RJ_GPS_VERSION2));
 			param_pos=param_pos+strlen((S8 *)RJ_GPS_VERSION2);
+			memcpy(param+param_pos, softversion,32-strlen((S8 *)RJ_GPS_VERSION2));
+			param_pos=param_pos+32-strlen((S8 *)RJ_GPS_VERSION2);
 		}
 		else
 		{

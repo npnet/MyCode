@@ -34,12 +34,12 @@ S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2)
     mmi_wcs_to_asc(name2_char,name2);	
 
     kal_prompt_trace(MOD_SOC,"Bird_comp_filename %s",name1_char,name2_char);
-    for(i=0;i<17;i++)
+    for(i=0;i<strlen(name1_char);i++)
     {
        if(name1_char[i]>name2_char[i])
 	   	return 1;
        else if(name1_char[i]<name2_char[i])
-	   	return -1;
+	   	return 2;
 
     }
     return 0;
@@ -91,7 +91,7 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
             mmi_wcs_to_asc(file_name,first_name);
   
             kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend3 %s",file_name);
-            if(Bird_comp_filename(first_name,g_find_name)<0)
+            if(Bird_comp_filename(first_name,g_find_name)==2)
             {
                 memset(g_find_name, 0, sizeof(g_find_name));
                 wcscpy(g_find_name,first_name);
@@ -149,9 +149,13 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
 			}
 			if(buf[lenper-1]=='9')
 			{
-				if((g_readpos.offset!=off/lenper)||(g_readpos.data_time.nYear!=atol(yearchar))||(g_readpos.data_time.nMonth!=atol(monthchar))
-					||(g_readpos.data_time.nDay!=atol(daychar))||(g_readpos.data_time.nHour!=atol(hourchar))
-					||(applib_dt_compare_time(&curtime,&g_readpos.cur_time,NULL)!= DT_TIME_LESS))
+				if((g_readpos.offset==off/lenper)&&((g_readpos.data_time.nYear==atol(yearchar))&&(g_readpos.data_time.nMonth==atol(monthchar))
+					&&(g_readpos.data_time.nDay==atol(daychar))&&(g_readpos.data_time.nHour==atol(hourchar)))
+					&&(applib_dt_compare_time(&curtime,&g_readpos.cur_time,NULL)== DT_TIME_LESS))
+				{
+				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend time limit2");
+				}
+				else
 				{
 				    g_readpos.offset=off/lenper;
 				    g_readpos.data_time.nYear=atol(yearchar);
@@ -168,10 +172,6 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
 				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend offset %s",unsendtime);
 				    FS_Close(handle);
 				    return off/lenper;
-				}
-				else
-				{
-				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend time limit2");
 				}
 				FS_Close(handle);
 				return nresult;

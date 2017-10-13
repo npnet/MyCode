@@ -987,7 +987,7 @@ void Bird_Tbox_saveinfo(Send_Info *_send,applib_time_struct dt)
 	
 }
 #define BIRD_DATE_FORMAT       "rec_2017-05-12"
-
+kal_wchar g_del_name[30]=0;
 void Bird_Tbox_delete()
 {
 	FS_HANDLE tboxdata_handle = -1;
@@ -999,7 +999,6 @@ void Bird_Tbox_delete()
 	kal_wchar file_hour[24][6]={L"-00",L"-01",L"-02",L"-03",L"-04",L"-05",L"-06",L"-07",L"-08",L"-09",L"-10",L"-11",
 		L"-12",L"-13",L"-14",L"-15",L"-16",L"-17",L"-18",L"-19",L"-20",L"-21",L"-22",L"-23"};
 	char char_name[BIRD_FILE_PATH_LEN];
-	kal_wchar file_name[BIRD_FILE_PATH_LEN];
 	kal_wchar first_name[BIRD_FILE_PATH_LEN];
 	kal_wchar  file[BIRD_FILE_PATH_LEN];
 	char file_name_str[BIRD_FILE_PATH_LEN];
@@ -1013,15 +1012,15 @@ void Bird_Tbox_delete()
            memset(tboxdata_file, 0, sizeof(tboxdata_file));
            kal_wsprintf(tboxdata_file,BIRD_TBOXDATA_FILE,(S16)MMI_CARD_DRV);	
 		   
-           memset(file_name, 0,sizeof(file_name));
-           tboxdata_handle = FS_FindFirst(tboxdata_file, 0, 0, &file_info, file_name, file_path_len);
+           memset(g_del_name, 0,sizeof(g_del_name));
+           tboxdata_handle = FS_FindFirst(tboxdata_file, 0, 0, &file_info, g_del_name, file_path_len);
 		   
            memset(char_name, 0, sizeof(char_name));
-           mmi_wcs_to_asc(char_name,file_name);
+           mmi_wcs_to_asc(char_name,g_del_name);
 
            memset(file_date, 0, sizeof(file_date));
            memcpy(file_date[0],char_name,14);
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data %d %d %s",tboxdata_handle,mmi_wcslen((kal_wchar*)BIRD_DATE_FORMAT),file_date);
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete1 %d %s",tboxdata_handle,char_name);
 	    count=1;
 		
            if (tboxdata_handle >= 0)   
@@ -1034,17 +1033,20 @@ void Bird_Tbox_delete()
 		       memset(tmp_date, 0, sizeof(tmp_date));
 		       memcpy(tmp_date,char_name,14);
 
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %s",tmp_date);
-		       if((strcmp(file_date[count-1], tmp_date) != 0)&&(tmp_date[0]!=0))
+		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete2 %s",char_name);
+		       if((strcmp(file_date[count-1], tmp_date) != 0)&&(strcmp(file_date[0], tmp_date) != 0)&&(tmp_date[0]!=0))
 		       {
 		           memcpy(file_date[count],tmp_date,14);
-		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data222 %s",file_date[count]);
+		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %s",file_date[count]);
 		           count++;
 		       }
-		       if(Bird_comp_filename(first_name,file_name)<0)
+		       if(Bird_comp_filename(first_name,g_del_name)==2)
 		       {
-		           memset(file_name, 0, sizeof(file_name));
-		           wcscpy(file_name,first_name);
+		           memset(g_del_name, 0, sizeof(g_del_name));
+		           wcscpy(g_del_name,first_name);
+		           memset(char_name, 0, sizeof(char_name));
+		           mmi_wcs_to_asc(char_name,g_del_name);
+		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete4 %s",char_name);
 		       }
 
 		   };
@@ -1053,7 +1055,7 @@ void Bird_Tbox_delete()
            }
            else
            {
-		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete data nofile");
+		   kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete nofile");
 		   FS_FindClose(tboxdata_handle);	   	
            }
        }
@@ -1067,7 +1069,7 @@ void Bird_Tbox_delete()
 		   memset(file, 0, sizeof(file));
 		   kal_wsprintf(file,BIRD_TBOXDATA_DIR,(S16)MMI_CARD_DRV);
 		   mmi_wcscat(file, L"\\");
-		   mmi_wcsncat(file, file_name,14);
+		   mmi_wcsncat(file, g_del_name,14);
 		   mmi_wcscat(file, file_hour[i]);
 		   mmi_wcscat(file, L".txt");
 		   
