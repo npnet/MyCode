@@ -28,6 +28,8 @@
 #include "cbm_api.h"
 #include "MMIDataType.h"
 
+#include "DtcntSrvIprot.h"
+
 sockaddr_struct rs_soc_addr;
 unsigned long nHostPort;
 
@@ -443,6 +445,9 @@ static int rs_socket_extract_ip_addr(char* szDstBuf, const char* szSrcURL, unsig
 
 rs_s32 rs_socket_init(RS_SOCKET_MSG_HANDLER_CALLBACK callback, void* handle)
 {
+	srv_dtcnt_store_prof_qry_struct acct_id_query = {0}; 
+	srv_dtcnt_result_enum acct_result;
+
 	g_socket_callback = callback;
 	g_rs_handle = handle;
 
@@ -473,8 +478,21 @@ rs_s32 rs_socket_init(RS_SOCKET_MSG_HANDLER_CALLBACK callback, void* handle)
 	            }
 	        }
 	        
-	        fota_data_account = cbm_encode_data_account_id(CBM_DEFAULT_ACCT_ID, 0/*sim 0*/, fota_app_id, 0);//CBM_DEFAULT_ACCT_ID 0x34 
-
+	        //fota_data_account = cbm_encode_data_account_id(CBM_DEFAULT_ACCT_ID, 0/*sim 0*/, fota_app_id, 0);//CBM_DEFAULT_ACCT_ID 0x34 
+	        
+		acct_id_query.qry_info.filters = SRV_DTCNT_STORE_QRY_TYPE_ACC_TYPE;    
+		acct_id_query.qry_info.acc_type_info = SRV_DTCNT_PROF_TYPE_FACTORY_CONF;	   
+		acct_result = srv_dtcnt_store_qry_ids(&acct_id_query);
+		kal_prompt_trace( MOD_SOC, "[%s], apn query result = %d, numid = %d\n\r", __func__, acct_result,acct_id_query.num_ids);
+		RS_PORITNG_LOG("[%s], apn query result = %d, numid = %d\n\r", __func__, acct_result,acct_id_query.num_ids);
+		if (acct_result == SRV_DTCNT_RESULT_SUCCESS && acct_id_query.num_ids > 0)
+		{
+			fota_data_account = cbm_encode_data_account_id(acct_id_query.ids[0], 0/*CBM_SIM_ID_SIM1*/, fota_app_id, 0);
+		}
+		else
+		{
+			fota_data_account = cbm_encode_data_account_id(CBM_DEFAULT_ACCT_ID, 0/*sim 0*/, fota_app_id, 0);//CBM_DEFAULT_ACCT_ID 0x34 
+		}
 
 		// 2. Register event handler
 		mmi_frm_set_protocol_event_handler(MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND, (PsIntFuncPtr)fota_get_ip_handle, MMI_TRUE);//¹²ÏíÄ£Ê½
