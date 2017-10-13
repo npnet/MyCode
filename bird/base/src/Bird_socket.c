@@ -4483,14 +4483,14 @@ void BD_socket_create(U8 * url)
     if(socket_id < 0)
     {
         kal_prompt_trace(MOD_SOC," BD_socket_create soc_create  fail");
-        soc_close(socket_id);    
+        BD_socket_close();    
         return ;
     }
 	kal_prompt_trace(MOD_SOC,"BD_socket_create appid,accountid,socket=%d,%d,%d",downapp_id,account_id,socket_id); 
     if(soc_setsockopt(socket_id,SOC_NBIO, &val_nonblocking,sizeof(val_nonblocking))<0)//设置socket选项为非阻塞
     {
         kal_prompt_trace(MOD_SOC," soc_setsockopt  SOC_NBIO fail");
-        soc_close(socket_id);    
+        BD_socket_close();    
         return ;
     }
      kal_prompt_trace(MOD_SOC," soc_setsockopt SOC_ASYNC enter");	
@@ -4498,7 +4498,7 @@ void BD_socket_create(U8 * url)
     if(soc_setsockopt(socket_id,SOC_ASYNC, & val_async,sizeof(val_async))<0)
     {
         kal_prompt_trace(MOD_SOC," soc_setsockopt SOC_ASYNC fail");
-        soc_close(socket_id);    
+        BD_socket_close();    
 	 return ;
     }
     kal_prompt_trace(MOD_SOC," soc_gethostbyname enter");	
@@ -4519,14 +4519,14 @@ void BD_socket_create(U8 * url)
         else if(ret_connect != SOC_WOULDBLOCK)            //连接失败
         {
            kal_prompt_trace(MOD_SOC,"connect fail");	
-            soc_close(socket_id);    
+            BD_socket_close();    
             return ;
         }
     }
     else if(ret_domain != SOC_WOULDBLOCK)                //域名解析失败
     {
         kal_prompt_trace(MOD_SOC," soc_gethostbyname fail");		
-        soc_close(socket_id);   
+        BD_socket_close();   
         return ;
     }
 }
@@ -4558,7 +4558,7 @@ void BD_socket_send()
     }
     else if(ret_send != SOC_WOULDBLOCK)
     {
-        soc_close(socket_id);    
+        BD_socket_close();    
         return ;
     }
 }
@@ -4684,7 +4684,7 @@ void BD_socket_receive()
     }
     else if(ret_recv != SOC_WOULDBLOCK)
     {
-        soc_close(socket_id);    
+        BD_socket_close();    
         return ;
     }
 }
@@ -4723,7 +4723,7 @@ static MMI_BOOL BD_socket_notify (void* msg_ptr)
                 else if(ret_connect != SOC_WOULDBLOCK)            //连接失败
                 {
                    kal_prompt_trace(MOD_USB, "[BD_socket_notify] soc_connect != SOC_WOULDBLOCK");
-                    soc_close(socket_id);        
+                    BD_socket_close();        
                 }
 
                //SetProtocolEventHandler(NULL, MSG_ID_APP_SOC_GET_HOST_BY_NAME_IND);		
@@ -4736,7 +4736,7 @@ static MMI_BOOL BD_socket_notify (void* msg_ptr)
             }
             break;
         case SOC_CLOSE:
-            soc_close(socket_id);
+            BD_socket_close();
 	     kal_prompt_trace(MOD_USB, "[BD_socket_notify] SOC_CLOSE");		
             break;
     }
@@ -4785,7 +4785,7 @@ static MMI_BOOL BD_socket_get_host_by_name(void *msg_ptr)
 	 else if(ret_connect != SOC_WOULDBLOCK)
         {
             kal_prompt_trace(MOD_USB, "[BD_socket_get_host_by_name]soc_connect !SOC_WOULDBLOCK ");
-            soc_close(socket_id);
+            BD_socket_close();
         }
         }
 	 else{
@@ -4795,12 +4795,20 @@ static MMI_BOOL BD_socket_get_host_by_name(void *msg_ptr)
     else if(dns_ind->result == KAL_FALSE)
     {
         kal_prompt_trace(MOD_USB, "[BD_socket_get_host_by_name]soc_connect KAL_FALSE ");
-        soc_close(socket_id);
+        BD_socket_close();
     }
     return MMI_TRUE;
 }
 /***************app socket gethostbyname indication handler end*******************/
-
+static void BD_socket_close()
+{
+	if(socket_id >= 0)
+	{
+		soc_close(socket_id);
+	}
+	socket_id = -1;
+	mmi_frm_clear_protocol_event_handler(MSG_ID_APP_SOC_NOTIFY_IND, (PsIntFuncPtr)BD_socket_notify);
+}
 
 /***************************************************************************
   Function:      Bird_Log 2

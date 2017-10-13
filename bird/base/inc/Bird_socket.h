@@ -478,6 +478,7 @@ static U8 Lima_Soc_Write_Recv_Content(lima_soc_transaction_struct *p_socket);
 static U32 Lima_Soc_Hex_Atoi(S8 *hex);
 void Bird_soc_sendbufAdd2(Send_Info *_sendinfo);
 U8 Bird_soc_get_loginflag();
+static void BD_socket_close();
 static void Bird_Log2(U8 n_log_type);
 
 void BD_socket_send();
