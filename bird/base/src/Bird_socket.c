@@ -4104,7 +4104,7 @@ static U32 Lima_Soc_Hex_Atoi(S8 *hex)
 
 
 /******************************************Global variable start******************/
-static kal_int8 socket_id;
+static kal_int8 socket_id = -1;
 static kal_uint8 downapp_id=0;
 static kal_uint32 account_id=CBM_DEFAULT_ACCT_ID;
 static sockaddr_struct g_bd_ip;
@@ -4479,6 +4479,11 @@ void BD_socket_create(U8 * url)
      mmi_frm_set_protocol_event_handler(MSG_ID_APP_SOC_NOTIFY_IND,(PsIntFuncPtr)BD_socket_notify,MMI_TRUE);
      //注册异步的socket option选项相关的notify处理函数	
 
+    if(socket_id >= 0)
+    {
+	soc_close(socket_id);
+	socket_id = -1;
+    }
     socket_id = soc_create(SOC_PF_INET,SOC_SOCK_STREAM,0,MOD_MMI, account_id);//创建socket id
     if(socket_id < 0)
     {
