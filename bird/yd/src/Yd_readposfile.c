@@ -33,7 +33,7 @@ S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2)
     mmi_wcs_to_asc(name1_char,name1);
     mmi_wcs_to_asc(name2_char,name2);	
 
-    kal_prompt_trace(MOD_SOC,"Bird_comp_filename %s",name1_char,name2_char);
+    kal_prompt_trace(MOD_SOC,"Bird_comp_filename %s %s",name1_char,name2_char);
     for(i=0;i<strlen(name1_char);i++)
     {
        if(name1_char[i]>name2_char[i])
@@ -42,6 +42,22 @@ S8 Bird_comp_filename(kal_wchar *name1,kal_wchar *name2)
 	   	return 2;
 
     }
+    return 0;
+}
+
+U8 Bird_comp_time(U8 *name1,U8 *name2)
+{	
+    U8 i=0;
+
+    kal_prompt_trace(MOD_SOC,"Bird_comp_time %s %s %d",name1,name2,strlen(name1));
+    for(i=0;i<strlen(name1);i++)
+    {
+       if(name1[i]>name2[i])
+	   	return 1;
+       else if(name1[i]<name2[i])
+	   	return 2;
+    }
+
     return 0;
 }
 
@@ -70,8 +86,12 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
     S8 minchar[4];
     S8 secchar[4];	
     applib_time_struct curtime={0};
+    applib_time_struct tmp_time = {0};
+    applib_time_struct datatime={0};
+    applib_time_struct compare_time = {0};
 
     lenper = strlen(BIRD_TBOXINFO);
+    tmp_time.nMin=bird_get_ser_res_time()/60+1;
 
     memset(file_patten, 0, sizeof(file_patten));
     kal_wsprintf(file_patten,BIRD_TBOXINFO_FILE,(S16)MMI_CARD_DRV);
@@ -136,9 +156,15 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
 			memcpy(minchar, (S8 *)&buf+10, 2);
 			memcpy(secchar, (S8 *)&buf+12, 2);
 			applib_dt_get_rtc_time(&curtime);   
+			datatime.nYear=atol(yearchar);
+			datatime.nMonth=atol(monthchar);
+			datatime.nDay=atol(daychar);
+			datatime.nHour=atol(hourchar);
+			datatime.nMin=atol(minchar);
+			datatime.nSec=atol(secchar);
 
-			if((atol(yearchar)<curtime.nYear)||(atol(monthchar)<curtime.nMonth)||(atol(daychar)<curtime.nDay)
-				||(atol(hourchar)<curtime.nHour)||(atol(minchar)+bird_get_ser_res_time()/60+1<curtime.nMin))
+			applib_dt_increase_time(&datatime,&tmp_time,&compare_time);
+			if(applib_dt_compare_time(&compare_time,&curtime,NULL)== DT_TIME_LESS)
 			{
 			}
 			else
@@ -149,29 +175,25 @@ S32 Bird_soc_getlast_unsend(S8* unsendtime)
 			}
 			if(buf[lenper-1]=='9')
 			{
-				if((g_readpos.offset==off/lenper)&&((g_readpos.data_time.nYear==atol(yearchar))&&(g_readpos.data_time.nMonth==atol(monthchar))
-					&&(g_readpos.data_time.nDay==atol(daychar))&&(g_readpos.data_time.nHour==atol(hourchar)))
-					&&(applib_dt_compare_time(&curtime,&g_readpos.cur_time,NULL)== DT_TIME_LESS))
-				{
-				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend time limit2");
-				}
-				else
+				if((g_readpos.offset!=off/lenper)||((g_readpos.data_time.nYear!=atol(yearchar))||(g_readpos.data_time.nMonth!=atol(monthchar))
+					||(g_readpos.data_time.nDay!=atol(daychar))||(g_readpos.data_time.nHour!=atol(hourchar)))
+					||(applib_dt_compare_time(&curtime,&g_readpos.cur_time,NULL)!= DT_TIME_LESS))
 				{
 				    g_readpos.offset=off/lenper;
 				    g_readpos.data_time.nYear=atol(yearchar);
 				    g_readpos.data_time.nMonth=atol(monthchar);
 				    g_readpos.data_time.nDay=atol(daychar);
 				    g_readpos.data_time.nHour=atol(hourchar);
-				    g_readpos.cur_time.nYear=curtime.nYear;
-				    g_readpos.cur_time.nMonth=curtime.nMonth;
-				    g_readpos.cur_time.nDay=curtime.nDay;
-				    g_readpos.cur_time.nHour=curtime.nHour;
-				    g_readpos.cur_time.nMin=curtime.nMin+bird_get_ser_res_time()/60+1;
+				    applib_dt_increase_time(&curtime,&tmp_time,&g_readpos.cur_time);
 				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend offset=%d",g_readpos.offset);
 				    memcpy(unsendtime, buf, 14);
 				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend offset %s",unsendtime);
 				    FS_Close(handle);
 				    return off/lenper;
+				}
+				else
+				{
+				    kal_prompt_trace(MOD_SOC,"Bird_soc_getlast_unsend time limit2");
 				}
 				FS_Close(handle);
 				return nresult;
@@ -241,12 +263,19 @@ U8 bird_busend_handle(U8* unsendtime)
 	FS_GetFileSize(handle,&buflen);
 	if(buflen>=0)
 	{
-	       for(noff=0;noff<buflen;noff=noff+lenper)
+	       U32 left, right, middle;
+
+	       left = 0, 
+	       right = buflen/lenper-1;
+
+	       //for(noff=buflen-lenper;noff>=0;noff=noff-lenper)
+	       while (left < right)
 		{
-			FS_Seek(handle, noff, FS_FILE_BEGIN);
+			middle = (left + right) / 2;
+			FS_Seek(handle, middle*lenper, FS_FILE_BEGIN);
 			memset(buf, 0, sizeof(buf));
 			FS_Read(handle, (void *)buf, lenper, &len);
-			kal_prompt_trace(MOD_SOC,"bird_busend_handle %d,%d,%d",noff,len,lenper);
+			kal_prompt_trace(MOD_SOC,"bird_busend_handle %d,%d,%d",middle,len,lenper);
 			comp_buf[0]='2';
 			comp_buf[1]='0';
 
@@ -274,6 +303,89 @@ U8 bird_busend_handle(U8* unsendtime)
 				Bird_soc_sendbufAdd2(&_send);
 				FS_Close(handle);
 				nresult=1;
+				break;
+			}
+			else if(Bird_comp_time(comp_buf, unsendtime) == 1) 
+			{
+			       if(right == middle)
+			       {
+			       FS_Seek(handle, left*lenper, FS_FILE_BEGIN);
+			       memset(buf, 0, sizeof(buf));
+			       FS_Read(handle, (void *)buf, lenper, &len);
+			       kal_prompt_trace(MOD_SOC,"bird_busend_handle2 %d,%d,%d",right,len,lenper);
+			       comp_buf[0]='2';
+			       comp_buf[1]='0';
+
+			       for(i=0,j=0;j<6;i=i+2,j++)
+			       {
+			       comp_buf[i+2]=buf[24+j]/16+0x30;
+			       comp_buf[i+3]=buf[24+j]%16+0x30;
+			       }
+			       kal_prompt_trace(MOD_SOC,"bird_busend_handle2 %s %s",comp_buf,unsendtime);
+			       if(strncmp(comp_buf, unsendtime,14) == 0) 
+			       {
+				_send.buf_len=0;
+				_send.ini_flag=0;
+				_send.send_flow=0;
+				_send.send_type=BIRD_SOC_SEND_GPSPOS;
+				memset(_send.send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+				memcpy(_send.send_buf,buf,lenper);
+				_send.buf_len = lenper;
+				
+				_send.send_buf[2]=0x03;
+				for(i=2;i<_send.buf_len-1;i++)
+				    check_code ^=_send.send_buf[i];
+				_send.send_buf[lenper-1]=check_code;
+
+				Bird_soc_sendbufAdd2(&_send);
+				FS_Close(handle);
+				nresult=1;
+			       }
+  
+			       break;
+			       }
+				right = middle;
+			}
+			else if(Bird_comp_time(comp_buf, unsendtime) == 2) 
+			{
+			       if(left == middle)
+			       {
+			       FS_Seek(handle, right*lenper, FS_FILE_BEGIN);
+			       memset(buf, 0, sizeof(buf));
+			       FS_Read(handle, (void *)buf, lenper, &len);
+			       kal_prompt_trace(MOD_SOC,"bird_busend_handle2 %d,%d,%d",right,len,lenper);
+			       comp_buf[0]='2';
+			       comp_buf[1]='0';
+
+			       for(i=0,j=0;j<6;i=i+2,j++)
+			       {
+			       comp_buf[i+2]=buf[24+j]/16+0x30;
+			       comp_buf[i+3]=buf[24+j]%16+0x30;
+			       }
+			       kal_prompt_trace(MOD_SOC,"bird_busend_handle2 %s %s",comp_buf,unsendtime);
+			       if(strncmp(comp_buf, unsendtime,14) == 0) 
+			       {
+				_send.buf_len=0;
+				_send.ini_flag=0;
+				_send.send_flow=0;
+				_send.send_type=BIRD_SOC_SEND_GPSPOS;
+				memset(_send.send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
+				memcpy(_send.send_buf,buf,lenper);
+				_send.buf_len = lenper;
+				
+				_send.send_buf[2]=0x03;
+				for(i=2;i<_send.buf_len-1;i++)
+				    check_code ^=_send.send_buf[i];
+				_send.send_buf[lenper-1]=check_code;
+
+				Bird_soc_sendbufAdd2(&_send);
+				FS_Close(handle);
+				nresult=1;
+			       }
+  
+			       break;
+			       }
+				left = middle;
 			}
 		}
 		if(nresult!=1)
@@ -284,19 +396,19 @@ U8 bird_busend_handle(U8* unsendtime)
 		    S8 hourchar[4];
 		    S8 minchar[4];
 		    S8 secchar[4];	
-		    memcpy(yearchar, (S8 *)&unsendtime, 4);
-		    memcpy(monthchar, (S8 *)&unsendtime+4, 2);
-		    memcpy(daychar, (S8 *)&unsendtime+6, 2);
-		    memcpy(hourchar, (S8 *)&unsendtime+8, 2);
-		    memcpy(minchar, (S8 *)&unsendtime+10, 2);
-		    memcpy(secchar, (S8 *)&unsendtime+12, 2);
+		    memcpy(yearchar, (S8 *)unsendtime, 4);
+		    memcpy(monthchar, (S8 *)unsendtime+4, 2);
+		    memcpy(daychar, (S8 *)unsendtime+6, 2);
+		    memcpy(hourchar, (S8 *)unsendtime+8, 2);
+		    memcpy(minchar, (S8 *)unsendtime+10, 2);
+		    memcpy(secchar, (S8 *)unsendtime+12, 2);
 		
-		    nfind.nYear=atoi(yearchar);
-		    nfind.nMonth=atoi(monthchar);
-		    nfind.nDay=atoi(daychar);
-		    nfind.nHour=atoi(hourchar);
-		    nfind.nMin=atoi(minchar);
-		    nfind.nSec=atoi(secchar);
+		    nfind.nYear=atol(yearchar);
+		    nfind.nMonth=atol(monthchar);
+		    nfind.nDay=atol(daychar);
+		    nfind.nHour=atol(hourchar);
+		    nfind.nMin=atol(minchar);
+		    nfind.nSec=atol(secchar);
 		    kal_prompt_trace(MOD_SOC,"bird_busend_handle not find");
 
 		    Bird_soc_setflag_posfile(nfind);

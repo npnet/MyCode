@@ -1265,6 +1265,16 @@ void bird_tbox_search_param_res(U8* rest_buf, U32 length)
 			memcpy(param+param_pos, softversion,32-strlen((S8 *)RJ_GPS_VERSION2));
 			param_pos=param_pos+32-strlen((S8 *)RJ_GPS_VERSION2);
 		}
+		else if(buf[t]==0x81)
+		{
+			word=bird_get_lixian_time();
+			memset(wordchar,0,sizeof(wordchar));
+			wordchar[0]=buf[t];
+			wordchar[1]=word/256;
+			wordchar[2]=word%256;
+			memcpy(param+param_pos, wordchar,3);
+			param_pos=param_pos+3;
+		}
 		else
 		{
 		    kal_prompt_trace(MOD_SOC,"bird_tbox_search_param_res param error");
@@ -1461,6 +1471,15 @@ void bird_tbox_set_param_res(U8* rest_buf, U32 length)
 		{
 		}
 		*/
+		else if(buf[buf_pos]==0x81)
+		{
+		       buf_pos++;
+			memset(wordchar,0,sizeof(wordchar));
+			memcpy(wordchar, buf+buf_pos,2);
+			tk005_info.lixian_time=wordchar[0]*256+wordchar[1];
+			buf_pos=buf_pos+2;
+			kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res lixian_time %d",tk005_info.lixian_time);
+		}
 		else
 		{
 		    kal_prompt_trace(MOD_SOC,"bird_tbox_set_param_res param error");
@@ -1503,6 +1522,11 @@ void bird_tbox_set_param_res(U8* rest_buf, U32 length)
 		{
 		    flag=0;
 		    bird_set_ser_res_time(tk005_info.ser_res_time);
+		}
+		if(tk005_info.lixian_time>=1)
+		{
+		    flag=0;
+		    bird_set_lixian_time(tk005_info.lixian_time);
 		}
 		
 		if(flag==0)

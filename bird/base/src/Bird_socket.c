@@ -127,7 +127,7 @@ void Lima_set_soc_rev_state(U8 rev_state)
 void Bird_clear_soc_conn()
 {	
     kal_prompt_trace(MOD_SOC," Bird_clear_soc_conn");
-    g_n_reconn = 0;
+    //g_n_reconn = 0;
     g_lima_is_conn = FALSE;
     g_lima_is_getip=FALSE;
 }
@@ -588,7 +588,7 @@ void Bird_soc_setflag_posfile(applib_time_struct dt)
     memset(name, 0, sizeof(name));
     kal_wsprintf(name,BIRD_TBOXINFO_PATH,(S16)MMI_CARD_DRV, dt.nYear, dt.nMonth, dt.nDay, dt.nHour);
     handle = FS_Open(name, FS_READ_WRITE);
-    kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d", handle);
+    kal_prompt_trace(MOD_SOC,"Bird_soc_setflag_posfile %d %d %d %d %d", handle,dt.nYear,dt.nMonth,dt.nDay,dt.nHour);
 	
     if (handle >= FS_NO_ERROR)
     {
@@ -978,7 +978,10 @@ void Bird_alarm_low_return(){
 void Bird_heart_return()
 {
 	kal_prompt_trace(MOD_SOC,"Bird_heart_return %d",Lima_get_soc_conn_flag());
-	if(!Lima_get_soc_conn_flag())
+	Rj_stop_timer(BIRD_TASK_SOCKET_RECON);
+	Rj_stop_timer(BIRD_TASK_SOCKET_SEND);
+	Rj_stop_timer(Bird_task_heart_Timer);
+	//if(!Lima_get_soc_conn_flag())
 	{
 	Lima_set_soc_init_flag(FALSE);
 	Lima_Soc_Dinit();
@@ -1399,15 +1402,28 @@ void Bird_soc_conn()
 		{
 			g_n_reconn ++;
 			kal_prompt_trace(MOD_SOC,"[Bird_soc_conn]: g_n_reconn=%d",g_n_reconn);
-	   		if(g_n_reconn>=3)
+	   		if((g_signal_flag==0)&&(g_n_reconn==2)){
+			    kal_prompt_trace(MOD_SOC," [Bird_soc_conn] error with static and weak signal");
+			    g_n_reconn=2;	
+			    Rj_start_timer(BIRD_TASK_SOCKET_RECON, RJ_GPS_APP_1M, Bird_soc_conn,NULL);
+			    return;
+	   		}
+	   		else if(g_n_reconn==3)
 			{	
 			       Bird_set_reseterr(BIRD_CONN_ERR);     
 				Bird_set_resttime(); //write rest time
-				g_n_reconn = 0;
+				//g_n_reconn = 0;
 				kal_prompt_trace(MOD_SOC,"g_n_reconn 30 min");
 			       Rj_stop_timer(BIRD_TASK_SOCKET_RECON);
 			       Rj_start_timer(BIRD_TASK_SOCKET_RECON, bird_get_conn_interval()*RJ_GPS_APP_1M, Bird_soc_conn,NULL);
 			}	
+	   		else if(g_n_reconn>=4)
+	   		{	
+			       g_n_reconn = 0;
+			       kal_prompt_trace(MOD_SOC,"g_n_reconn reboot");
+			       bird_deal_send_msg_handler(MSG_ID_YD_TK001_MSG_REBOOT, 0, 0);			
+			       return;		
+	   		}	
 			else
 			{
 			       Rj_stop_timer(BIRD_TASK_SOCKET_RECON);

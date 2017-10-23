@@ -660,6 +660,14 @@ void bird_set_conn_interval(U8 flag)
 U8 bird_get_conn_interval(){
 	return yd_tk005_info.conn_interval;
 }
+void bird_set_lixian_time(U8 flag)
+{
+	kal_prompt_trace(MOD_SOC,"bird_set_lixian_time: %d",flag);
+	yd_tk005_info.lixian_time=flag;
+}
+U8 bird_get_lixian_time(){
+	return yd_tk005_info.lixian_time;
+}
 
 void RJ_GPS_Get_ID(void)
 {

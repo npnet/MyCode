@@ -142,6 +142,7 @@ typedef struct
     U16 ter_res_time;		
     U16 ser_res_time;		
     U8 conn_interval;
+    U16 lixian_time;		
 }YD_TK005_COMMAND_Info;
 
 extern YD_TK001_COMMAND_Info yd_tk001_info;

@@ -33,6 +33,7 @@ extern void Yd_logintxbox();
 extern void Yd_logouttxbox();
 extern void Yd_tbox_heart();
 extern void Yd_main();
+extern void Yd_DiniSocketDelay2();
 
 void yd_init_acc_control_param()
 {
@@ -187,7 +188,7 @@ void yd_acc_key_open()
 	kal_prompt_trace(MOD_SOC,"yd_acc_key_open %d",g_n_ydislogin); 
 	if(KAL_FALSE == b_SIM_IS_OK)
 		return;
-	
+	Rj_stop_timer(Bird_task_sleep_dinisocket_Timer);
 	if(!Lima_get_soc_conn_flag())
 	{
 		Lima_set_soc_init_flag(FALSE);
@@ -198,7 +199,7 @@ void yd_acc_key_open()
        if(g_n_ydislogin==2)
        {
 	    Rj_stop_timer(Bird_task_heart_Timer); 
-	    Rj_start_timer(Bird_task_heart_Timer, 10*1000, Yd_tbox_heart,NULL);
+	    Rj_start_timer(Bird_task_heart_Timer, 2*60*1000, Yd_tbox_heart,NULL);
 	    Rj_stop_timer(Bird_task_main_Timer); 
 	    Rj_start_timer(Bird_task_main_Timer, 10*1000, Yd_main,NULL);
 	
@@ -221,6 +222,7 @@ void yd_acc_key_closed()
 	Rj_stop_timer(Bird_task_heart_Timer); 
 	Rj_stop_timer(Bird_task_main_Timer); 
 	Yd_logouttxbox();
+	Yd_DiniSocketDelay2();
 	g_n_ydislogin=2;
 }
 

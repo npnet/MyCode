@@ -454,6 +454,7 @@ void yd_tk005_set_default_record_to_NV()
 	yd_tk005_info.ter_res_time=60;
 	yd_tk005_info.ser_res_time=60;
 	yd_tk005_info.conn_interval=1;
+	yd_tk005_info.lixian_time=3;
 
 	WriteRecord(NVRAM_EF_TD_TK005_SETTING,
 				1,

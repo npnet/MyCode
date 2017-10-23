@@ -159,7 +159,7 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 {
 	kal_prompt_trace(MOD_SOC," Yd_tboxlogin_res %d",g_n_ydislogin);
 	applib_dt_get_rtc_time(&g_login_time); 
-	g_login_time.nMin++;
+	//g_login_time.nMin++;
 	
 	if((g_n_ydislogin==0)||(g_n_ydislogin==3))		
 	{
@@ -211,7 +211,7 @@ void Yd_logouttxbox()
 	kal_prompt_trace(MOD_SOC,"Yd_logouttxbox %d",g_login_count);
 
 	bird_soc_send_tboxlogout();
-	g_login_count++;
+	//g_login_count++;
 }
 void Yd_24calib()
 {

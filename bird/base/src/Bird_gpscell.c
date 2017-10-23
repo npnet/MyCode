@@ -434,7 +434,6 @@ void RJ_reset_GPS_flag(void)
 {
     g_n_saltllite_snr_isvalid = 0;
     rj_position.satellite_num = 0;
-    gps_remove_timer=0;
     memset(&g_pos_data,0,sizeof(g_pos_data));
 }
 

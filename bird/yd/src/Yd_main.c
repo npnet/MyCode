@@ -460,6 +460,7 @@ void yd_save_alarm()
        U8 last=0;
 	   
 	//tbox data
+	/*
 	memset(file, 0, sizeof(file));
 	kal_wsprintf(file,BIRD_TBOXDATA_PATH,(S16)MMI_CARD_DRV, alarm_dt[0].nYear, alarm_dt[0].nMonth, alarm_dt[0].nDay, alarm_dt[0].nHour);
 
@@ -554,7 +555,7 @@ void yd_save_alarm()
            }  
            }
        }
-
+       */
        last=0;
 	   
 	//tbox info
@@ -697,8 +698,9 @@ void Yd_main()
 	Send_Info _send;	
 	applib_time_struct dt={0};
        U8 rtn=0;
-	U8 i=0;
-   
+	U16 i=0;
+	U8 check_code=0; 
+
 	kal_prompt_trace(MOD_SOC," bg Yd_main %d",g_third_alarm_flag);
 	count_judge_gps_app_timer=0;
 	StopTimer(BIRD_READ_FILE);
@@ -708,7 +710,29 @@ void Yd_main()
 	    if(g_cur_dt.nYear!=0)
 	    {
 	        if(Lima_get_soc_conn_flag())
+	        {
+	            kal_prompt_trace(MOD_SOC,"Yd_main %d %d %d %d %d %d",g_cur_send.send_buf[24],g_cur_send.send_buf[25],
+					g_cur_send.send_buf[26],g_cur_send.send_buf[27],g_cur_send.send_buf[28],g_cur_send.send_buf[29]);
+	            if(((g_cur_send.send_buf[24]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nYear%100)||
+					((g_cur_send.send_buf[25]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nMonth)||
+					((g_cur_send.send_buf[26]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nDay)||
+					((g_cur_send.send_buf[27]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nHour)||
+					((g_cur_send.send_buf[28]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nMin)||
+					((g_cur_send.send_buf[29]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nSec))
+	            {
+	                g_cur_send.send_buf[24]=(g_cur_dt.nYear%100)/10*16+(g_cur_dt.nYear%100)%10;
+	                g_cur_send.send_buf[25]=g_cur_dt.nMonth/10*16+g_cur_dt.nMonth%10;
+	                g_cur_send.send_buf[26]=g_cur_dt.nDay/10*16+g_cur_dt.nDay%10;
+	                g_cur_send.send_buf[27]=g_cur_dt.nHour/10*16+g_cur_dt.nHour%10;
+	                g_cur_send.send_buf[28]=g_cur_dt.nMin/10*16+g_cur_dt.nMin%10;
+	                g_cur_send.send_buf[29]=g_cur_dt.nSec/10*16+g_cur_dt.nSec%10;
+	                for(i=2;i<g_cur_send.buf_len-1;i++)
+				    check_code ^=g_cur_send.send_buf[i];
+	                g_cur_send.send_buf[g_cur_send.buf_len-1]=check_code;
+
+	            }
 	            Bird_soc_sendbufAdd2(&g_cur_send);
+	        }
 	        Bird_Tbox_saveinfo(&g_cur_send,g_cur_dt);
 	        can_data_reset();
 	        RJ_reset_GPS_flag();
@@ -798,6 +822,12 @@ void Yd_DiniSocketDelay()
 	Rj_start_timer(Bird_task_sleep_dinisocket_Timer, RJ_GPS_APP_1M*4, Yd_DinitSocket,NULL); 
 }
 
+void Yd_DiniSocketDelay2()
+{
+      Rj_stop_timer(Bird_task_sleep_dinisocket_Timer);
+	Rj_start_timer(Bird_task_sleep_dinisocket_Timer, 10*1000, Yd_DinitSocket,NULL); 
+}
+
 void yd_start_con_socket()
 {
 		kal_prompt_trace(MOD_SOC,"yd_start_con_socket");   
@@ -812,8 +842,10 @@ void Yd_disconnect_socket()
 		Bird_clear_soc_conn();
 		Rj_stop_timer(BIRD_TASK_HEART_WAIT_TIMER);
 		Rj_stop_timer(Bird_task_heart_Timer); 
+		Rj_stop_timer(BIRD_TASK_SOCKET_RECON);
+		Rj_stop_timer(BIRD_TASK_SOCKET_SEND);
 		StopTimer(BIRD_DISCON_SOCK_TIMER);
-		StartTimer(BIRD_DISCON_SOCK_TIMER, RJ_GPS_APP_1M*5, yd_start_con_socket); 
+		StartTimer(BIRD_DISCON_SOCK_TIMER, RJ_GPS_APP_1M*bird_get_lixian_time(), yd_start_con_socket); 
 }
 void  yd_upload_call_handler(U8* caller, U16 len)
 {
@@ -895,7 +927,7 @@ void Bird_Tbox_savedata(Send_Info *_send,applib_time_struct dt)
 	memset(file_name_str, 0, sizeof(file_name_str));
 	mmi_wcs_to_asc(file_name_str, file);
 
-	kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata %d %d %d %d %d %d",dt.nYear, dt.nMonth, dt.nDay, dt.nHour,dt.nMin,dt.nSec); 
+	kal_prompt_trace(MOD_VT,"Bird_Tbox_savedata %d %d %d %d %d %d",dt.nYear, dt.nMonth, dt.nDay, dt.nHour,dt.nMin,dt.nSec); 
 
 	tboxdata_handle = FS_Open(file, FS_CREATE | FS_READ_WRITE);
 	kal_prompt_trace(MOD_SOC,"Bird_Tbox_savedata handle=%d %s",tboxdata_handle,file_name_str); 
@@ -988,14 +1020,14 @@ void Bird_Tbox_saveinfo(Send_Info *_send,applib_time_struct dt)
 }
 #define BIRD_DATE_FORMAT       "rec_2017-05-12"
 kal_wchar g_del_name[30]=0;
+extern U8 Bird_comp_time(U8 *name1,U8 *name2);
 void Bird_Tbox_delete()
 {
 	FS_HANDLE tboxdata_handle = -1;
-	FS_HANDLE tboxinfo_handle = -1;
 
 	FS_DOSDirEntry file_info;
-	char file_date[10][18];
-	char tmp_date[18];
+	char file_date[10][18]={0};
+	char tmp_date[18]={0};
 	kal_wchar file_hour[24][6]={L"-00",L"-01",L"-02",L"-03",L"-04",L"-05",L"-06",L"-07",L"-08",L"-09",L"-10",L"-11",
 		L"-12",L"-13",L"-14",L"-15",L"-16",L"-17",L"-18",L"-19",L"-20",L"-21",L"-22",L"-23"};
 	char char_name[BIRD_FILE_PATH_LEN];
@@ -1007,6 +1039,7 @@ void Bird_Tbox_delete()
 	U32 file_path_len = (BIRD_FILE_PATH_LEN + 1) * 2;
 	U8 i=0;
        U8 count=0;
+       U8 result =1; 
 	   
        {
            memset(tboxdata_file, 0, sizeof(tboxdata_file));
@@ -1020,7 +1053,7 @@ void Bird_Tbox_delete()
 
            memset(file_date, 0, sizeof(file_date));
            memcpy(file_date[0],char_name,14);
-           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete1 %d %s",tboxdata_handle,char_name);
+           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete1 %d %s",tboxdata_handle,file_date[0]);
 	    count=1;
 		
            if (tboxdata_handle >= 0)   
@@ -1031,15 +1064,25 @@ void Bird_Tbox_delete()
 		       memset(char_name, 0, sizeof(char_name));
 		       mmi_wcs_to_asc(char_name,first_name);
 		       memset(tmp_date, 0, sizeof(tmp_date));
-		       memcpy(tmp_date,char_name,14);
-
-		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete2 %s",char_name);
-		       if((strcmp(file_date[count-1], tmp_date) != 0)&&(strcmp(file_date[0], tmp_date) != 0)&&(tmp_date[0]!=0))
+		       memcpy(tmp_date,char_name,14);	   
+		       result=1; 
+			   
+		       for(i=0;i<=count-1;i++)
+		       {
+		           if(Bird_comp_time(file_date[i], tmp_date)==0)
+		           {
+		               result=0;
+		               break;
+		           }
+		       }
+		       kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete2 %d %s",result,tmp_date);
+		       if((result==1)&&(tmp_date[0]!=0))
 		       {
 		           memcpy(file_date[count],tmp_date,14);
-		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %s",file_date[count]);
+		           kal_prompt_trace(MOD_SOC,"Bird_Tbox_delete3 %d %s",count,file_date[count]);
 		           count++;
 		       }
+			   	
 		       if(Bird_comp_filename(first_name,g_del_name)==2)
 		       {
 		           memset(g_del_name, 0, sizeof(g_del_name));

@@ -123,7 +123,7 @@
 #elif defined(BIRD_DW60)
 	#define RJ_GPS_VERSION			"V1.01"
 	#define RJ_HW_VERSION			"V1.01"
-	#define RJ_GPS_VERSION2			"V1.01_NBBD_20171013_DW60"
+	#define RJ_GPS_VERSION2			"V1.01_NBBD_20171020_DW60"
 	/*默认密码*/
 	#define YD_TK001_PW "123456"
 	/*默认服务器地址*/
@@ -132,7 +132,7 @@
 	#define YD_TK001_HTTP2 "http://sk.gpslink.cn:8090/"
 	#define YD_TK001_IP2 "139.129.87.204:8090"
 	#define YD_TK001_YD_ADMIN_PSW "bdws"
-	#define YD_NV_BATCH "Y4.1"	
+	#define YD_NV_BATCH "Y4.0"	
 #else 
 	#define RJ_GPS_VERSION			"V1.01_NBBD_20170727_DW11OTA_MT6261"
 	/*默认密码*/
@@ -145,7 +145,7 @@
 #endif
 
 /*********OTA Current Version*********/
-#define BIRD_OTA_VRESION "BIRD_DW60_OTA_V1.02"
+#define BIRD_OTA_VRESION "BIRD_DW60_OTA_V1.03"
 
 #define RJ_GPS_LOG_ON
 #define RJ_GPS_LEN					32
