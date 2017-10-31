@@ -121,9 +121,9 @@
 	#define YD_TK001_YD_ADMIN_PSW "bdws"
 	#define YD_NV_BATCH "Y2.1"
 #elif defined(BIRD_DW60)
-	#define RJ_GPS_VERSION			"V1.01"
+	#define RJ_GPS_VERSION			"V1.02"
 	#define RJ_HW_VERSION			"V1.01"
-	#define RJ_GPS_VERSION2			"V1.01_NBBD_20171020_DW60"
+	#define RJ_GPS_VERSION2			"V1.02_NBBD_20171024_DW60"
 	/*默认密码*/
 	#define YD_TK001_PW "123456"
 	/*默认服务器地址*/
@@ -145,7 +145,7 @@
 #endif
 
 /*********OTA Current Version*********/
-#define BIRD_OTA_VRESION "BIRD_DW60_OTA_V1.03"
+#define BIRD_OTA_VRESION "BIRD_DW60_OTA_V1.04"
 
 #define RJ_GPS_LOG_ON
 #define RJ_GPS_LEN					32

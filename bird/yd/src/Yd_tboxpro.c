@@ -28,6 +28,8 @@ extern U8 g_pos_data_30S[9*30];
 
 extern RJ_Gps_User_Info rj_user_info;
 extern U8 g_gpscheck;
+extern applib_time_struct g_save_dt;
+extern applib_time_struct g_cur_dt;
 
 extern U8* txboxhex(U8* hex);
 extern void yd_tk001_receive_reboot_msg_handler();
@@ -105,23 +107,46 @@ U8* bird_get_can_time()
     }
 }
 
-U8* txbox_can_time(applib_time_struct *dt)
+U8* txbox_can_time()
 {
+    applib_time_struct current_time = {0} ;
+    U8 can_time[6]={0};
+	
+    applib_dt_get_rtc_time(&current_time);   
+
     if((car_can_data.date[0]==0)||(car_can_data.date[1]==0)||(car_can_data.date[2]==0))
-        return NULL;
+    {
+    	kal_prompt_trace(MOD_SOC,"txbox_can_time1");
+        return can_time;
+    }
     else
     {
-        dt->nYear=(U16)(car_can_data.date[0]+2000);
-        dt->nMonth=car_can_data.date[1];
-        dt->nDay=car_can_data.date[2];
-        dt->nHour=car_can_data.date[3];
-        dt->nMin=car_can_data.date[4];
-        dt->nSec=car_can_data.date[5];
+        if((applib_dt_compare_time(&current_time,&g_save_dt,NULL)== DT_TIME_GREATER)||(g_save_dt.nYear==0))
+        {
+        g_save_dt.nYear=current_time.nYear;
+        g_save_dt.nMonth=current_time.nMonth;
+        g_save_dt.nDay=current_time.nDay;
+        g_save_dt.nHour=current_time.nHour;
+        g_save_dt.nMin=current_time.nMin;
+        g_save_dt.nSec=current_time.nSec;
 		
-        if(applib_dt_is_valid(dt))
+        car_can_data.date[0]=(U8)(g_save_dt.nYear%100);
+        car_can_data.date[1]=g_save_dt.nMonth;
+        car_can_data.date[2]=g_save_dt.nDay;
+        car_can_data.date[3]=g_save_dt.nHour;
+        car_can_data.date[4]=g_save_dt.nMin;
+        car_can_data.date[5]=g_save_dt.nSec;
+		
+        kal_prompt_trace(MOD_SOC,"txbox_can_time2 %d %d %d",car_can_data.date[0],car_can_data.date[1],car_can_data.date[2]);
+        kal_prompt_trace(MOD_SOC,"txbox_can_time2 %d %d %d",current_time.nYear,current_time.nMonth,current_time.nDay);
+
         return txboxhex(car_can_data.date);
+        }
         else
-        return NULL;
+        {
+        kal_prompt_trace(MOD_SOC,"txbox_can_time4");
+        return can_time;
+        }
     }
 /*
     U8 time[6]={0};
@@ -157,21 +182,23 @@ U8* bird_get_can_time_30S(U8 index)
 
 U8* txbox_can_time_30S(U8 index,applib_time_struct *dt)
 {
+    applib_time_struct tmp_time = {0} ;
+	
+    tmp_time.nSec=30-index;
+
     if((car_can_data_30s[index].date[0]==0)||(car_can_data_30s[index].date[1]==0)||(car_can_data_30s[index].date[2]==0))
         return NULL;
     else
     {	
-        dt->nYear=(U16)(car_can_data_30s[index].date[0]+2000);
-        dt->nMonth=car_can_data_30s[index].date[1];
-        dt->nDay=car_can_data_30s[index].date[2];
-        dt->nHour=car_can_data_30s[index].date[3];
-        dt->nMin=car_can_data_30s[index].date[4];
-        dt->nSec=car_can_data_30s[index].date[5];
+        applib_dt_decrease_time(&g_cur_dt,&tmp_time,dt);
+        car_can_data_30s[index].date[0]=(U8)(dt->nYear%100);
+        car_can_data_30s[index].date[1]=dt->nMonth;
+        car_can_data_30s[index].date[2]=dt->nDay;
+        car_can_data_30s[index].date[3]=dt->nHour;
+        car_can_data_30s[index].date[4]=dt->nMin;
+        car_can_data_30s[index].date[5]=dt->nSec;
 		
-        if(applib_dt_is_valid(dt))
         return txboxhex(car_can_data_30s[index].date);
-        else
-        return NULL;
     }
 }
 
@@ -662,7 +689,7 @@ void TB_Soc_Send_heart_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,U8* nflow)
 }
 
 //实时信息
-U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,applib_time_struct *dt)
+U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len)
 {
     //23 23 02 fe 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00 00 01 02 03 04 05 06 07 08 09 00
     U16 send_len=0;
@@ -671,6 +698,7 @@ U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,applib_time
     U16 length=0; 
     U8 check_code=0; 
     U16 i=0; 
+    U8 can_time[6]={0};
 	
 	//起始符
 	memcpy(sendBuffer+send_len,head,2);	
@@ -692,10 +720,12 @@ U8 TB_Soc_Send_realinfo_ReqBuffer(U8* sendBuffer,U16 *sendBuffer_len,applib_time
 	sendBuffer[send_len]=(U8)(length%256);
 	send_len = send_len + 1;
 	//数据采集时间
-	if(txbox_can_time(dt)!=NULL)
+	memcpy(can_time,txbox_can_time(),6);	
+	if(can_time[0]!=0)
 	{
-	    memcpy(sendBuffer+send_len,txbox_can_time(dt),6);	
+	    memcpy(sendBuffer+send_len,can_time,6);	
 	    send_len = send_len + 6;
+	    kal_prompt_trace(MOD_SOC,"TB_Soc_Send_realinfo_ReqBuffer %d %d %d",sendBuffer[send_len-6],sendBuffer[send_len-5],sendBuffer[send_len-4]);
 	}
        else
        {
@@ -1677,7 +1707,7 @@ void bird_soc_send_tboxheart(void)
 	}
 
 }
-U8 bird_soc_send_tboxrealinfo(Send_Info *sendinfo,applib_time_struct *dt)
+U8 bird_soc_send_tboxrealinfo(Send_Info *sendinfo)
 {
 	U8 rtn=0;
 	
@@ -1686,7 +1716,7 @@ U8 bird_soc_send_tboxrealinfo(Send_Info *sendinfo,applib_time_struct *dt)
 	sendinfo->send_flow=0;
 	sendinfo->send_type=BIRD_SOC_SEND_GPSPOS;
 	memset(sendinfo->send_buf, 0, MAX_BIRD_SENDBUF_SIZE);
-	rtn=TB_Soc_Send_realinfo_ReqBuffer(sendinfo->send_buf,&sendinfo->buf_len,dt);
+	rtn=TB_Soc_Send_realinfo_ReqBuffer(sendinfo->send_buf,&sendinfo->buf_len);
 	if(rtn==0)
 	{
 	    kal_prompt_trace(MOD_SOC,"bird_soc_send_tboxrealinfo time not get");

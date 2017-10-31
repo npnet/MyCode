@@ -636,20 +636,20 @@ void bird_set_heart_ival(U8 flag)
 U8 bird_get_heart_ival(){
 	return yd_tk005_info.heart_ival;
 }
-void bird_set_ter_res_time(U8 flag)
+void bird_set_ter_res_time(U16 flag)
 {
 	kal_prompt_trace(MOD_SOC,"bird_set_ter_res_time: %d",flag);
 	yd_tk005_info.ter_res_time=flag;
 }
-U8 bird_get_ter_res_time(){
+U16 bird_get_ter_res_time(){
 	return yd_tk005_info.ter_res_time;
 }
-void bird_set_ser_res_time(U8 flag)
+void bird_set_ser_res_time(U16 flag)
 {
 	kal_prompt_trace(MOD_SOC,"bird_set_ser_res_time: %d",flag);
 	yd_tk005_info.ser_res_time=flag;
 }
-U8 bird_get_ser_res_time(){
+U16 bird_get_ser_res_time(){
 	return yd_tk005_info.ser_res_time;
 }
 void bird_set_conn_interval(U8 flag)
@@ -660,12 +660,12 @@ void bird_set_conn_interval(U8 flag)
 U8 bird_get_conn_interval(){
 	return yd_tk005_info.conn_interval;
 }
-void bird_set_lixian_time(U8 flag)
+void bird_set_lixian_time(U16 flag)
 {
 	kal_prompt_trace(MOD_SOC,"bird_set_lixian_time: %d",flag);
 	yd_tk005_info.lixian_time=flag;
 }
-U8 bird_get_lixian_time(){
+U16 bird_get_lixian_time(){
 	return yd_tk005_info.lixian_time;
 }
 

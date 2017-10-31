@@ -151,6 +151,8 @@ void Yd_login_res(U8 *datetime,U8 *flag)
 		g_n_ydislogin = 3;
 		Rj_stop_timer(Bird_task_logintxbox_Timer); 
 		Rj_start_timer(Bird_task_logintxbox_Timer, 1*1000, Yd_logintxbox,NULL);
+		Rj_stop_timer(Bird_task_savedata_Timer); 
+		Rj_start_timer(Bird_task_savedata_Timer, 5*1000, Yd_savedata,NULL);/*启动存储数据*/	
 	}
 }
 
@@ -178,8 +180,6 @@ void Yd_tboxlogin_res(U8 *buf,U8 length)
 		
 		Rj_stop_timer(Bird_task_main_Timer); 
 		Rj_start_timer(Bird_task_main_Timer, 2*1000, Yd_main,NULL);/*启动主定时器，开始处理位置信息*/	
-		Rj_stop_timer(Bird_task_savedata_Timer); 
-		Rj_start_timer(Bird_task_savedata_Timer, 1*1000, Yd_savedata,NULL);/*启动存储数据*/	
 		StartTimer(BIRD_DELETE_FILE_TIMER, 1*60*1000, Bird_Tbox_delete);
 
 

@@ -75,6 +75,7 @@ extern U8 g_acc_sleep_status;
 extern U8 g_n_sleepcount;
 extern U8 g_n_sleepposcount;
 extern Socket_Send g_socket_send_alarm;
+extern U8 g_n_ydislogin;
 
 extern kal_uint32 bird_get_bat_channel_voltage(void);
 extern double bird_get_adc_channel_voltage();
@@ -658,24 +659,35 @@ void yd_save_alarm()
 }
 
 Send_Info g_cur_send={0};	
+Send_Info g_save_send={0};	
 applib_time_struct g_cur_dt={0};
+applib_time_struct g_save_dt={0};
 void Yd_savedata()
 {	
        U8 rtn=0;
-
-	memset(&g_cur_send, 0, sizeof(Send_Info));
-	memset(&g_cur_dt, 0, sizeof(applib_time_struct));
-	rtn=bird_soc_send_tboxrealinfo(&g_cur_send,&g_cur_dt);
+	
+	if(g_n_ydislogin==3)
+	{
+	kal_prompt_trace(MOD_SOC," Yd_savedata login3");
+	}
+	else
+	{
+	rtn=bird_soc_send_tboxrealinfo(&g_save_send);
 	kal_prompt_trace(MOD_SOC," Yd_savedata %d",rtn);
 	if(rtn==1)
 	{
+	    memcpy(&g_cur_send, &g_save_send, sizeof(Send_Info));
+	    memcpy(&g_cur_dt, &g_save_dt, sizeof(applib_time_struct));
 	    Bird_Tbox_savedata(&g_cur_send,g_cur_dt);
+	    kal_prompt_trace(MOD_SOC," Yd_savedata %d %d",g_save_send.send_buf[24],g_cur_send.send_buf[24]);
 	    //can_data_reset();
 	    //RJ_reset_GPS_flag();
+	    //memset(&g_save_send, 0, sizeof(Send_Info));
+	    //memset(&g_save_dt, 0, sizeof(applib_time_struct));
 	}
-
+	}
 	Rj_stop_timer(Bird_task_savedata_Timer); 
-	Rj_start_timer(Bird_task_savedata_Timer, bird_get_savedata_ival(), Yd_savedata,NULL);
+	Rj_start_timer(Bird_task_savedata_Timer, 400, Yd_savedata,NULL);//bird_get_savedata_ival()
 
 }
 /***************************************************************************
@@ -766,7 +778,30 @@ void Yd_main()
                if(g_cur_dt.nYear!=0)
                {
                    if(Lima_get_soc_conn_flag())
+                   {
+	            kal_prompt_trace(MOD_SOC,"Yd_main %d %d %d %d %d %d",g_cur_send.send_buf[24],g_cur_send.send_buf[25],
+					g_cur_send.send_buf[26],g_cur_send.send_buf[27],g_cur_send.send_buf[28],g_cur_send.send_buf[29]);
+	            if(((g_cur_send.send_buf[24]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nYear%100)||
+					((g_cur_send.send_buf[25]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nMonth)||
+					((g_cur_send.send_buf[26]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nDay)||
+					((g_cur_send.send_buf[27]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nHour)||
+					((g_cur_send.send_buf[28]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nMin)||
+					((g_cur_send.send_buf[29]/16*10+g_cur_send.send_buf[24]%16)!=g_cur_dt.nSec))
+	            {
+	                g_cur_send.send_buf[24]=(g_cur_dt.nYear%100)/10*16+(g_cur_dt.nYear%100)%10;
+	                g_cur_send.send_buf[25]=g_cur_dt.nMonth/10*16+g_cur_dt.nMonth%10;
+	                g_cur_send.send_buf[26]=g_cur_dt.nDay/10*16+g_cur_dt.nDay%10;
+	                g_cur_send.send_buf[27]=g_cur_dt.nHour/10*16+g_cur_dt.nHour%10;
+	                g_cur_send.send_buf[28]=g_cur_dt.nMin/10*16+g_cur_dt.nMin%10;
+	                g_cur_send.send_buf[29]=g_cur_dt.nSec/10*16+g_cur_dt.nSec%10;
+	                for(i=2;i<g_cur_send.buf_len-1;i++)
+				    check_code ^=g_cur_send.send_buf[i];
+	                g_cur_send.send_buf[g_cur_send.buf_len-1]=check_code;
+
+	            }
+
 	                Bird_soc_sendbufAdd2(&g_cur_send);
+                   }
 	            Bird_Tbox_saveinfo(&g_cur_send,g_cur_dt);
                }
 	    }
@@ -788,6 +823,8 @@ void Yd_main()
 	        ntimer = bird_get_alarm_main_ival();
 	    }
 	}
+	//memset(&g_cur_send, 0, sizeof(Send_Info));
+	memset(&g_cur_dt, 0, sizeof(applib_time_struct));
 	Rj_stop_timer(Bird_task_main_Timer); 
 	Rj_start_timer(Bird_task_main_Timer, ntimer, Yd_main,NULL);
 }
