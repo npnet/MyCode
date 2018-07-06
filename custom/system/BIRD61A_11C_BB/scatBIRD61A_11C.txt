@@ -1,4 +1,4 @@
-#! armcc -E
+;[MAUI_12345678]
 ;/*****************************************************************************
 ;*  Copyright Statement:
 ;*  --------------------
@@ -54,7 +54,7 @@
 ; *
 ; * Auto Generated Date:
 ; * -------
-; *   2017/8/29
+; *   2018/7/3
 ; *
 ; * Revision History:
 ; * -------
@@ -67,38 +67,35 @@
 ;=========================================================================
 ;
 ;--------------------
-; SCHEME   : external 7.5MB flash memory and 4MB SRAM
+; SCHEME   : external 7MB flash memory and 4MB SRAM
 ; PLATFORM : MT6261
 ; FEATURES : ESBNOR 
 ;--------------------
 
-#define ALIGNMENT_32B 0x20
-#define SetAddress(address, alignment) ((address+(alignment-1)) AND ~(alignment-1))
-
-BOOTLOADER 0x10001000 0x00005000
+BOOTLOADER 0x10001000 0x00002800
 {
 }
 
-ROOT_CERT 0x10006000 0x00000000
+ROOT_CERT 0x10003800 0x00000000
 {
     ; reserved region for secure chip project
 }
 
-EXT_BOOTLOADER 0x10006000 0x00018000
+EXT_BOOTLOADER 0x10003800 0x00020000
 {
 }
 
 
 
-CBR 0x10020000 0x00000000
+CBR 0x10028000 0x00000000
 {
     ; reserved for bootup and features
 }
 
 ; ROM Load region is block-aligned
-ROM 0x10020000
+ROM 0x10028000
 {
-    ROM_GFH 0x10020000 
+    ROM_GFH 0x10028000 
     {
          *                             (MAUI_GFH, +First)
          *                             (MAUI_GFH_EXT)
@@ -118,29 +115,14 @@ ROM 0x10020000
          *.obj (SECOND_PART)
          *.obj (MAUI_FOTA_HEAD_INFO)
     }
+    ROM_VIDEO +0x0 
+    {
+         * (MP4ENC1_DYNAMIC_CODE, MP4ENC1_DYNAMIC_RO)
+         * (MP4ENC_DYNAMIC_CODE, MP4ENC_DYNAMIC_RO)
+         * (MP4ENC2_DYNAMIC_RO)
+    }
     ROM1 +0x0 
     {
-         *                             (i.__rt_udiv_3)
-         *                             (i.__rt_sdiv_3)
-         *                             (i.__rt_udiv_5)
-         *                             (i.__rt_sdiv_5)
-         *                             (i.__rt_udiv_9)
-         *                             (i.__rt_sdiv_9)
-         *                             (i.__rt_udiv_21)
-         *                             (i.__rt_sdiv_21)
-         *                             (i.__rt_udiv_31)
-         *                             (i.__rt_sdiv_31)
-         *                             (i.__rt_udiv_60)
-         *                             (i.__rt_sdiv_60)
-         *                             (i.__rt_udiv_100)
-         *                             (i.__rt_sdiv_100)
-         *                             (i.__rt_udiv_1000)
-         *                             (i.__rt_sdiv_1000)
-         *                             (i.__rt_udiv_3600)
-         *                             (i.__rt_sdiv_3600)
-         *                             (i.__rt_udiv_10000)
-         *                             (i.__rt_sdiv_10000)
-         
          *    (+RO)
          *    (CAT_RODATA_IMG, CAT_RODATA_ADO, CAT_RODATA_STR)
          *    (PRIMARY_ROCODE, PRIMARY_RODATA)
@@ -203,7 +185,15 @@ ROM 0x10020000
     {
          * (DYNAMICCACHEABLEZI_C)
     }
-    CACHED_DUMMY_END 0xf03cfe7c 
+    TBOX_EXTSRAM 0xf0300000
+    {
+		 bird_base.obj (+RW, +ZI)
+		 ;bird.lib (+RW, +ZI)
+		 ;yd_*.obj (+RW, +ZI)
+		 ;bird_*.obj (+RW, +ZI)
+ 		 * (TBOX_EXTSRAM_RW, TOBX_EXTSRAM_ZI)
+    }    
+    CACHED_DUMMY_END 0xf03eb000 
     {
          bootarm.obj (DUMMY_POOL)
     }
@@ -285,89 +275,72 @@ ROM 0x10020000
     }
 }
 
-
-VIVA +0x400 0x4c
+LOAD_SEC_ROM 0x10480000
 {
-    VIVA_GFH +0x0 ; Only exist on SV5 platform
+    TBOX_GFH 0x10480000 
     {
-        *                             (VIVA_GFH)
+         *                             (TBOX_GFH)
     }
-
-    VIVA +0x0
+    ROM_TBOX_START +0x0
+    { 
+         bird_base.obj (+RO-CODE, +RO-DATA) 
+    }    
+    ;ROM_TBOX_SEC 0x10480400
+    ;{
+    ;     Motion_sensor_custom.obj (+RO-CODE, +RO-DATA)
+    ;     Motion_sensor_custom_bma220.obj (+RO-CODE, +RO-DATA)
+    ;}
+    ROM_TBOX +0x0
     {
-        *                             (VIVA)
+         ;Motion_sensor_custom.obj (+RO-CODE, +RO-DATA)         
+         ;Motion_sensor_custom_bma220.obj (+RO-CODE, +RO-DATA)                 
+         customer_at_command.obj (+RO-CODE, +RO-DATA)
+         uart2_drv.obj (+RO-CODE, +RO-DATA)
+         Rj_DW02.obj (+RO-CODE, +RO-DATA)
+         hd8020_gps_drv.obj (+RO-CODE, +RO-DATA)
+         Yd_reboot_control.obj (+RO-CODE, +RO-DATA)
+         Yd_sms.obj (+RO-CODE, +RO-DATA)
+         nmeap.obj (+RO-CODE, +RO-DATA)
+         Yd_main.obj (+RO-CODE, +RO-DATA)
+         Bird_main.obj (+RO-CODE, +RO-DATA)
+         Yd_low_power_alarm.obj (+RO-CODE, +RO-DATA)
+         bird_drv_message.obj (+RO-CODE, +RO-DATA)
+         Yd_login_handle.obj (+RO-CODE, +RO-DATA)
+         Bird_nbrcell.obj (+RO-CODE, +RO-DATA)
+         Yd_az_alarm.obj (+RO-CODE, +RO-DATA)
+         Yd_move_alarm.obj (+RO-CODE, +RO-DATA)
+         Yd_out_vol_alarm.obj (+RO-CODE, +RO-DATA)
+         Yd_readposfile.obj (+RO-CODE, +RO-DATA)
+         Yd_rollover_alarm.obj (+RO-CODE, +RO-DATA)
+         Yd_speed_alarm.obj (+RO-CODE, +RO-DATA)
+         Bird_std.obj (+RO-CODE, +RO-DATA)
+         Yd_fly_mode_control.obj (+RO-CODE, +RO-DATA)
+         Yd_nv_handler.obj (+RO-CODE, +RO-DATA)
+         Yd_wakeup_handle.obj (+RO-CODE, +RO-DATA)
+         bird_can_data.obj (+RO-CODE, +RO-DATA)
+         Bird_oilcut.obj (+RO-CODE, +RO-DATA)
+         Yd_heart.obj (+RO-CODE, +RO-DATA)
+         Yd_base.obj (+RO-CODE, +RO-DATA)
+         Bird_socket.obj (+RO-CODE, +RO-DATA)
+         Bird_task.obj (+RO-CODE, +RO-DATA)
+         Yd_vibration_alarm.obj (+RO-CODE, +RO-DATA)
+         hd8020_agps.obj (+RO-CODE, +RO-DATA)
+         Yd_datadeal.obj (+RO-CODE, +RO-DATA)         
+         Yd_defense.obj (+RO-CODE, +RO-DATA)         
+         Yd_sleep_state.obj (+RO-CODE, +RO-DATA)         
+         Bird_mileage.obj (+RO-CODE, +RO-DATA)         
+         Yd_tboxpro.obj (+RO-CODE, +RO-DATA)         
+         bma222.obj (+RO-CODE, +RO-DATA)         
+         can.obj (+RO-CODE, +RO-DATA)         
+         Yd_aes128.obj (+RO-CODE, +RO-DATA)         
+         Yd_gps_control.obj (+RO-CODE, +RO-DATA)         
+         Yd_power_off.obj (+RO-CODE, +RO-DATA)         
+         bma220.obj (+RO-CODE, +RO-DATA)         
+         Yd_acc_control.obj (+RO-CODE, +RO-DATA)         
+         Bird_gpscell.obj (+RO-CODE, +RO-DATA)         
+         bird_can_data_shanshan.obj (+RO-CODE, +RO-DATA)         
+         *    (TBOX_ROCODE, TBOX_RODATA)
     }
 }
-
-; DYNAMIC_COMP_CODE MaxSize is queried from custom_FeatureConfig.h
-DYNAMIC_COMP_CODE +0x0 0x00004F00
-{
-    DYNAMIC_COMP_CODE +0x0
-    {
-         * (DYNAMIC_DUMMY_CODE_HEAD)
-    }
-}
-DYNAMIC_COMP_BESLOUDNESS +0x0 ALIGN 32
-{
-; 32byte aligned to support dynamically switchable cachability 
-    DYNAMIC_COMP_BESLOUDNESS 0xf03e7a20 ALIGN 32 OVERLAY 0x40
-    {
-         * (DYNAMIC_COMP_BESLOUDNESS_HEAD)
-    }
-    DYNAMIC_COMP_BESLOUDNESS_BODY +0x0 OVERLAY 0x35a0
-    {
-       *BesLoudness.a (+RO-CODE, +RO-DATA)
-    }
-}
-DYNAMIC_COMP_VEENC +0x0 ALIGN 32
-{
-; 32byte aligned to support dynamically switchable cachability 
-    DYNAMIC_COMP_VEENC 0xf03d9320 ALIGN 32 OVERLAY 0x40
-    {
-         * (DYNAMIC_COMP_VEENC_HEAD)
-    }
-    DYNAMIC_COMP_VEENC_BODY +0x0 OVERLAY 0xe6c0
-    {
-         * (DYNAMIC_CODE_VEENC_ROCODE, DYNAMIC_CODE_VEENC_RODATA)
-    }
-}
-DYNAMIC_COMP_VEDEC +0x0 ALIGN 32
-{
-; 32byte aligned to support dynamically switchable cachability 
-    DYNAMIC_COMP_VEDEC 0xf03d9320 ALIGN 32 OVERLAY 0x40
-    {
-         * (DYNAMIC_COMP_VEDEC_HEAD)
-    }
-    DYNAMIC_COMP_VEDEC_BODY +0x0 OVERLAY 0xe6c0
-    {
-         * (DYNAMIC_CODE_VEDEC_ROCODE, DYNAMIC_CODE_VEDEC_RODATA)
-    }
-}
-DYNAMIC_COMP_WAVETABLE +0x0 ALIGN 32
-{
-; 32byte aligned to support dynamically switchable cachability 
-    DYNAMIC_COMP_WAVETABLE 0xf03cfe80 ALIGN 32 OVERLAY 0x40
-    {
-         * (DYNAMIC_COMP_WAVETABLE_HEAD)
-    }
-    DYNAMIC_COMP_WAVETABLE_BODY +0x0 OVERLAY 0x9460
-    {
-       *melody_par.a (+RO-CODE, +RO-DATA)
-       *melody_syn.a (+RO-CODE, +RO-DATA)
-    }
-}
-DYNAMIC_COMP_MAUIINIT +0x0 ALIGN 32 
-{ 
-; 32byte aligned to support dynamically switchable cachability 
-    DYNAMIC_COMP_MAUIINIT SetAddress(ImageBase(DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI_MMIPOOL)+0xA000,ALIGNMENT_32B) OVERLAY 0x40
-    {
-        * (DYNAMIC_COMP_MAUIINIT_HEAD) 
-    }
-    DYNAMIC_COMP_MAUIINIT_BODY +0x0 OVERLAY 
-    {
-        * (DYNAMIC_COMP_MAUIINIT_SECTION) 
-    } 
-    ScatterAssert(ImageLimit(DYNAMIC_COMP_MAUIINIT_BODY) < ImageBase(DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI))
-}        
 
 
