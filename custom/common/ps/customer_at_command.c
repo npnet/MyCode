@@ -218,7 +218,7 @@
 #if defined(__PLMN_LIST_WITH_CELL_INFO__)
 #include "ps_public_struct.h"
 #endif
-#include "bird_app.h"
+
 extern void kal_monitor_buffer(kal_uint32 index);
 extern kal_bool twomicnr_command_hdlr(char *full_cmd_string);
 
@@ -241,7 +241,8 @@ extern kal_bool twomicnr_command_hdlr(char *full_cmd_string);
 *****************************************************************************/
 
 kal_uint8 custom_get_atcmd_symbol(void);
-kal_bool custom_command_hdlr(char *full_cmd_string);
+kal_bool __custom_command_hdlr(char *full_cmd_string);
+
 
 /*****************************************************************************
 * FUNCTION
@@ -453,7 +454,265 @@ custom_cmd_mode_enum custom_find_cmd_mode(custom_cmdLine *cmd_line)
     return (result);
 }
 
+
+/*****************************************************************************
+* FUNCTION
+*  	custom_get_atcmd_symbol()
+* DESCRIPTION
+*   	This function returns special symbol for customer-defined AT command, 
+*   	so AT parser can recognize its a custom command and forward the string to custom_command_handler().
+*
+*     CUSTOMER DOES NOT need to modify this function.
+* PARAMETERS
+*   	none
+* RETURNS
+*     kal_uint8 
+*****************************************************************************/
+kal_uint8 custom_get_atcmd_symbol(void)
+{
+   return (CUSTOM_SYMBOL);
+}
+
+/*****************************************************************************
+* USER DEFINE CONSTANT
+*  	RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE
+* DESCRIPTION
+* 	1. This value defines the control DCD value for data mode (CSD/GPRS dialup)
+*   2. CUSTOMER CAN modify this value accroding to its TE requirement
+*****************************************************************************/
+#define RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE (1)
+
+/*****************************************************************************
+* USER DEFINE CONSTANT
+*  	RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE
+* DESCRIPTION
+* 	1. This value defines the control DCD value for AT command mode (Normal/Escaped AT)
+*   2. CUSTOMER CAN modify this value accroding to its TE requirement
+*****************************************************************************/
+#define RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE (0)
+
+/*****************************************************************************
+* FUNCTION
+*  	custom_get_dcd_value_for_data_state()
+* DESCRIPTION
+*   	This function returns the user-defined DCD value for data state
+*
+*     CUSTOMER DOES NOT need to modify this function.
+* PARAMETERS
+*   	none
+* RETURNS
+*     kal_uint8 
+*****************************************************************************/
+kal_uint8 custom_get_dcd_value_for_data_state(void)
+{
+    return (kal_uint8) RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE;
+}
+
+/*****************************************************************************
+* FUNCTION
+*  	custom_get_dcd_value_for_cmd_state()
+* DESCRIPTION
+*   	This function returns the user-defined DCD value for command state
+*       It shall be inverted value of custom_get_dcd_value_for_data_state()
+*     CUSTOMER DOES NOT need to modify this function.
+* PARAMETERS
+*   	none
+* RETURNS
+*     kal_uint8 
+*****************************************************************************/
+kal_uint8 custom_get_dcd_value_for_cmd_state(void)
+{
+    return (kal_uint8)RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE;
+}
+
+#ifdef __MOD_TCM__
+/*****************************************************************************
+* FUNCTION
+*  	custom_get_gprs_dialup_connect_post_string()
+* DESCRIPTION
+*   This function returns the post string right after CONNECT in gprs dialup.
+*
+*   The return string length must be less than 64
+*
+*   If post_string is XXXXXX, 
+*   then MS sends "<cr><lf>CONNECT XXXXXX<cr><lf>" when GPRS dialup
+*   Ex.1 if post_string=" 230400", 
+*        then entire output string is "<cr><lf>CONNECT 230400<cr><lf>"
+*   Ex.2 if post_string=" 56000 V42bis", 
+*        then entire output string is "<cr><lf>CONNECT 56000 V42bis<cr><lf>"
+*    
+* PARAMETERS
+*   kal_uint8 act, ACcess Technology, 
+                   This field value can be referred to TS27.007
+                   0,   GSM
+                   1,   GSM Compact
+                   2,   UTRAN
+                   3,   GSM w/EGPRS
+                   4,   UTRAN w/HSDPA
+                   5,   UTRAN w/HSUPA
+                   6,   UTRAN w/HSDPA and HSUPA
+* RETURNS
+*     kal_uint8* post_string
+*****************************************************************************/
+const kal_uint8* custom_get_gprs_dialup_connect_post_string(kal_uint8 act)
+{
+    /* Note: The return string length must be less than 64!!! */
+#ifdef __TC01__
+    #if defined(__HSDPA_SUPPORT__)
+/* under construction !*/
+	#elif defined(__EGPRS_MODE__)
+/* under construction !*/
+	#else
+/* under construction !*/
+	#endif
+#elif defined(__PS_DIALUP_CONNECT_STRING_BY_ACT__)
+    static kal_uint8 temp_string[64];
+    const kal_uint8* post_string = temp_string;    
+    if ((act == 0) || (act == 1) || (act == 3))
+    {
+        strcpy(temp_string, " 236800");
+    }
+    else
+    {
+        strcpy(temp_string, " 7200000");
+    }    
+#else
+  //Note: user MUST prepare a space before the speed number
+  #if defined(__HSDPA_SUPPORT__) && defined(__UMTS_FDD_MODE__)
+	static const kal_uint8 post_string[] = " 7200000"; //7.2Mbps
+  #elif defined(__HSDPA_SUPPORT__) && defined(__UMTS_TDD128_MODE__)
+  	static const kal_uint8 post_string[] = " 2624000"; //2.6Mbps
+  #elif defined(__UMTS_FDD_MODE__) || defined(__UMTS_TDD128_MODE__)
+    static const kal_uint8 post_string[] =  " 384000"; //384kbps
+  #elif defined(__EGPRS_MODE__)
+    static const kal_uint8 post_string[] =  " 473600"; //473.6kbps
+  #else
+    static const kal_uint8 post_string[] =   " 80000"; //80kbps  
+  #endif
+#endif
+    return (const kal_uint8*) post_string;
+} // MAUI_02386357, mtk02285, MAUI_02825172
+#endif /* __MOD_TCM__ */
+
+/*****************************************************************************
+* FUNCTION
+*  	custom_is_edit_mode_command()
+* DESCRIPTION
+*   This function is used to let customer judge if the input command is needed to enter 
+* editor mode or not. If true, we will output "> " and wait for 
+*       ctrl+z character to execute the whole command string
+*       ESC character to cancel the command
+*    
+* PARAMETERS
+*   	data    [IN]    input command string header, maximum length : 10
+* RETURNS
+*     KAL_TRUE or KAL_FALSE
+*****************************************************************************/
+kal_bool custom_is_edit_mode_command(kal_uint8 *data)
+{
+    /*if (strncmp(data, "AT%EDIT", 7) == 0)
+        return KAL_TRUE;
+    else*/
+        return KAL_FALSE;
+}
+
+#if defined(__PLMN_LIST_WITH_CELL_INFO__)
+kal_uint32 custom_at_posi_get_ndssign(kal_char *buffer, kal_uint32 buf_len, kal_uint8 plmn_num, l4c_rat_plmn_info_struct *list)
+{
+    /* buf_len: MAX size of the 'buffer' please do not cruppt
+       string_length: Indicates how many bytes writes into 'buffer'
+    */
+    
+   /* Prototype of l4c_rat_plmn_info_struct
+            #ifdef __PLMN_LIST_WITH_CELL_INFO__
+                #define MAX_NUM_CELL_PER_PLMN  10
+            #endif 
+            
+            #if defined(__PLMN_LIST_WITH_CELL_INFO__)
+            typedef struct {
+                kal_uint16       arfcn;
+                kal_int16        rxlev;
+                kal_uint8        bsic;
+                kal_uint8        la_code[2];
+                kal_uint16       cell_id;
+                }l4c_location_cell_info_struct;
+            #endif
+            
+            typedef struct {
+               kal_uint8   plmn_id[7];
+               kal_uint8   status;
+               kal_uint8 rat;
+               #if defined(__PLMN_LIST_WITH_CELL_INFO__)
+               l4c_location_cell_info_struct cell_list[MAX_NUM_CELL_PER_PLMN];
+               #endif
+            } l4c_rat_plmn_info_struct;
+      */
+     /* sample code, judge how many PLMN and cell info in the parameter 'list'
+          kal_uint8 i;
+          kal_uint8 j;
+          kal_uint8 ended;
+          kal_uint16 temp_lac;
+          kal_uint16 temp_lac_2;
+          
+          for (i = 0; i < plmn_num; i++)
+            {
+                for(j = 0; j < MAX_NUM_CELL_PER_PLMN; j++)
+                {
+                    temp_lac = list[i].cell_list[j].la_code[0];
+                    temp_lac = (temp_lac << 8) | (list[i].cell_list[j].la_code[1]);
+
+                    if((temp_lac == 0) && (list[i].cell_list[j].cell_id == 0))
+                    {
+                        break;
+                    }
+
+                    // Judge if this is the last cell info 
+                    if((i == (plmn_num - 1)) && (j == (MAX_NUM_CELL_PER_PLMN - 1)))
+                    {
+                        ended = 1;
+                    }
+                    else if(i == (plmn_num - 1))
+                    {
+                        temp_lac_2 = list[i].cell_list[j+1].la_code[0];
+                        temp_lac_2 = (temp_lac_2 << 8) | (list[i].cell_list[j+1].la_code[1]);
+
+                        if((temp_lac_2 == 0) && (list[i].cell_list[j+1].cell_id == 0))
+                        {
+                            ended = 1;
+                        }
+                    }
+                 }
+             }
+    */
+    kal_uint32 string_length = 0;
+    
+    /* Replace the line after thie comment, calculate NDSSIGN and write into buffer */
+    string_length = kal_sprintf(buffer, "\"NDSSIGN\"");
+
+    
+    /* It's recommended that do not remove the codes after this line! */
+    if(string_length > buf_len)
+    {
+        /* Add length check, void memory curruption */
+        ASSERT(0);
+    }
+    return string_length;
+}
+
+kal_bool custom_process_at_posi()
+{
+	  // customer code
+    return KAL_FALSE;
+}
+#endif
+
+
+#if 1
+
+//Please do NOT modify any content above!
+
 #ifdef RJ_GPS_APP
+#include "bird_app.h"
 #include "common_nvram_editor_data_item.h"
 extern kal_uint16 rj_gps_for_at_test;
 extern void RJ_GPS_Exit_GPSTest();
@@ -479,6 +738,8 @@ volatile kal_uint8 watchdog_at_flag =1;
 kal_bool watchdog_state_test = 0 ; //0: LEVEL_LOW; 1: LEVEL_HIGH
 kal_uint8 reset_flag = 0;
 kal_uint8 watchdog_testcount =0;
+extern kal_uint8 factory_calibration_flag;
+
 void bird_watchdog_test()
 {
 	//static kal_uint8 count = 0;
@@ -850,7 +1111,7 @@ void Bird_at_test(kal_uint16 param1,kal_uint16 param2)
 *    KAL_TRUE : the command is handled by the customer
 *    KAL_FALSE: the command is not handled by the customer
 *****************************************************************************/
-kal_bool custom_command_hdlr(char *full_cmd_string)
+kal_bool __custom_command_hdlr(char *full_cmd_string)
 {
     char buffer[MAX_UART_LEN+1]; //MAUI_02377056
     char *cmd_name, *cmdString;
@@ -1156,255 +1417,5 @@ kal_bool custom_command_hdlr(char *full_cmd_string)
     /* we should return KAL_FALSE to let ATCI judge if the it can handle the command */
     return KAL_FALSE;
 	
-}
-
-/*****************************************************************************
-* FUNCTION
-*  	custom_get_atcmd_symbol()
-* DESCRIPTION
-*   	This function returns special symbol for customer-defined AT command, 
-*   	so AT parser can recognize its a custom command and forward the string to custom_command_handler().
-*
-*     CUSTOMER DOES NOT need to modify this function.
-* PARAMETERS
-*   	none
-* RETURNS
-*     kal_uint8 
-*****************************************************************************/
-kal_uint8 custom_get_atcmd_symbol(void)
-{
-   return (CUSTOM_SYMBOL);
-}
-
-/*****************************************************************************
-* USER DEFINE CONSTANT
-*  	RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE
-* DESCRIPTION
-* 	1. This value defines the control DCD value for data mode (CSD/GPRS dialup)
-*   2. CUSTOMER CAN modify this value accroding to its TE requirement
-*****************************************************************************/
-#define RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE (1)
-
-/*****************************************************************************
-* USER DEFINE CONSTANT
-*  	RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE
-* DESCRIPTION
-* 	1. This value defines the control DCD value for AT command mode (Normal/Escaped AT)
-*   2. CUSTOMER CAN modify this value accroding to its TE requirement
-*****************************************************************************/
-#define RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE (0)
-
-/*****************************************************************************
-* FUNCTION
-*  	custom_get_dcd_value_for_data_state()
-* DESCRIPTION
-*   	This function returns the user-defined DCD value for data state
-*
-*     CUSTOMER DOES NOT need to modify this function.
-* PARAMETERS
-*   	none
-* RETURNS
-*     kal_uint8 
-*****************************************************************************/
-kal_uint8 custom_get_dcd_value_for_data_state(void)
-{
-    return (kal_uint8) RMMI_CUSTOM_DCD_VALUE_IN_DATA_STATE;
-}
-
-/*****************************************************************************
-* FUNCTION
-*  	custom_get_dcd_value_for_cmd_state()
-* DESCRIPTION
-*   	This function returns the user-defined DCD value for command state
-*       It shall be inverted value of custom_get_dcd_value_for_data_state()
-*     CUSTOMER DOES NOT need to modify this function.
-* PARAMETERS
-*   	none
-* RETURNS
-*     kal_uint8 
-*****************************************************************************/
-kal_uint8 custom_get_dcd_value_for_cmd_state(void)
-{
-    return (kal_uint8)RMMI_CUSTOM_DCD_VALUE_IN_CMD_STATE;
-}
-
-#ifdef __MOD_TCM__
-/*****************************************************************************
-* FUNCTION
-*  	custom_get_gprs_dialup_connect_post_string()
-* DESCRIPTION
-*   This function returns the post string right after CONNECT in gprs dialup.
-*
-*   The return string length must be less than 64
-*
-*   If post_string is XXXXXX, 
-*   then MS sends "<cr><lf>CONNECT XXXXXX<cr><lf>" when GPRS dialup
-*   Ex.1 if post_string=" 230400", 
-*        then entire output string is "<cr><lf>CONNECT 230400<cr><lf>"
-*   Ex.2 if post_string=" 56000 V42bis", 
-*        then entire output string is "<cr><lf>CONNECT 56000 V42bis<cr><lf>"
-*    
-* PARAMETERS
-*   kal_uint8 act, ACcess Technology, 
-                   This field value can be referred to TS27.007
-                   0,   GSM
-                   1,   GSM Compact
-                   2,   UTRAN
-                   3,   GSM w/EGPRS
-                   4,   UTRAN w/HSDPA
-                   5,   UTRAN w/HSUPA
-                   6,   UTRAN w/HSDPA and HSUPA
-* RETURNS
-*     kal_uint8* post_string
-*****************************************************************************/
-const kal_uint8* custom_get_gprs_dialup_connect_post_string(kal_uint8 act)
-{
-    /* Note: The return string length must be less than 64!!! */
-#ifdef __TC01__
-    #if defined(__HSDPA_SUPPORT__)
-/* under construction !*/
-	#elif defined(__EGPRS_MODE__)
-/* under construction !*/
-	#else
-/* under construction !*/
-	#endif
-#elif defined(__PS_DIALUP_CONNECT_STRING_BY_ACT__)
-    static kal_uint8 temp_string[64];
-    const kal_uint8* post_string = temp_string;    
-    if ((act == 0) || (act == 1) || (act == 3))
-    {
-        strcpy(temp_string, " 236800");
-    }
-    else
-    {
-        strcpy(temp_string, " 7200000");
-    }    
-#else
-  //Note: user MUST prepare a space before the speed number
-  #if defined(__HSDPA_SUPPORT__) && defined(__UMTS_FDD_MODE__)
-	static const kal_uint8 post_string[] = " 7200000"; //7.2Mbps
-  #elif defined(__HSDPA_SUPPORT__) && defined(__UMTS_TDD128_MODE__)
-  	static const kal_uint8 post_string[] = " 2624000"; //2.6Mbps
-  #elif defined(__UMTS_FDD_MODE__) || defined(__UMTS_TDD128_MODE__)
-    static const kal_uint8 post_string[] =  " 384000"; //384kbps
-  #elif defined(__EGPRS_MODE__)
-    static const kal_uint8 post_string[] =  " 473600"; //473.6kbps
-  #else
-    static const kal_uint8 post_string[] =   " 80000"; //80kbps  
-  #endif
-#endif
-    return (const kal_uint8*) post_string;
-} // MAUI_02386357, mtk02285, MAUI_02825172
-#endif /* __MOD_TCM__ */
-
-/*****************************************************************************
-* FUNCTION
-*  	custom_is_edit_mode_command()
-* DESCRIPTION
-*   This function is used to let customer judge if the input command is needed to enter 
-* editor mode or not. If true, we will output "> " and wait for 
-*       ctrl+z character to execute the whole command string
-*       ESC character to cancel the command
-*    
-* PARAMETERS
-*   	data    [IN]    input command string header, maximum length : 10
-* RETURNS
-*     KAL_TRUE or KAL_FALSE
-*****************************************************************************/
-kal_bool custom_is_edit_mode_command(kal_uint8 *data)
-{
-    /*if (strncmp(data, "AT%EDIT", 7) == 0)
-        return KAL_TRUE;
-    else*/
-        return KAL_FALSE;
-}
-
-#if defined(__PLMN_LIST_WITH_CELL_INFO__)
-kal_uint32 custom_at_posi_get_ndssign(kal_char *buffer, kal_uint32 buf_len, kal_uint8 plmn_num, l4c_rat_plmn_info_struct *list)
-{
-    /* buf_len: MAX size of the 'buffer' please do not cruppt
-       string_length: Indicates how many bytes writes into 'buffer'
-    */
-    
-   /* Prototype of l4c_rat_plmn_info_struct
-            #ifdef __PLMN_LIST_WITH_CELL_INFO__
-                #define MAX_NUM_CELL_PER_PLMN  10
-            #endif 
-            
-            #if defined(__PLMN_LIST_WITH_CELL_INFO__)
-            typedef struct {
-                kal_uint16       arfcn;
-                kal_int16        rxlev;
-                kal_uint8        bsic;
-                kal_uint8        la_code[2];
-                kal_uint16       cell_id;
-                }l4c_location_cell_info_struct;
-            #endif
-            
-            typedef struct {
-               kal_uint8   plmn_id[7];
-               kal_uint8   status;
-               kal_uint8 rat;
-               #if defined(__PLMN_LIST_WITH_CELL_INFO__)
-               l4c_location_cell_info_struct cell_list[MAX_NUM_CELL_PER_PLMN];
-               #endif
-            } l4c_rat_plmn_info_struct;
-      */
-     /* sample code, judge how many PLMN and cell info in the parameter 'list'
-          kal_uint8 i;
-          kal_uint8 j;
-          kal_uint8 ended;
-          kal_uint16 temp_lac;
-          kal_uint16 temp_lac_2;
-          
-          for (i = 0; i < plmn_num; i++)
-            {
-                for(j = 0; j < MAX_NUM_CELL_PER_PLMN; j++)
-                {
-                    temp_lac = list[i].cell_list[j].la_code[0];
-                    temp_lac = (temp_lac << 8) | (list[i].cell_list[j].la_code[1]);
-
-                    if((temp_lac == 0) && (list[i].cell_list[j].cell_id == 0))
-                    {
-                        break;
-                    }
-
-                    // Judge if this is the last cell info 
-                    if((i == (plmn_num - 1)) && (j == (MAX_NUM_CELL_PER_PLMN - 1)))
-                    {
-                        ended = 1;
-                    }
-                    else if(i == (plmn_num - 1))
-                    {
-                        temp_lac_2 = list[i].cell_list[j+1].la_code[0];
-                        temp_lac_2 = (temp_lac_2 << 8) | (list[i].cell_list[j+1].la_code[1]);
-
-                        if((temp_lac_2 == 0) && (list[i].cell_list[j+1].cell_id == 0))
-                        {
-                            ended = 1;
-                        }
-                    }
-                 }
-             }
-    */
-    kal_uint32 string_length = 0;
-    
-    /* Replace the line after thie comment, calculate NDSSIGN and write into buffer */
-    string_length = kal_sprintf(buffer, "\"NDSSIGN\"");
-
-    
-    /* It's recommended that do not remove the codes after this line! */
-    if(string_length > buf_len)
-    {
-        /* Add length check, void memory curruption */
-        ASSERT(0);
-    }
-    return string_length;
-}
-
-kal_bool custom_process_at_posi()
-{
-	  // customer code
-    return KAL_FALSE;
 }
 #endif

@@ -42,8 +42,6 @@
 kal_bool  b_acc_switch_status = KAL_FALSE;    //   KAL_FALSE   means ACC OFF,  KAL_TRUE means ACC ON
 kal_bool KEY_switch_status=KAL_FALSE;    //
 
-kal_bool b_service_is_available = KAL_FALSE;
-kal_bool b_sim_is_available = KAL_FALSE;
 kal_bool b_reset = KAL_FALSE;
 kal_bool b_outside_volt_disconnect = KAL_FALSE;
 
@@ -548,11 +546,13 @@ void UART2_EINT_INIT(void)
 /**SIM 卡无效、无网络，重启，  24小时重启一次**/
 void rj_reset(void)
 {
+#if 1
         applib_time_struct current_time;
         applib_dt_get_rtc_time(&current_time);
-        kal_prompt_trace( MOD_WPS, "rj_reset %d:%d:%d:%d:%d:%d" ,
+        kal_prompt_trace( MOD_SOC, "rj_reset %d:%d:%d:%d:%d:%d" ,
         current_time.nYear,  current_time.nMonth, current_time.nDay, current_time.nHour, current_time.nMin, current_time.nSec); 
         l4cuem_power_reset(NORMAL_RESET);
+#endif
 }
 
 kal_uint16 acc_flag =0;
@@ -567,7 +567,8 @@ void Bird_acc()
 	GPIO_InitIO(0, 54);
 	kal_sleep_task(10); 
 	gpio54_data = GPIO_ReadIO(54);
-	if(gpio54_data==0)
+	if(gpio54_data==1) // just for debug
+	//if(gpio54_data==0)
 		{
 		count_acc_on_cnt++;
 		count_acc_off_cnt = 0;
@@ -607,7 +608,7 @@ void bird_watchdog_control()
 	GPIO_ModeSetup(21, 0);		//eint4	
 	GPIO_InitIO(1, 21);
 	GPIO_WriteIO(watchdog_state,21);	
-	kal_prompt_trace(MOD_SOC,"watchdog_state =%d",watchdog_state);  
+	//kal_prompt_trace(MOD_SOC,"watchdog_state =%d",watchdog_state);  
 	RJ_GPS_StartTimer(BIRD_WDG_timer, 1*1000, bird_watchdog_control); 	
 }
 #endif

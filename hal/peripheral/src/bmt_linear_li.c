@@ -245,9 +245,9 @@ static void bmt_charge_start(void)
       
      //  if( AC_IN_STATE ==    bmt_usb_state  )
 	{
-               extern void rj_outside_volt_connect(void);
+               extern void rj_outside_volt_connect__(void);
 
-			rj_outside_volt_connect();
+			rj_outside_volt_connect__();
 
 	}
 
@@ -362,7 +362,7 @@ static void bmt_charge_end(void)
 }
 #endif
 #else
-     extern void rj_outside_volt_disconnect(void);//add by yanchunhai
+     extern void rj_outside_volt_disconnect__(void);//add by yanchunhai
    /**yanchunhai add 20120817    begin  ************************/
 
          b_charge_usb_in = KAL_FALSE;
@@ -370,7 +370,7 @@ static void bmt_charge_end(void)
 
             //   if( AC_OUT_STATE ==    bmt_usb_state  )
 		{
-			rj_outside_volt_disconnect();
+			rj_outside_volt_disconnect__();
 
 		}
 

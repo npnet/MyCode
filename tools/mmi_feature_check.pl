@@ -541,7 +541,7 @@ sub processCheckDotC()
     
     open(hFile, ">makeCheck.bat") or die "makeCheck.bat";
     print hFile "\@echo off\n";
-    print hFile "\"$compiler\" $checkMainFilename.c -o $checkMainFilename.obj $compileOptions $viaOption $defTmpFilename $viaOption $incTmpFilename\n";    
+    print hFile "\"armcc\" $checkMainFilename.c -o $checkMainFilename.obj $compileOptions $viaOption $defTmpFilename $viaOption $incTmpFilename\n";    
     print hFile "if ERRORLEVEL 1 exit 1\n";
     print hFile "\@echo on\n";
     close(hFile);
@@ -600,7 +600,7 @@ sub checkMMIFeatureCompileError()
     print "build\\log\\mmi_feature_compile\.log\n";
     open(hFile, ">makeCheck.bat") or die "makeCheck.bat";
     print hFile "\@echo off\n";
-    print hFile "\"$compiler\" mmi_feature_compile_test.c -o mmi_feature_compile_test.obj -c $viaOption $defTmpFilename $viaOption $incTmpFilename --errors=$mmi_feature_compile_log \n";
+    print hFile "\"armcc\" mmi_feature_compile_test.c -o mmi_feature_compile_test.obj -c $viaOption $defTmpFilename $viaOption $incTmpFilename --errors=$mmi_feature_compile_log \n";
     print hFile "if ERRORLEVEL 1 exit 1\n";
     print hFile "\@echo on\n";
     close(hFile);

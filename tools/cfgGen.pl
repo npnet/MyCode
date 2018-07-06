@@ -51,7 +51,7 @@
 #*   Claudia Lo  (mtk01876)
 #*
 #****************************************************************************/
-
+#
 #****************************************************************************
 # Included Modules
 #****************************************************************************
@@ -540,7 +540,8 @@ sub gen_main_region_setting
         {
             $main_region_list .= "    - file: " . $_ . "\n";
             ###Generate THIRD_ROM_2 if MT6260 with THIRD_ROM
-            $main_region_list .= "    - file: THIRD_ROM_2\n" if (($PLATFORM eq 'MT6260') and ($_ eq 'THIRD_ROM'));
+            ###$main_region_list .= "    - file: THIRD_ROM_2\n" if (($PLATFORM eq 'MT6260') and ($_ eq 'THIRD_ROM'));
+            $main_region_list .= "    - file: TBOX\n";
         }
     }
     chomp $main_region_list;

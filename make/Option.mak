@@ -256,7 +256,8 @@ ifeq ($(strip $(COMPILER)),RVCT)
     $(call DEP_ERR_SETA_OR_ONB,COMPILER,non RVCT,RVCT_VERSION)
     DEPENDENCY_CONFLICT = TRUE
   endif
-  DIR_ARM  = C:\Progra~1\ARM\RVCT
+ DIR_ARM  = C:\ARM\RVCT
+ # DIR_ARM  = $(ARMROOT)\RVCT
   DIR_ARM := $(strip $(DIR_ARM))
   ifeq ($(strip $(RVCT_VERSION)),V22)
     DIR_TOOL       =  $(DIR_ARM)\Programs\2.2\349\win_32-pentium

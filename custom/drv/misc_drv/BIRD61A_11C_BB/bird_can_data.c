@@ -310,8 +310,9 @@ void can_rx_data_check()
 	kal_int16 cell_device_index;
 	kal_uint32 temp_id;
 	kal_uint32 temp_id0,temp_id1,temp_id2,temp_id3,temp_id4,temp_id5,temp_id6,temp_id7,temp_id8,temp_id9,temp_id10,temp_id11,temp_id12,temp_id13,temp_id14,temp_id15;	
+	applib_time_struct cur_time;
 
-kal_prompt_trace(MOD_SOC, "can_rx_data_check,");
+kal_prompt_trace(MOD_USB, "can_rx_data_check,");
 can_selfcheck_flag =1;
 #ifdef CAN_SHANSHAN_SUPPORT
 	can_rx_data_check_shanshan();
@@ -429,6 +430,7 @@ can_selfcheck_flag =1;
 		cell_device_index++;
 	}
 
+
 	charging_data_num=11+2*cell_nun;
 	charging_device_voltage_data[0]=0x01;
 	charging_device_voltage_data[1]=0x01;
@@ -438,6 +440,19 @@ can_selfcheck_flag =1;
 	memcpy(car_can_data.alarm,alarm_data,alarm_data_nun);
 	memcpy(car_can_data.charging_device_voltage,charging_device_voltage_data,charging_device_data_nun);	
 #endif
+
+
+#if 1 // add by zyz 	
+	applib_dt_get_rtc_time(&cur_time);
+
+	car_can_data.date[0] = cur_time.nYear %100;    
+	car_can_data.date[1] = cur_time.nMonth;
+	car_can_data.date[2] = cur_time.nDay;
+	car_can_data.date[3] = cur_time.nHour;
+	car_can_data.date[4] = cur_time.nMin;
+	car_can_data.date[5] = cur_time.nSec;
+#endif	
+
 
 	memcpy((kal_uint8*)&car_can_data_temp_30s[car_data_index],(kal_uint8*)&car_can_data,can_save_data_len);
 	if(alarm_flag == 1)
@@ -476,7 +491,7 @@ kal_uint16 bird_charging_data_num()
 }
 void can_data_reset()
 {
-	kal_prompt_trace(MOD_SOC, "can_data_reset");	
+	kal_prompt_trace(MOD_USB, "can_data_reset");	
 	memset(&car_can_data.date,0x00,sizeof(car_can_data.date));
 	can_data_shanshan_init();
 }
@@ -485,7 +500,7 @@ void can_data_30S_reset()
 {
 	U8 i=0;
 	
-	kal_prompt_trace(MOD_SOC, "can_data_30S_reset");	
+	kal_prompt_trace(MOD_USB, "can_data_30S_reset");	
 	//car_data_index=0;
 	for(i=0;i<30;i++)
 	{

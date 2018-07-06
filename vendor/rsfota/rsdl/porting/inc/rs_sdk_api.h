@@ -162,6 +162,8 @@ RS_FWDL_STATE rs_sdk_getDLCurrentState();
 */
 rs_bool rs_sdk_needAutoCheck();
 
+void rs_fota_start();
+
 #ifdef __cplusplus
 }
 #endif

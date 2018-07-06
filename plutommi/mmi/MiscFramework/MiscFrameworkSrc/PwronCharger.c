@@ -1641,10 +1641,10 @@ void LowBatteryCommonAction(void) // will be phase out
 /* battery is too low, if not connect charger,USB, will power off */
 //rj_bike
 #ifdef RJ_GPS_APP
-      #include "Bird_app.h"
- 
+
       //extern void RJ_GPS_RedLightWink();
       //extern RJ_POWER_GSM_GPRS_status_Info rj_led_status_info;
+      extern void RJ_SYS_ReStart__();
 #endif
 
 static void mmi_charger_check_low_power_off(S32 battery_level)
@@ -1699,7 +1699,7 @@ void BatteryStatusIndication(U8 battery_voltage)
    {
         extern void RJ_SYS_ReStart();
         kal_prompt_trace(MOD_SOC,"count_system_time reboot");		
-        RJ_SYS_ReStart();
+        RJ_SYS_ReStart__();
    }
    else
    {
@@ -1794,11 +1794,14 @@ void BatteryStatusIndication(U8 battery_voltage)
     }
 
 	{
-		extern kal_uint32 bird_get_bat_channel_voltage(void);	
-		extern void rj_low_volt_alarm(void);
-      		extern U32 bird_get_bvl();
-      		m_bat_voltage = bird_get_bat_channel_voltage();
-     		 m_lbv_voltage = bird_get_bvl();
+		extern kal_uint32 bird_get_bat_channel_voltage__(void);	
+		extern void rj_low_volt_alarm__(void);
+      	extern U32 bird_get_bvl__();
+		extern void Bird_set_reseterr__(U8 n_err_type);
+		extern void Bird_set_resttime__();
+		
+      		m_bat_voltage = bird_get_bat_channel_voltage__();
+     		 m_lbv_voltage = bird_get_bvl__();
 		if(m_bat_voltage<m_lbv_voltage)
 		{
 			//rj_led_status_info.b_BATTERY_IS_LOW = KAL_TRUE ;
@@ -1809,7 +1812,7 @@ void BatteryStatusIndication(U8 battery_voltage)
       				if((count_alarm==10) || (count_alarm==30)) //alarm 2 times
       				{
       					pwr_get_bat_vol = m_bat_voltage;
-      					rj_low_volt_alarm();
+      					rj_low_volt_alarm__();
       				}	      			
       				count_alarm++;
 				if(count_alarm>250)
@@ -1838,9 +1841,8 @@ void BatteryStatusIndication(U8 battery_voltage)
                 kal_prompt_trace(  MOD_SOC,"relogin");
                 count_judge_gps_app_timer =0;
 			{
-		  	extern void RJ_SYS_ReStart();
 			kal_prompt_trace(MOD_SOC,"relogin reboot");
-    			RJ_SYS_ReStart();
+    			RJ_SYS_ReStart__();
                 	}
             }
             else
@@ -1851,8 +1853,8 @@ void BatteryStatusIndication(U8 battery_voltage)
             {              
                 kal_prompt_trace(  MOD_SOC,"send no rev relogin");
                 kal_prompt_trace(  MOD_SOC,"send no rev relogin reboot");				
-		  Bird_set_reseterr(5);     
-	         Bird_set_resttime(); //write rest time				
+		  Bird_set_reseterr__(5);     
+	         Bird_set_resttime__(); //write rest time				
 		  DRV_BuildPrimitive(rj_ilm, MOD_AUX, MOD_MMI, MSG_ID_YD_TK001_MSG_SAVENV_RESET, 0);       
 		  msg_send_ext_queue(rj_ilm);
 		  count_judge_gps_send_timer =0;		  

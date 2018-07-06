@@ -1,11 +1,11 @@
 /**************************************************************************
   Copyright (C), 2012-2013, BIRD. Co., Ltd.
-  File name:      
+  File name:
   Author:       Version:        Date: 2013-05-29
   Description:   Socket universal function header files
-  Others:         
-  Function List:  
-  History:       
+  Others:
+  Function List:
+  History:
     1. Date:
        Author:
        Modification:
@@ -28,7 +28,7 @@
 #include "ProtocolEvents.h"
 #include "EventsGprot.h"
 #include "med_api.h"
-#include "gui.h" 
+#include "gui.h"
 #include "CommonScreens.h"
 #include "stdarg.h"
 #include "app_datetime.h"//ErrReport
@@ -54,18 +54,18 @@
 //断点续传功能
 #define LIMA_SOC_SLIM
 
-#ifndef LIMA_SOC_SLIM 
+#ifndef LIMA_SOC_SLIM
 #define LIMA_SOC_CONTINUE_DL
 #define LIMA_SOC_TRACERT
 #endif
 
 
 #ifdef    LIMA_SOC_CONTINUE_DL
-typedef struct 
+typedef struct
 {
     S8  url[MAX_LIMA_URL_LEN];
     U16 path[MAX_LIMA_FILENAME_LEN];
-}lima_soc_task_item_struct;
+} lima_soc_task_item_struct;
 
 #define LIMA_SOC_TASKS_CFG_FILE 	  "%c:\\limadl.cfg"
 #endif
@@ -84,8 +84,8 @@ typedef struct
 
 #define BIRD_TBOXINFO       "201705120308129"
 
-#define PF_INET                     SOC_PF_INET 
-#define SOCK_STREAM                 SOC_SOCK_STREAM 
+#define PF_INET                     SOC_PF_INET
+#define SOCK_STREAM                 SOC_SOCK_STREAM
 
 #define BIRD_HOME_NUMBER_LENGTH			5
 //设置连接超时的默认counter(毫秒)
@@ -181,7 +181,7 @@ typedef struct
     S8 *rcvd_buf;	//对需要返回数据的请求返回数据头指针
     U32 rcvd_buf_len;//接收的数据长度
     S32 reserve;
-}lima_soc_callback_para_struct;
+} lima_soc_callback_para_struct;
 
 
 typedef void (*mmi_lima_soc_progress_t)(U32 rcvd, U32 total);
@@ -199,23 +199,23 @@ typedef struct
 
 typedef enum
 {
-	LIMA_SOC_CMWAP,
-	LIMA_SOC_CMNET
-}lima_soc_account_yk_type_enum;
+    LIMA_SOC_CMWAP,
+    LIMA_SOC_CMNET
+} lima_soc_account_yk_type_enum;
 
 typedef enum
 {
     LIMA_SOC_CONNECT,
     LIMA_SOC_SEND,
     LIMA_SOC_RCVD
-}lima_soc_timeout_yk_type_enum;
+} lima_soc_timeout_yk_type_enum;
 
 typedef enum
 {
-	lima_operator_unknown=0,			/*!< 未知的 */
-	lima_operator_cmcc,				/*!< 中国移动 */
-	lima_operator_unicom			/*!< 中国联通 */
-}lima_operator;
+    lima_operator_unknown=0,			/*!< 未知的 */
+    lima_operator_cmcc,				/*!< 中国移动 */
+    lima_operator_unicom			/*!< 中国联通 */
+} lima_operator;
 
 typedef enum
 {
@@ -227,22 +227,22 @@ typedef enum
 
 typedef enum
 {
-	LIMA_SOC_NO_ERROR,       //没有错误
-	LIMA_SOC_NO_MEMORY,      //内存不足
-	LIMA_SOC_CREATE_ERR,     //socket创建失败
-	LIMA_SOC_GET_HOST_ERR,   //得到主机名错误(只用于CMNET)
-	LIMA_SOC_CONNECT_ERR,    //连接错误
-	LIMA_SOC_SEND_ERR,       //发送请求错误
-	LIMA_SOC_RSP_RCVING_ERR, //接收数据错误
-	LIMA_SOC_ON_ENTER_FORWARD,//移动推送页
-	LIMA_SOC_CONN_TIME_OUT,   //连接超时
-	LIMA_SOC_BUSY,			//已经有连接正在处理(目前只支持一个连接)
-	LIMA_SOC_HTTP_STATUS_ERR, //(http返回错误状态码，lima_soc_callback_para_struct 中status值,4XX,客户端错误，5XX服务器错误)
-	LIMA_SOC_SAVE_FILE_ERROR, // 拔SD卡等写文件错误
-	LIMA_SOC_RCVD_TIME_OUT,   //接收数据超时
-	LIMA_SOC_SEND_TIME_OUT,    //发送请求超时
-	LIMA_SOC_RCVD_NONE		 //接收数据为空
-}lima_soc_error_enum;
+    LIMA_SOC_NO_ERROR,       //没有错误
+    LIMA_SOC_NO_MEMORY,      //内存不足
+    LIMA_SOC_CREATE_ERR,     //socket创建失败
+    LIMA_SOC_GET_HOST_ERR,   //得到主机名错误(只用于CMNET)
+    LIMA_SOC_CONNECT_ERR,    //连接错误
+    LIMA_SOC_SEND_ERR,       //发送请求错误
+    LIMA_SOC_RSP_RCVING_ERR, //接收数据错误
+    LIMA_SOC_ON_ENTER_FORWARD,//移动推送页
+    LIMA_SOC_CONN_TIME_OUT,   //连接超时
+    LIMA_SOC_BUSY,			//已经有连接正在处理(目前只支持一个连接)
+    LIMA_SOC_HTTP_STATUS_ERR, //(http返回错误状态码，lima_soc_callback_para_struct 中status值,4XX,客户端错误，5XX服务器错误)
+    LIMA_SOC_SAVE_FILE_ERROR, // 拔SD卡等写文件错误
+    LIMA_SOC_RCVD_TIME_OUT,   //接收数据超时
+    LIMA_SOC_SEND_TIME_OUT,    //发送请求超时
+    LIMA_SOC_RCVD_NONE		 //接收数据为空
+} lima_soc_error_enum;
 
 
 
@@ -284,24 +284,24 @@ typedef struct
 
 typedef struct
 {
-	S32 request_id;
-	U16 http_method;              //lima_soc_http_method_enum之一，HTTP METHOD
-	U16 account_type;             //lima_soc_account_yk_type_enum之一,    联网类型CMNET OR CMWAP
-	S8  *p_url;
-	U16 *fullpath;                //下载文件存储路径，如果为NULL,则回传buffer
-	S8  *post_data;               //[可选项]POST方法携带的数据
-	S32  post_data_len;			  //[可选项]POST方法携带的数据长度
+    S32 request_id;
+    U16 http_method;              //lima_soc_http_method_enum之一，HTTP METHOD
+    U16 account_type;             //lima_soc_account_yk_type_enum之一,    联网类型CMNET OR CMWAP
+    S8  *p_url;
+    U16 *fullpath;                //下载文件存储路径，如果为NULL,则回传buffer
+    S8  *post_data;               //[可选项]POST方法携带的数据
+    S32  post_data_len;			  //[可选项]POST方法携带的数据长度
 #ifdef	LIMA_SOC_CONTINUE_DL
-	S8  need_continue_dl;		 //需要断点续传
-	S8  a_pad[3];
+    S8  need_continue_dl;		 //需要断点续传
+    S8  a_pad[3];
 #endif
-}lima_soc_req_header_struct;
+} lima_soc_req_header_struct;
 
 typedef enum
 {
-	LIMA_SOC_GET,
-	LIMA_SOC_POST	
-}lima_soc_http_method_enum;
+    LIMA_SOC_GET,
+    LIMA_SOC_POST
+} lima_soc_http_method_enum;
 
 typedef enum
 {
@@ -319,7 +319,7 @@ typedef enum
 
 typedef enum
 {
-    #if 0
+#if 0
     LIMA_REQ_RESIGNER = 0,
     LIMA_REQ_SERVICE,   //获取授权，大循环完成后，上传服务器的返回值
     LIMA_REQ_NEWPASSWORD,
@@ -331,22 +331,22 @@ typedef enum
     LIMA_REQ_RSP_SALES,
     LIMA_REQ_POWEROFF,
     LIMA_REQ_TEST
-    #endif
+#endif
     LIMA_GPS_QUIET= 0,
     LIMA_REQ_TEST,
-    LIMA_REQ_TEST_RSP,    
+    LIMA_REQ_TEST_RSP,
     LIMA_REQ_POSITION,
-    LIMA_REQ_POSITION_RSP,    
+    LIMA_REQ_POSITION_RSP,
     LIMA_REQ_AGPS_DATA,
     LIMA_REQ_AGPS_DATA_RSP,
     LIMA_REQ_GPS_INFO,
-    LIMA_REQ_GPS_INFO_RSP ,   
+    LIMA_REQ_GPS_INFO_RSP,
     LIMA_REQ_GPS_HTTP,
-    LIMA_REQ_GPS_HTTP_RSP,   
+    LIMA_REQ_GPS_HTTP_RSP,
     LIMA_REQ_AGPS_INFO,
-    LIMA_REQ_AGPS_INFO_RSP ,   
+    LIMA_REQ_AGPS_INFO_RSP,
     LIMA_REQ_AGPS_HTTP,
-    LIMA_REQ_AGPS_HTTP_RSP,     
+    LIMA_REQ_AGPS_HTTP_RSP,
     LIMA_REQ_GPS_GET_SOS,
     LIMA_REQ_GPS_GET_SOS_RSP,
     LIMA_REQ_GPS_SET_SOS,
@@ -358,29 +358,29 @@ typedef enum
     LIMA_RECEIVE_GPS_REQ,
     LIMA_RECEIVE_GPS_REQ_RSP,
     LIMA_RECEIVE_SPECIAL_REQ,
-    LIMA_RECEIVE_SPECIAL_REQ_RSP,    
+    LIMA_RECEIVE_SPECIAL_REQ_RSP,
     LIMA_RECEIVE_POSITION_REQ,
-    LIMA_RECEIVE_POSITION_REQ_RSP,     
-    LIMA_REQ_GET_TIME,    
+    LIMA_RECEIVE_POSITION_REQ_RSP,
+    LIMA_REQ_GET_TIME,
     LIMA_REQ_GET_TIME_RSP,
 #ifdef  __BIRD_YD_TK001__
     YD_TK001_ENUM_LOGIN,
     YD_TK001_ENUM_LOGIN_RSP,
-    YD_TK001_ENUM_SMS_UPLOAD,    
-    YD_TK001_ENUM_SMS_UPLOAD_RSP,    
-    YD_TK001_ENUM_CALL_UPLOAD,    
-    YD_TK001_ENUM_CALL_UPLOAD_RSP,    
+    YD_TK001_ENUM_SMS_UPLOAD,
+    YD_TK001_ENUM_SMS_UPLOAD_RSP,
+    YD_TK001_ENUM_CALL_UPLOAD,
+    YD_TK001_ENUM_CALL_UPLOAD_RSP,
     YD_TK001_ENUM_UTILITY_SETTING,
-    YD_TK001_ENUM_UTILITY_SETTING_RSP,    
-    YD_TK001_ENUM_UTILITY_CONTROL,    
-    YD_TK001_ENUM_UTILITY_CONTROL_RSP,    
-    YD_TK001_ENUM_ALARM_POST,    
-    YD_TK001_ENUM_ALARM_POST_RSP,    
+    YD_TK001_ENUM_UTILITY_SETTING_RSP,
+    YD_TK001_ENUM_UTILITY_CONTROL,
+    YD_TK001_ENUM_UTILITY_CONTROL_RSP,
+    YD_TK001_ENUM_ALARM_POST,
+    YD_TK001_ENUM_ALARM_POST_RSP,
     YD_TK001_ENUM_UTILITY_PARA_UPLAOD,
-    YD_TK001_ENUM_UTILITY_PARA_UPLAOD_RSP,      
+    YD_TK001_ENUM_UTILITY_PARA_UPLAOD_RSP,
 #endif
     BIRD_REQ_MAX
-}lima_req_type_t;
+} lima_req_type_t;
 
 typedef enum
 {
@@ -415,7 +415,7 @@ typedef struct _Send_Info
     S8  send_flow;/*发送流水号*/
     S8  send_type;/*发送指令类型*/
     kal_char send_buf[MAX_BIRD_SENDBUF_SIZE];//数据
-}Send_Info;
+} Send_Info;
 
 typedef struct _Socket_Send
 {
@@ -424,14 +424,14 @@ typedef struct _Socket_Send
     S8 g_n_rev_state;
     S32 g_n_send_indexAdd;
     Send_Info send_info[MAX_BIRD_SENDBUF_LEN];
-}Socket_Send;
+} Socket_Send;
 
 typedef struct _Socket_Rev
 {
     S32 g_n_rev_index;
     S32 g_n_rev_indexEnd;
     kal_char rev_buf[RECEIVE_DATA_LENGTH];
-}Socket_Rev;
+} Socket_Rev;
 
 void Bird_save_ip();
 void Lima_Soc_Dinit(void);
@@ -447,7 +447,7 @@ S8 *  bird_get_nw_plmn(void);//add by lqy
 mmi_sim_enum  Get_Simcard(void); // add by lqy
 U32 Get_aact_id(void); //add by lqy
 static kal_uint32 add_new_acc_prof_id(const WCHAR* account_name);//add by lqy
-kal_uint32 update_acc_prof_id(kal_uint32 acc_prof_id, U8 *apn, U8 *px_addr, U16 px_port,U8 *px_authid, U8 *px_authpw, U8 *primaryaddr, U8 *secondaryaddr ,U8 *homepage);// add by lqy
+kal_uint32 update_acc_prof_id(kal_uint32 acc_prof_id, U8 *apn, U8 *px_addr, U16 px_port,U8 *px_authid, U8 *px_authpw, U8 *primaryaddr, U8 *secondaryaddr,U8 *homepage); // add by lqy
 static U16 Lima_Soc_Init(void);
 //int Lima_plat_Get_Priv_Simcard(void);
 static void Lima_Soc_Time_Out(void);
@@ -487,7 +487,7 @@ static MMI_BOOL BD_socket_notify (void* msg_ptr);
 static MMI_BOOL BD_socket_get_host_by_name(void *msg_ptr);
 
 extern lima_req_type_t bird_deal_with_command(lima_req_type_t command);
-extern void bird_deal_send_msg_handler(U16 bird_msg_id , U8 bird_para_id , U8 is_init);
+extern void bird_deal_send_msg_handler(U16 bird_msg_id, U8 bird_para_id, U8 is_init);
 extern void Yd_readposfile();
 #endif
 

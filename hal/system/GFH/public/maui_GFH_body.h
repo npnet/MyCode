@@ -173,6 +173,16 @@ typedef struct
    GFH_FILE_INFO_v1  gfh_file_info;
 } S_MAUI_GFH;
 
+
+
+typedef struct 
+{
+   GFH_FILE_INFO_v1  gfh_file_info;
+} TBOX_GFH;
+
+
+
+
 #ifdef __DEMAND_PAGING__
 //==============================================================================
 // On-demand-paging GFH structure
@@ -243,6 +253,14 @@ typedef struct
 } THIRD_ROM_GFH;
 
 #endif
+
+
+typedef struct 
+{
+   GFH_FILE_INFO_v1  gfh_file_info;
+} THIRD_ROM_GFH;
+
+
 
 //==============================================================================
 // SecureRO GFH structure

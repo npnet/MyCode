@@ -75,6 +75,8 @@ Disclaimer
 
 #include "bma220.h"
 #include "motion_sensor_custom_bma220.h"
+#include "Yd_main.h"
+
 
 
 bma220_t *p_bma220;				/**< pointer to BMA220 device structure  */
@@ -1820,3 +1822,4 @@ int bma220_set_reg(unsigned char addr, unsigned char *data, unsigned char len)
 	comres = p_bma220->BMA220_BUS_WRITE_FUNC(p_bma220->dev_addr, addr, data, len);
 	return comres;
 }
+

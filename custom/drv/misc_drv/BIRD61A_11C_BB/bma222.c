@@ -107,6 +107,7 @@ LastLevelId=100690 */
 
 #include "bma222.h"
 #include "Yd_main.h"
+#include "MMIDataType.h"
 #include "motion_sensor_custom.h"
 /* EasyCASE ) */
 /* EasyCASE ) */

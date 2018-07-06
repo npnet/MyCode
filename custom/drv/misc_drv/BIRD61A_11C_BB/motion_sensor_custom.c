@@ -86,6 +86,9 @@
 
 #include "rj_dw02.h"
 
+//#include "Yd_main.h"
+
+
 //#include "gps_main.h"
 
 //#include  "bosch_sensor_algo.h"
@@ -153,7 +156,7 @@ extern void EINT_Mask(kal_uint8 eintno);
 extern void EINT_Registration(kal_uint8 eintno, kal_bool Dbounce_En, kal_bool ACT_Polarity, void (reg_hisr)(void), kal_bool auto_umask);
 extern kal_uint32 EINT_Set_Sensitivity(kal_uint8 eintno, kal_bool sens);
 
-extern void RJ_GPS_log(kal_uint8 * fmt,...);
+//extern void RJ_GPS_log(kal_uint8 * fmt,...);
 extern void TRACE_P_3D(kal_uint8 * fmt,...);
 extern void TRACE_P_GPS(kal_uint8 * fmt,...);
 //extern void Acc_Switch_on_Progress(void);
@@ -480,7 +483,7 @@ void bosch_motion_sensor_eint_xyz(void)
 	   X_DATA[k] = x;
 	   Y_DATA[k] = y;
 	   Z_DATA[k] = z;
-	   kal_prompt_trace(MOD_SOC,"x=%d,y=%d,z=%d,k=%d",x,y,z,k);
+	   //kal_prompt_trace(MOD_SOC,"x=%d,y=%d,z=%d,k=%d",x,y,z,k);
 
 
 	   k++;
@@ -542,7 +545,7 @@ void bosch_motion_sensor_eint_xyz(void)
 
 	  //  TRACE_P_3D("b_motion=%d",b_motion);
 
-	kal_prompt_trace(MOD_SOC,"b_motion=%d",b_motion); 
+	//kal_prompt_trace(MOD_SOC,"b_motion=%d",b_motion); 
 
 	//Acc_Switch_on_Progress();
 

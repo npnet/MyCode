@@ -1,5 +1,6 @@
 # Define source file lists to SRC_LIST
 SRC_LIST = bird\base\src\Bird_socket.c \
+				   bird\base\src\Bird_base.c \
                    bird\base\src\Bird_std.c \
                    bird\base\src\Bird_main.c \
                    bird\base\src\Bird_gpscell.c \

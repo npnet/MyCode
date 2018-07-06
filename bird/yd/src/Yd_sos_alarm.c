@@ -14,17 +14,17 @@ extern kal_uint8 bird_start_sound_recording();
 
 void yd_sos_handle()
 {
-	kal_prompt_trace(MOD_SOC,"yd_sos_handle %d",rj_gps_stage);
-	if(rj_gps_stage != BIRD_STATUS_RUN)/*当前状态不是运行，则转换为运行状态*/
-	{
-		yd_tk001_wakeup_function();/*唤醒*/  
-	}
-	bird_soc_sendalarm(TK001_ALARM_ENUM_sos);
+    kal_prompt_trace(MOD_SOC,"yd_sos_handle %d",rj_gps_stage);
+    if(rj_gps_stage != BIRD_STATUS_RUN)/*当前状态不是运行，则转换为运行状态*/
+    {
+        yd_tk001_wakeup_function();/*唤醒*/
+    }
+    bird_soc_sendalarm(TK001_ALARM_ENUM_sos);
 }
 
 void yd_set_sos_alarm_msg()
 {
-	SetProtocolEventHandler(yd_sos_handle,MSG_ID_YD_TK001_MSG_SOS_IS_ON);
+    SetProtocolEventHandler(yd_sos_handle,MSG_ID_YD_TK001_MSG_SOS_IS_ON);
 }
 
 

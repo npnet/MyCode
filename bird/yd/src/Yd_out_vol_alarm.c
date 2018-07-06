@@ -31,116 +31,117 @@ extern void bird_set_gpspositon(S8 updatekind);
 
 void yd_init_power_off_alarm_param(kal_uint8 interval_time)
 {
-	alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = 1;
-	alarm_msg[TK001_ALARM_ENUM_power_off].call_onoff = 0;
+    alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = 1;
+    alarm_msg[TK001_ALARM_ENUM_power_off].call_onoff = 0;
 
-	alarm_msg[TK001_ALARM_ENUM_power_off].alarm_times = 0;
-	alarm_msg[TK001_ALARM_ENUM_power_off].interval_time = interval_time;
-	memset(&(alarm_msg[TK001_ALARM_ENUM_power_off].compare_time),0,sizeof(alarm_msg[TK001_ALARM_ENUM_power_off].compare_time));
+    alarm_msg[TK001_ALARM_ENUM_power_off].alarm_times = 0;
+    alarm_msg[TK001_ALARM_ENUM_power_off].interval_time = interval_time;
+    memset(&(alarm_msg[TK001_ALARM_ENUM_power_off].compare_time),0,sizeof(alarm_msg[TK001_ALARM_ENUM_power_off].compare_time));	
+
 }
 
 void bird_set_poft_value(U32 value)
 {
-	kal_prompt_trace(MOD_SOC,"bird_set_poft_value %d  \n",value);    
-	yd_tk001_info.POFT = value;
+    kal_prompt_trace(MOD_SOC,"bird_set_poft_value %d  \n",value);
+    yd_tk001_info.POFT = value;
 }
 
 U32 bird_get_poft_value()
 {
-	return yd_tk001_info.POFT;
+    return yd_tk001_info.POFT;
 }
 
 void bird_set_external_power_alarm_flag(U8 flag)
 {
-	if(yd_tk001_info.external_power_alarm != flag)
-	{
-		yd_tk001_info.external_power_alarm = flag;
-		alarm_msg[TK001_ALARM_ENUM_power_off].alarm_times = 0;
-	}
+    if(yd_tk001_info.external_power_alarm != flag)
+    {
+        yd_tk001_info.external_power_alarm = flag;
+        alarm_msg[TK001_ALARM_ENUM_power_off].alarm_times = 0;
+    }
 }
 
 U8 bird_get_power_dis_to_platform_flag()
 {
-	return yd_tk001_info.external_power_alarm ;
+    return yd_tk001_info.external_power_alarm ;
 }
 
 void yd_power_off_alarm_handler()
 {
-	if(bird_get_equmode()!=1)
-	{
-		alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = bird_get_power_dis_to_platform_flag();
-		alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = yd_upload_judge_function(&(alarm_msg[TK001_ALARM_ENUM_power_off]));
-	}
-	yd_set_compare_time_function(&(alarm_msg[TK001_ALARM_ENUM_power_off]));
-	kal_prompt_trace(MOD_SOC,"yd_power_off_alarm_handler upload = %d",alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff);     
+    if(bird_get_equmode()!=1)
+    {
+        alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = bird_get_power_dis_to_platform_flag();
+        alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff = yd_upload_judge_function(&(alarm_msg[TK001_ALARM_ENUM_power_off]));
+    }
+    yd_set_compare_time_function(&(alarm_msg[TK001_ALARM_ENUM_power_off]));
+    kal_prompt_trace(MOD_SOC,"yd_power_off_alarm_handler upload = %d",alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff);
 
-	if(alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff)
-	{
-		bird_soc_sendalarm(TK001_ALARM_ENUM_power_off);	
-	}
-	else
-	{
-		bird_soc_sendpos();
-	}
+    if(alarm_msg[TK001_ALARM_ENUM_power_off].upload_onoff)
+    {
+        bird_soc_sendalarm(TK001_ALARM_ENUM_power_off);
+    }
+    else
+    {
+        bird_soc_sendpos();
+    }
 }
 
 void yd_power_off_delay()
 {
-	double vol = bird_get_adc_channel_voltage();	
-	if(!is_ac_charger_in() && vol<9.5)/*未接通USB且外接电压小于9.5V*/
-	{
-		g_poweroff_count++;
-		if(g_poweroff_count>bird_get_poft_value())
-		{
-			g_poweroff_count = 0;
-			if(bird_get_normal_sleep_state())
-			{
-				yd_tk001_wakeup_function(); //插电唤醒
-			}
-	    		Yd_stop_sleepTimer();
-			yd_power_off_alarm_handler();
-			g_adc_connect_post=1;
-		}
-		else
-		{
-	 		Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
-	 		Rj_start_timer(BIRD_TASK_POWER_OFF_DELAY, 1000, yd_power_off_delay,NULL);	
-			g_adc_connect_post=0;
-		}
-	} 
-	else
-	{
-		Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
-		g_poweroff_count = 0;
-		g_adc_connect_post=0;
-	}
+    double vol = bird_get_adc_channel_voltage();
+    if(!is_ac_charger_in() && vol<9.5)/*未接通USB且外接电压小于9.5V*/
+    {
+        g_poweroff_count++;
+        if(g_poweroff_count>bird_get_poft_value())
+        {
+            g_poweroff_count = 0;
+            if(bird_get_normal_sleep_state())
+            {
+                yd_tk001_wakeup_function(); //插电唤醒
+            }
+            Yd_stop_sleepTimer();
+            yd_power_off_alarm_handler();
+            g_adc_connect_post=1;
+        }
+        else
+        {
+            Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
+            Rj_start_timer(BIRD_TASK_POWER_OFF_DELAY, 1000, yd_power_off_delay,NULL);
+            g_adc_connect_post=0;
+        }
+    }
+    else
+    {
+        Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
+        g_poweroff_count = 0;
+        g_adc_connect_post=0;
+    }
 }
 
 void yd_tk001_post_alarm_power_on_off(void *data)
 {
-	kal_prompt_trace(MOD_SOC,"yd_tk001_post_alarm_power_on_off  msg_handle_function");  
-	if( 0 == ((BIRD_id_struct*)data)->para_setting_id)/*外部电源断开*/
-	{
-		g_poweroff_count = 0;
-		Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
-		Rj_start_timer(BIRD_TASK_POWER_OFF_DELAY, 10*1000, yd_power_off_delay,NULL);		
-		g_adc_connect_post=0;
-	}
-	else
-	{
-		Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
-		g_poweroff_count = 0;
-		if((g_adc_connect_post==1)||(bird_get_normal_sleep_state()))
-		{
-			Yd_stop_sleepTimer();		
-			yd_tk001_wakeup_function(); /*插电唤醒*/
-			bird_soc_sendpos();
-		}
-	}	
+    kal_prompt_trace(MOD_SOC,"yd_tk001_post_alarm_power_on_off  msg_handle_function");
+    if( 0 == ((BIRD_id_struct*)data)->para_setting_id)/*外部电源断开*/
+    {
+        g_poweroff_count = 0;
+        Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
+        Rj_start_timer(BIRD_TASK_POWER_OFF_DELAY, 10*1000, yd_power_off_delay,NULL);
+        g_adc_connect_post=0;
+    }
+    else
+    {
+        Rj_stop_timer(BIRD_TASK_POWER_OFF_DELAY);
+        g_poweroff_count = 0;
+        if((g_adc_connect_post==1)||(bird_get_normal_sleep_state()))
+        {
+            Yd_stop_sleepTimer();
+            yd_tk001_wakeup_function(); /*插电唤醒*/
+            bird_soc_sendpos();
+        }
+    }
 }
 
 void yd_set_out_vol_alarm_msg()
 {
-	SetProtocolEventHandler(yd_tk001_post_alarm_power_on_off,MSG_ID_RJ_OUTSIDE_VOLT_DISCONNECT);
+    SetProtocolEventHandler(yd_tk001_post_alarm_power_on_off,MSG_ID_RJ_OUTSIDE_VOLT_DISCONNECT);
 }
 

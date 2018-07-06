@@ -1407,7 +1407,8 @@ MMI_BOOTUP_INIT_REG_BEGIN(EVT_ID_SRV_BOOTUP_EARLY_INIT)
 
 
 #if defined(__RS_FOTA_SUPPORT__)
-MMI_BOOTUP_INIT_ADP( rs_sdk_start)
+/*MMI_BOOTUP_INIT_ADP( rs_sdk_start) add by zyz*/
+	MMI_BOOTUP_INIT_ADP( rs_fota_start) /*add by zyz*/
 #endif
 MMI_BOOTUP_INIT_REG_END(EVT_ID_SRV_BOOTUP_EARLY_INIT)
 

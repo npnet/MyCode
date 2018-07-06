@@ -39,6 +39,8 @@
 #define CAN_ID_NUM_SS   	65
 #define CAN_UNIT_NUM_SS   	12
 #define CAN_DATA_LENGTH_SS 8
+
+#define MOD_CAN MOD_USB
 extern kal_uint8 can_rx_temp_buf[CAN_ID_NUM_SS][CAN_UNIT_NUM_SS];
 extern kal_uint8 alarm_flag;
 extern can_data_save_struct car_can_data;;
@@ -108,14 +110,14 @@ void can1_rx_id1818D0F3_data_check()
 	/*整车数据 总电压*/
 	car_data[9]=can_rx_buf[1][1+4];
 	car_data[10]=can_rx_buf[1][0+4];
-	kal_prompt_trace(MOD_SOC, "car_data[9] = %x, car_data[10] = %x", car_data[9], car_data[10]);	
+	kal_prompt_trace(MOD_CAN, "car_data[9] = %x, car_data[10] = %x", car_data[9], car_data[10]);	
 	/*整车数据 总电流*/
 	car_data[11]=can_rx_buf[1][3+4];
 	car_data[12]=can_rx_buf[1][2+4];
-	kal_prompt_trace(MOD_SOC, "car_data[11] = %x, car_data[12] = %x", car_data[11], car_data[12]);	
+	kal_prompt_trace(MOD_CAN, "car_data[11] = %x, car_data[12] = %x", car_data[11], car_data[12]);	
 	/*整车数据 SOC*/
 	car_data[13]=(can_rx_buf[1][4+4])*4/10;
-	kal_prompt_trace(MOD_SOC, "car_data[13] = %x", car_data[13]);	
+	kal_prompt_trace(MOD_CAN, "car_data[13] = %x", car_data[13]);	
 
 	/*通用报警标志 SOC过高报警*/
 	alarm_data[1] |= (bird_set_byte_bit(can_rx_buf[1][5+4],1,2))<<7;
@@ -611,11 +613,11 @@ void can1_rx_id18FF97D2_data_check()
 	{
 		value = can_rx_buf[i][0+4];
 #if SHANSHAN_CAN_DEBUG  	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list i = %d value = %d", i, value);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list i = %d value = %d", i, value);	
 #endif
 		if ((value >0x25) || (((value + VALTAGE_SPACE- 1) % VALTAGE_SPACE) != 0))
 		{
-			kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list value error! value = %d", value);	
+			kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list value error! value = %d", value);	
 			return;
 		}
 
@@ -626,12 +628,12 @@ void can1_rx_id18FF97D2_data_check()
 		charging_device_voltage_data[15+(value-1)*2] = can_rx_buf[i][6+4];
 		charging_device_voltage_data[16+(value-1)*2] = can_rx_buf[i][5+4];	
 #if SHANSHAN_CAN_DEBUG 		
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[11+(value-1)*2]);	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[12+(value-1)*2]);	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[13+(value-1)*2]);	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[14+(value-1)*2]);	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[15+(value-1)*2]);	
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[16+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[11+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[12+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[13+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[14+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[15+(value-1)*2]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF97D2_data_check voltage list  value = %x", charging_device_voltage_data[16+(value-1)*2]);	
 #endif		
 	}
 
@@ -662,7 +664,7 @@ void can1_rx_id18FF98D2_data_check()
 #if SHANSHAN_CAN_DEBUG 
 	for(i = 4; i<14; i++)
 	{
-		kal_prompt_trace(MOD_SOC, "can1_rx_id18FF98D2_data_check temperature list value = %x", charging_device_temperature_data[i]);	
+		kal_prompt_trace(MOD_CAN, "can1_rx_id18FF98D2_data_check temperature list value = %x", charging_device_temperature_data[i]);	
 	}
 #endif	
 }
@@ -677,7 +679,7 @@ void can_rx_data_check_shanshan()
 	kal_uint32 temp_id;
 	kal_uint32 id;	
 
-	kal_prompt_trace(MOD_SOC, "can_rx_data_check_shanshan");	
+	kal_prompt_trace(MOD_CAN, "can_rx_data_check_shanshan");	
 
 	i=0;
 	id=(can_rx_buf[i][0]<<24)|(can_rx_buf[i][1]<<16)|(can_rx_buf[i][2]<<8)|can_rx_buf[i][3];
@@ -884,7 +886,7 @@ void can_table_create_shanshan(void)
 {
 	kal_uint8 i = 0, j=0;
 	
-	kal_prompt_trace(MOD_SOC, "can_table_create_shanshan");
+	kal_prompt_trace(MOD_CAN, "can_table_create_shanshan");
 	for (i = 0; i<CAN_ID_NUM_SS;i++)
 	{
 		for(j = 0;j < CAN_UNIT_NUM_SS; j++)

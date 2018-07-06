@@ -280,8 +280,8 @@ kal_uint16 BD_UART_Write( kal_uint8 *buffer, kal_uint16 length)
 void BD_UART_READ_HANDLE(kal_uint8 *Buffaddr, kal_uint16 Length)
 {
 
-       kal_prompt_trace(MOD_SOC," BD_UART_READ_HANDLE Length = %d",Length);	
-	kal_prompt_trace(MOD_SOC," BD_UART_READ_HANDLE Buffaddr = %s",Buffaddr);	
+    //kal_prompt_trace(MOD_SOC," BD_UART_READ_HANDLE Length = %d",Length);	
+	//kal_prompt_trace(MOD_SOC," BD_UART_READ_HANDLE Buffaddr = %s",Buffaddr);	
 	BD_NMEAP_INIT(Buffaddr);
 	
 }

@@ -2234,7 +2234,7 @@ RSAT_SUPPORT = NONE
   # Switch-ability:
   #   N/A
 
-SIM_RECOVERY_ENHANCEMENT = FALSE
+SIM_RECOVERY_ENHANCEMENT = TRUE
   # Description:
   #   Enable continuous SIM card recovery procedure
   # Option Values:
@@ -2831,7 +2831,7 @@ ACCDET_SUPPORT = TRUE
   # Switch-ability:
   #   Non-switchable
 
-CLASSK_CHARGEPUMP_SUPPORT = TRUE
+CLASSK_CHARGEPUMP_SUPPORT = FALSE
   # Description:
   #   For MT6260, support Class-K (chargepump)
   # Option Values:

@@ -43,7 +43,7 @@ void RJ_GPS_speed_handle(float gps_speed);
 float yd_get_speed();
 /*描述：获取实际速度值*/
 
-#ifdef BIRD_ECU_MMI_SUPPORT	
+#ifdef BIRD_ECU_MMI_SUPPORT
 
 void Bird_ecu_speed_handle();
 /*描述：ECU判断是否向消息队列发送超速报警消息函数*/

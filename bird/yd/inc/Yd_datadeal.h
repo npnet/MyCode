@@ -1,11 +1,11 @@
 /**************************************************************************
   Copyright (C), 2012-2013, BIRD. Co., Ltd.
-  File name:      
+  File name:
   Author:       Version:        Date: 2013-05-29
   Description:   YD business data processing module header file
-  Others:         
-  Function List:  
-  History:       
+  Others:
+  Function List:
+  History:
     1. Date:
        Author:
        Modification:

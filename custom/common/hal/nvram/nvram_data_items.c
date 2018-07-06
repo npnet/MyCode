@@ -2294,7 +2294,7 @@ static port_setting_struct const NVRAM_EF_PORT_SETTING_DEFAULT[]=
         0,   /* TST-PS uses uart_port1 */
         5,   /* ATCI uses uart_port_usb2 */           
     #else
-        99,   /* tst-ps uses uart_port_null(value is 99) */
+        4,   /* tst-ps uses uart_port_null(value is 99) */
         0,   /* APP uses uart_port1 (value is 0) */
     #endif
 
@@ -2305,7 +2305,7 @@ static port_setting_struct const NVRAM_EF_PORT_SETTING_DEFAULT[]=
 	#elif defined(__USB_MULTIPLE_COMPORT_SUPPORT__) && defined(__L4_INIT_MULTIUSB_COM__)
 		921600, /* TST-PS baud uses 921600 */
     #else
-        115200, /* tst default baud rate base = 115200 = 0x0001C200 */
+        921600,//115200, /* tst default baud rate base = 115200 = 0x0001C200 */
     #endif
 
     #if defined (__PS_SERVICE__)
@@ -2332,7 +2332,7 @@ static port_setting_struct const NVRAM_EF_PORT_SETTING_DEFAULT[]=
     #elif defined(__USB_MULTIPLE_COMPORT_SUPPORT__) && defined(__L4_INIT_MULTIUSB_COM__)
 		1, /* TST-L1 baud uses uart_port2 */
     #else
-        99,                           /* tst-l1 uart port, same as tst-ps*/
+        4,                           /* tst-l1 uart port, same as tst-ps*/
     #endif
 
     #if defined(EMPTY_MMI)
@@ -2342,7 +2342,7 @@ static port_setting_struct const NVRAM_EF_PORT_SETTING_DEFAULT[]=
     #elif defined(__USB_MULTIPLE_COMPORT_SUPPORT__) && defined(__L4_INIT_MULTIUSB_COM__)
 		921600, /* TST-L1 baud uses 921600 */
     #else
-        115200, /* tst default baud rate base = 115200 = 0x0001C200 */
+        921600,//115200, /* tst default baud rate base = 115200 = 0x0001C200 */
     #endif
 
         0,                           /* tst output mode*/

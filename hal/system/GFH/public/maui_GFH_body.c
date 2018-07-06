@@ -218,6 +218,15 @@ extern kal_uint32 Image$$ROM$$Base;
 extern kal_uint32 Image$$ROM_GFH$$Length;
 extern kal_uint32 Load$$ROM_GFH$$Base;
 
+
+extern kal_uint32 Image$$LOAD_SEC_ROM$$Base;
+
+extern kal_uint32 Image$$TBOX_GFH$$Length;
+extern kal_uint32 Load$$TBOX_GFH$$Base;
+
+
+
+
 extern kal_uint32 Image$$SECONDARY_ROM_GFH$$Length;
 extern kal_uint32 Load$$SECONDARY_ROM_GFH$$Base;
 
@@ -466,6 +475,36 @@ const MAUI_GFH g_maui_gfh =
 #endif
 */
 };
+
+
+
+#pragma arm section rodata = "TBOX_GFH" 
+
+
+const TBOX_GFH g_maui_yd_gfh = 
+{
+      //GFH_FILE_INFO_v1
+      {  
+         GFH_HEADER(GFH_FILE_INFO, 1),
+         GFH_FILE_INFO_ID,
+         
+         MAUI_VERSION,
+         THIRD_ROM,
+         MAUI_DEVICE_TYPE,
+         SIG_NONE,
+         
+         (kal_uint32)(&Load$$TBOX_GFH$$Base),
+         GFH_FILE_SIZE_BY_POST_BUILD,
+         MAX_LENGTH_ROM,
+         (kal_uint32)(&Image$$TBOX_GFH$$Length),
+         0,
+         0,
+         BINARY_ATTRIBUTE
+      },
+};
+
+
+
 
 #pragma arm section rodata
 
@@ -860,6 +899,8 @@ kal_uint32 DummyReference()
 #if defined(__VI_ENABLED__)
     size += (kal_uint32)(&g_viva_gfh);
 #endif
+
+	size += (kal_uint32)(&g_maui_yd_gfh) ;
 
     return size;
 }

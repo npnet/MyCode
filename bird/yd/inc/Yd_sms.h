@@ -1,11 +1,11 @@
 /**************************************************************************
   Copyright (C), 2012-2013, BIRD. Co., Ltd.
-  File name:      
+  File name:
   Author:       Version:        Date: 2013-05-29
   Description:   The YD service message processing module header file
-  Others:         
-  Function List:  
-  History:       
+  Others:
+  Function List:
+  History:
     1. Date:
        Author:
        Modification:
@@ -28,9 +28,9 @@
 #define YD_TK001_SMS_CF             "cf"
 #define YD_TK001_SMS_CQ             "cq"
 //lrf add
-#define YD_TK001_SMS_KEY               "key" 
-#define YD_TK001_SMS_SFMS               "sfms" 
-#define YD_TK001_SMS_SCMS               "scms" 
+#define YD_TK001_SMS_KEY               "key"
+#define YD_TK001_SMS_SFMS               "sfms"
+#define YD_TK001_SMS_SCMS               "scms"
 #define YD_TK001_SMS_CQADMIN             "cqadmin"
 
 
@@ -67,19 +67,19 @@
 #define    BIRD_COMMAND_CONTINUE_SEARCH  0x09
 #define    BIRD_COMMAND_NORMAL_SLEEP_VALUE  0x0A
 #define    BIRD_COMMAND_MAIN_INTERVAL_VALUE  0x0B
-#define    BIRD_COMMAND_NORMAL_SLEEP_FLAG  0x0C    
+#define    BIRD_COMMAND_NORMAL_SLEEP_FLAG  0x0C
 #define    BIRD_COMMAND_ABNORMAL_SLEEP_VALUE  0x0D
 
 #define    BIRD_COMMAND_DIS_SLEEP_FLAG  0x76
-#define    BIRD_COMMAND_DEFENSE_DELAY_VALUE  0x0E         
-#define    BIRD_COMMAND_ALARM_DELAY_VALUE  0x0F    
+#define    BIRD_COMMAND_DEFENSE_DELAY_VALUE  0x0E
+#define    BIRD_COMMAND_ALARM_DELAY_VALUE  0x0F
 
 #define    BIRD_COMMAND_SET_OWNER_NUMBER  0x4A
 #define    BIRD_COMMAND_SET_UTILITY_PW  0x4B
 #define    BIRD_COMMAND_SET_SYS_ADDRESS  0x4C
 #define    BIRD_COMMAND_ACTIVE_OWNER_NUMBER  0x4D
 #define    BIRD_COMMAND_SET_UTILITY_PW_EXT  0x4E
-    
+
 #define    BIRD_COMMAND_MOVE_POSITION_ALARM  0x5B
 #define    BIRD_COMMAND_MOVE_POSITION_DISTAENSENCE  0x5C
 #define    BIRD_COMMAND_VIBRATION_ALARM  0x5D
@@ -103,8 +103,8 @@
 #define    BIRD_COMMAND_CONTROL_DYKG  13
 #define    BIRD_COMMAND_CONTROL_KEY_LEARN  14
 
-#define    BIRD_COMMAND_BATCH_NO  0x64 
-#define    BIRD_COMMAND_ADMIN_NO  0x68 
+#define    BIRD_COMMAND_BATCH_NO  0x64
+#define    BIRD_COMMAND_ADMIN_NO  0x68
 #define    BIRD_COMMAND_ILLEGAL_POWER  0x69
 #define    BIRD_COMMAND_EXTERNAL_STATUS  0x6A
 #define    BIRD_COMMAND_SLEEP_STATUS  0x6B

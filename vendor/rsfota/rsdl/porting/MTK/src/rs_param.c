@@ -7,6 +7,7 @@
 #include "rs_std_fun.h"
 #include "rs_debug.h"
 #include "rs_sdk_api_ex.h"
+#include "rs_flash_operate.h"
 
 
 // MTK header
@@ -98,8 +99,8 @@ static void get_OEMCurrentVersion(char *buf)
 {
 
 	char *ptr = NULL;
-	extern void Bird_Get_OTA_Version(kal_uint8 *ver);
-	Bird_Get_OTA_Version(buf);
+	extern void Bird_Get_OTA_Version__(kal_uint8 *ver);
+	Bird_Get_OTA_Version__(buf);
 	dbg_print("%s, verno[%s]\n\r", __func__, buf);
 	kal_prompt_trace( MOD_SOC, "%s, verno[%s]\n\r", __func__, buf);
 
@@ -587,4 +588,49 @@ rs_u32 rs_sys_getVIVAStartAddr()
 	//RS_PORITNG_LOG("viva address is 0x%x\n\r", ((rs_u32)&Image$$VIVA_GFH$$Base) & 0x00FFFFFF);
 	//return (((rs_u32)&Image$$VIVA_GFH$$Base) & 0x00FFFFFF); 
 	return 0;
+}
+
+
+#define MOD_FOTA MOD_BT
+
+void rs_fota_start()
+{
+#if 0
+	rs_u8 buffer[512];
+	rs_u32 update_info1_addr,update_info2_addr,rom_start_addr;
+	rs_u32 nPage,i;
+		
+	if(rs_flash_init()!=RS_ERR_OK)
+	{
+		kal_prompt_trace(MOD_FOTA, "rs_flash_init err");
+		return;
+	}
+	
+	update_info1_addr = 0x500000;
+	update_info2_addr = 0x580000;
+	rom_start_addr = 0x480000;
+
+	
+	for(i=0;i<0x80000/0x8000;i++)
+	{
+		if(rs_flash_eraseBlock(update_info1_addr + i*0x8000) != RS_ERR_OK)
+		{
+			kal_prompt_trace(MOD_FOTA, "rs_flash_eraseBlock err");
+			return;
+		}
+	}
+
+	for(i=0;i<0x80000/0x200;i++)
+	{
+		rs_flash_readPage(rom_start_addr + i*0x200 , buffer , 512);
+		
+		if(rs_flash_writePage(update_info1_addr  + i*0x200 , buffer, 512) != RS_ERR_OK)
+		{
+			kal_prompt_trace(MOD_FOTA, "rs_flash_writePage err");
+			return;
+		}		
+	}
+
+	kal_prompt_trace(MOD_FOTA, "rs_fota_start finished!");
+#endif	
 }

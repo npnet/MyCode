@@ -414,6 +414,7 @@ void MCP2515_can2_rts_tx0(void)
 //   输出：    无                                          // 
 //   调用函数：                                  //
 //**********************************************************//
+#if 0
 void mcp2515_init(void)
 {
  //初始化MCU的SPI总线
@@ -795,6 +796,10 @@ void mcp2515_init(void)
  
 
 }
+#endif
+
+#define BIRD_CAN_SIMULATE_SEND_SUPPORT
+
 
 void mcp2515_init_gpio_spi(void)
 {
@@ -935,7 +940,7 @@ void mcp2515_init_gpio_spi(void)
 
 	//开通RX1的接收中断和错误中断
 	//mcp2515_write_register(CANINTE,0x22);	//ERRIE and RX1IE enabled
-#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT	
+#if 0//def BIRD_CAN_SIMULATE_SEND_SUPPORT	
 	MCP2515_byte_write2(CANINTE,0x04);	//RX0IE  enabled  here must 0x01  or int can not effective
 #else
 	MCP2515_byte_write2(CANINTE,0x01);
@@ -1065,7 +1070,7 @@ void mcp2515_init_gpio_spi(void)
 
 	//开通RX1的接收中断和错误中断
 	//mcp2515_write_register(CANINTE,0x22);	//ERRIE and RX1IE enabled
-#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT	
+#if 0//def BIRD_CAN_SIMULATE_SEND_SUPPORT	
 	MCP2515_byte_write1(CANINTE,0x04);	//RX0IE  enabled  here must 0x01  or int can not effective
 #else
 	MCP2515_byte_write1(CANINTE,0x01);

@@ -6,15 +6,13 @@
 typedef unsigned char kal_uint8;
 #endif
 
-kal_uint8 factory_calibration_flag =0;
-
 void yd_tk001_set_record_from_NV();
 /*描述：将yd_tk001_info结构体数据保存至NV*/
 
 void yd_tk002_set_record_from_NV();
 /*描述：将yd_tk002_info结构体数据保存至NV*/
 
-#ifdef BIRD_BT_SUPPORT    
+#ifdef BIRD_BT_SUPPORT
 void yd_tk003_set_record_from_NV();
 /*描述：将yd_tk003_info结构体数据保存至NV*/
 #endif
@@ -25,7 +23,7 @@ void yd_tk001_get_record_from_NV();
 void yd_tk002_get_record_from_NV();
 /*描述：从NV中读取数据存入yd_tk002_info*/
 
-#ifdef BIRD_BT_SUPPORT    
+#ifdef BIRD_BT_SUPPORT
 void yd_tk003_get_record_from_NV();
 /*描述：从NV中读取数据存入yd_tk003_info*/
 #endif

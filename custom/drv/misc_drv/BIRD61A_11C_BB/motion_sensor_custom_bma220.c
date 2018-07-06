@@ -81,6 +81,7 @@
 //#include "bosch_sensor_app.h"
 //#include "gps_main.h"
 
+//#include "Yd_main.h"
 
 
 
@@ -133,7 +134,7 @@
 
 #define motion_3d_delay_time   216     //   ticks       1 tick =4.61ms 216
 
-extern void RJ_GPS_log(kal_uint8 * fmt,...);
+//extern void RJ_GPS_log(kal_uint8 * fmt,...);
 extern void TRACE_P_3D(kal_uint8 * fmt,...);
 extern void TRACE_P_GPS(kal_uint8 * fmt,...);
 
@@ -623,4 +624,3 @@ slt_MmiMotionAutoTstInit(void)
    //gui_start_timer(100, slt_MmiMotionTst);
 }
 ////////////////////////////////////////////////////
-  

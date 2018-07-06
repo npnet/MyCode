@@ -2949,7 +2949,7 @@ task_name("TASKBIRD")  //->task的名字
 task_queue_name("TASKBIRD Q")
 task_priority(TASK_PRIORITY_BIRD) //->任务优先级的宏定义也在此文件中，请参考其它task的定义，不过至不能跟其他task的优先级重复，因为，平台必须保证每个优先级只对应一个task；总的原则是，如果你的task相应不需要太及时的话，可以把优先级定的稍微低点
 task_stack_size(8192)
-task_create_function(bird_task_create)        //->task的create函数，自行定义
+task_create_function(bird_task_create__)        //->task的create函数，自行定义
 task_stack_internalRAM(KAL_FALSE)
 task_external_queue_size(30)
 task_internal_queue_size(0)
@@ -2965,7 +2965,7 @@ task_name("TASKBIRD2")  //->task的名字
 task_queue_name("TASKBIRD2 Q")
 task_priority(TASK_PRIORITY_BIRD2) //->任务优先级的宏定义也在此文件中，请参考其它task的定义，不过至不能跟其他task的优先级重复，因为，平台必须保证每个优先级只对应一个task；总的原则是，如果你的task相应不需要太及时的话，可以把优先级定的稍微低点
 task_stack_size(8192)
-task_create_function(bird_second_task_create)        //->task的create函数，自行定义
+task_create_function(bird_second_task_create__)        //->task的create函数，自行定义
 task_stack_internalRAM(KAL_FALSE)
 task_external_queue_size(30)
 task_internal_queue_size(0)

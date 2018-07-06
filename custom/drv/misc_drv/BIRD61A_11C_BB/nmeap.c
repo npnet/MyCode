@@ -429,7 +429,7 @@ int nmeap_parse(nmeap_context_t *context,char ch)
 	else {
 	    memset(errinput,0,sizeof(errinput));
 	    strcpy((char*)errinput, (char*)context->input);
-	    kal_prompt_trace(MOD_SOC, "nmeap_parse input=%s",context->input);	
+	    kal_prompt_trace(MOD_GPS, "nmeap_parse input=%s",context->input);	
 	    //Bd_Log(3);	 // by lqy for test
             /* bad character, start over */
             context->err_id++;
@@ -500,7 +500,7 @@ int nmeap_parse(nmeap_context_t *context,char ch)
 			else {
 				memset(errinput,0,sizeof(errinput));
 	                      strcpy((char*)errinput, (char*)context->input);
-	                      kal_prompt_trace(MOD_SOC, " checksum errors  input=%s",context->input);	
+	                      kal_prompt_trace(MOD_GPS, " checksum errors  input=%s",context->input);	
 	                      //Bd_Log(2);	 // by lqy for test
 				/* count checksum errors */
 				context->err_cks++;
@@ -577,11 +577,11 @@ int nmeap_gntxt(nmeap_context_t *context,nmeap_sentence_t *sentence)
 		txt->hed_2  = atoi(context->token[3]);
 		strcpy(txt->hed_string, context->token[4]);
     }
-    kal_prompt_trace(MOD_SOC, "nmeap_gntxt token[1]=%s, token[2]=%s, token[3]=%s, token[4]=%s",context->token[1],context->token[2],context->token[3],context->token[4]);
-    kal_prompt_trace(MOD_SOC, "nmeap_gntxt debug_input=%s,txt->hed_0 = %d, %d, %d, txt->hed_string = %s",context->debug_input, txt->hed_0, txt->hed_1, txt->hed_2, txt->hed_string);
+    kal_prompt_trace(MOD_GPS, "nmeap_gntxt token[1]=%s, token[2]=%s, token[3]=%s, token[4]=%s",context->token[1],context->token[2],context->token[3],context->token[4]);
+    kal_prompt_trace(MOD_GPS, "nmeap_gntxt debug_input=%s,txt->hed_0 = %d, %d, %d, txt->hed_string = %s",context->debug_input, txt->hed_0, txt->hed_1, txt->hed_2, txt->hed_string);
 
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_gntxt input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_gntxt input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
 
     if (sentence->callout != 0) {
         (*sentence->callout)(context,txt,context->user_data);
@@ -622,26 +622,26 @@ int nmeap_gngga(nmeap_context_t *context,nmeap_sentence_t *sentence)
 	{
 	    memset(errinput,0,sizeof(errinput));
 	    strcpy((char*)errinput, (char*)context->debug_input);
-	    kal_prompt_trace(MOD_SOC, "nmeap_gngga debug_input=%s,quality = %d",context->debug_input,gga->quality);	
+	    kal_prompt_trace(MOD_GPS, "nmeap_gngga debug_input=%s,quality = %d",context->debug_input,gga->quality);	
 	    Bd_Log(1);
       	}	
       if ((gga->longitude<120)  && (gga->quality>=1)  )	
 	{ 
 	    memset(errinput,0,sizeof(errinput));
-	     kal_prompt_trace(MOD_SOC, "nmeap_gngga debug_input=%s,quality = %d",context->debug_input,gga->quality);		
+	     kal_prompt_trace(MOD_GPS, "nmeap_gngga debug_input=%s,quality = %d",context->debug_input,gga->quality);		
 	    strcpy((char*)errinput, (char*)context->debug_input);
 	    Bd_Log(1);
       	}*/	
          
-    kal_prompt_trace(MOD_SOC, "nmeap_gngga debug_input=%s",context->debug_input);
+    kal_prompt_trace(MOD_GPS, "nmeap_gngga debug_input=%s",context->debug_input);
 
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_gngga input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_gngga input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
 	
     /* print the tokens */
    /*	
     for(i=0;i<context->tokens;i++) {
-        //kal_prompt_trace(MOD_SOC, "nmeap_gngga i,tokens=%d:%s",i,context->token[i]);
+        //kal_prompt_trace(MOD_GPS, "nmeap_gngga i,tokens=%d:%s",i,context->token[i]);
     }*/
 
     /* if the sentence has a callout, call it */
@@ -677,16 +677,16 @@ int nmeap_gnrmc(nmeap_context_t *context,nmeap_sentence_t *sentence)
 		rmc->magvar     = atof(context->token[10]);
 	}
 
-    kal_prompt_trace(MOD_SOC, "nmeap_gnrmc debug_input=%s",context->debug_input);
+    kal_prompt_trace(MOD_GPS, "nmeap_gnrmc debug_input=%s",context->debug_input);
 	
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_gnrmc input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_gnrmc input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
 
    	
     /* print the tokens */
    /*	
     for(i=0;i<context->tokens;i++) {
-   //     kal_prompt_trace(MOD_SOC, "nmeap_gnrmc i,tokens=%d:%s",i,context->token[i]);
+   //     kal_prompt_trace(MOD_GPS, "nmeap_gnrmc i,tokens=%d:%s",i,context->token[i]);
     }*/
 
     /* if the sentence has a callout, call it */
@@ -733,15 +733,15 @@ int nmeap_gpgsv(nmeap_context_t *context,nmeap_sentence_t *sentence)
 		gpgsv->sat_data[3].sig      = atoi(context->token[19]);
 	}
 
-    kal_prompt_trace(MOD_SOC, "nmeap_gpgsv debug_input=%s",context->debug_input);
+    kal_prompt_trace(MOD_GPS, "nmeap_gpgsv debug_input=%s",context->debug_input);
 	
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_gpgsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_gpgsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
 	
     /* print the tokens */
    /*	
     for(i=0;i<context->tokens;i++) {
-        kal_prompt_trace(MOD_SOC, "nmeap_gpgsv i,tokens=%d:%s",i,context->token[i]);
+        kal_prompt_trace(MOD_GPS, "nmeap_gpgsv i,tokens=%d:%s",i,context->token[i]);
     }*/
 
     /* if the sentence has a callout, call it */
@@ -788,15 +788,15 @@ int nmeap_bdgsv(nmeap_context_t *context,nmeap_sentence_t *sentence)
 		bdgsv->sat_data[3].sig      = atoi(context->token[19]);
 	}
 
-    kal_prompt_trace(MOD_SOC, "nmeap_bdgsv debug_input=%s",context->debug_input);
+    kal_prompt_trace(MOD_GPS, "nmeap_bdgsv debug_input=%s",context->debug_input);
 	
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_bdgsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_bdgsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
 	
     /* print the tokens */
    /*	
     for(i=0;i<context->tokens;i++) {
-        kal_prompt_trace(MOD_SOC, "nmeap_bdgsv i,tokens=%d:%s",i,context->token[i]);
+        kal_prompt_trace(MOD_GPS, "nmeap_bdgsv i,tokens=%d:%s",i,context->token[i]);
     }*/
 
     /* if the sentence has a callout, call it */
@@ -834,15 +834,15 @@ int nmeap_gnvtg(nmeap_context_t *context,nmeap_sentence_t *sentence)
      
 #ifndef NDEBUG    
     /* print raw input string */
-    kal_prompt_trace(MOD_SOC, "nmeap_dngsv debug_input=%s",context->debug_input);
+    kal_prompt_trace(MOD_GPS, "nmeap_dngsv debug_input=%s",context->debug_input);
     
     /* print some validation data */
-    kal_prompt_trace(MOD_SOC, "nmeap_dngsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
+    kal_prompt_trace(MOD_GPS, "nmeap_dngsv input_name,name=%s,%s,icks,ccks=%x,%x",context->input_name,sentence->name,context->icks,context->ccks);
     
     /* print the tokens */
    /*	
     for(i=0;i<context->tokens;i++) {
-        kal_prompt_trace(MOD_SOC, "nmeap_dngsv i,tokens=%d:%s",i,context->token[i]);
+        kal_prompt_trace(MOD_GPS, "nmeap_dngsv i,tokens=%d:%s",i,context->token[i]);
     }*/
 #endif   
 
@@ -878,13 +878,13 @@ if(0)// by lqy for disable
     //char  temp[NMEAP_MAX_SENTENCE_LENGTH+1];
     unsigned short                 file[256];
     S32                 hFile;
-    kal_prompt_trace(MOD_SOC,"Bd_Log entry");   
+    kal_prompt_trace(MOD_GPS,"Bd_Log entry");   
     p_soc.Log_data_len = 0;
     memset(p_soc.Log_buffer, 0, 512);
     applib_dt_get_date_time(&dt);
     sprintf((char*)p_soc.Log_buffer, "[%04d-%02d-%02d %02d:%02d:%02d]", dt.nYear, dt.nMonth,dt.nDay,dt.nHour, dt.nMin, dt.nSec);
     p_soc.Log_data_len = strlen((const char *)p_soc.Log_buffer);
-    kal_prompt_trace(MOD_SOC,"Bd_Log data %s",p_soc.Log_buffer);   
+    kal_prompt_trace(MOD_GPS,"Bd_Log data %s",p_soc.Log_buffer);   
    
     /*LOG*/
    if (logtype == 1)
@@ -911,7 +911,7 @@ if(0)// by lqy for disable
     strcat((char*)p_soc.Log_buffer, " \r\n");
     p_soc.Log_data_len += strlen(" \r\n");
 
-    kal_prompt_trace(MOD_SOC,"Bd_Log data %s",p_soc.Log_buffer);   
+    kal_prompt_trace(MOD_GPS,"Bd_Log data %s",p_soc.Log_buffer);   
     kal_wsprintf((kal_wchar*) file,BIRD_LOG_FILE_PATH,(S16)MMI_CARD_DRV);
     //对比url和文件名称
     hFile = FS_Open((U16 *)file, FS_CREATE | FS_READ_WRITE);
@@ -921,7 +921,7 @@ if(0)// by lqy for disable
         UINT len;		
         //UINT fsize;
         //FS_GetFileSize(hFile,&fsize);
-	 //kal_prompt_trace(MOD_SOC,"Bird_Log fsize=%d",fsize);   
+	 //kal_prompt_trace(MOD_GPS,"Bird_Log fsize=%d",fsize);   
         FS_Seek( hFile, 0, FS_FILE_END);
         FS_Write(hFile, p_soc.Log_buffer, p_soc.Log_data_len, &len);
         FS_Close(hFile);

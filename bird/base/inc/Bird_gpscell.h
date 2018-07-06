@@ -1,11 +1,11 @@
 /**************************************************************************
   Copyright (C), 2012-2013, BIRD. Co., Ltd.
-  File name:      
+  File name:
   Author:       Version:        Date: 2013-05-29
   Description:   BIRD GPS station data processing function header files
-  Others:         
-  Function List:  
-  History:       
+  Others:
+  Function List:
+  History:
     1. Date:
        Author:
        Modification:
@@ -30,9 +30,9 @@
 #define BIRD_AGPS_WRITE_5_GROUPS  0
 //#define BIRD_AGPS_WRITE_POSTIME 0
 #define BIRD_COLD_START_ENABLE 1
-#define BIRD_COLD_START_ACK_COUNT 2  
-#define BIRD_COLD_START_COUNT 2  
-#define BIRD_AGPS_WRITE_COUNT 2  
+#define BIRD_COLD_START_ACK_COUNT 2
+#define BIRD_COLD_START_COUNT 2
+#define BIRD_AGPS_WRITE_COUNT 2
 
 #ifndef __GPS_SUPPORT__
 #ifndef __BT_GPS_SUPPORT__
@@ -115,7 +115,7 @@ typedef enum
     MDI_GPS_UART_GPS_HOT_START,             /*Let GPS do hot start*/
     MDI_GPS_UART_GPS_COLD_START,            /*Let GPS do cold start*/
     MDI_GPS_UART_GPS_VERSION,
-    MDI_GPS_UART_GPS_ENABLE_DEBUG_INFO,    
+    MDI_GPS_UART_GPS_ENABLE_DEBUG_INFO,
     MDI_GPS_UART_GPS_SWITCH_MODE_MA,
     MDI_GPS_UART_GPS_SWITCH_MODE_MB,
     MDI_GPS_UART_GPS_SWITCH_MODE_NORMAL,
@@ -130,7 +130,7 @@ typedef enum
 } mdi_gps_uart_cmd_type_enum;
 
 typedef struct
-{            
+{
     kal_int8      hour;
     kal_int8      minute;
     kal_int8      second;
@@ -138,7 +138,7 @@ typedef struct
 } mdi_gps_nmea_utc_time_struct;
 
 typedef struct
-{            
+{
     kal_int8      year;
     kal_int8      month;
     kal_int8      day;
@@ -146,16 +146,16 @@ typedef struct
 
 /*GPTXT -- Global Positioning System Fix Data*/
 typedef struct
-{            
-	int hed_0;
-	int hed_1;
-	int hed_2;
-	char hed_string[20];	
+{
+    int hed_0;
+    int hed_1;
+    int hed_2;
+    char hed_string[20];
 } mdi_gps_nmea_txt_struct;
 
 /*GPGGA -- Global Positioning System Fix Data*/
 typedef struct
-{            
+{
     double  latitude;               /*Latitude South<0  North>0*/
     double  longitude;              /*Longitude West<0 east>0*/
     float   h_precision;            /*Horizontal Dilution of precision*/
@@ -173,9 +173,9 @@ typedef struct
 } mdi_gps_nmea_gga_struct;
 
 
- /*GPGSA -- GNSS DOP and Active Satellites*/
-typedef struct 
-{           
+/*GPGSA -- GNSS DOP and Active Satellites*/
+typedef struct
+{
     float   pdop;       /*PDOP in meters*/
     float   hdop;       /*HDOP in meters*/
     float   vdop;       /*VDOP in meters*/
@@ -186,8 +186,8 @@ typedef struct
 
 
 /*GPGSV -- GNSS Satellites in View*/
-typedef struct 
-{            
+typedef struct
+{
     kal_int16     msg_sum;              /*total number of messages*/
     kal_int16     msg_index;            /*message number*/
     kal_int16     sates_in_view;        /*satellites in view*/
@@ -206,7 +206,7 @@ typedef struct
 
 /*GPRMC -- Recommended Minimum Specific GNSS Data*/
 typedef struct
-{            
+{
     double   latitude;          /*latitude*/
     double   longitude;         /*longitude*/
     float   ground_speed;       /*Speed over ground, knots*/
@@ -225,8 +225,8 @@ typedef struct
 
 /*GPGLL -- Geographic Position - Latitude/Longitude*/
 typedef struct
-{            
-    double  latitude;               /*latitude*/ 
+{
+    double  latitude;               /*latitude*/
     double  longitude;              /*longitude*/
     mdi_gps_nmea_utc_time_struct      utc_time;     /*UTC time*/
     kal_int8      north_south;      /*N or S*/
@@ -269,34 +269,34 @@ typedef struct
 /* GPS */
 typedef struct
 {
-	//base data
-	S32 conn_port_handle;
-	S32 port;
-	volatile S8 satellite_num;								//卫星数
-	S32 gps_status;									//GPS当前状态
-	
-	//GPS data
-	//格林威治标准时间
-	mdi_gps_nmea_utc_time_struct      utc_time; 			/* UTC time */
-	mdi_gps_nmea_utc_date_struct      utc_date; 			/* UTC date */
-	double latitude;									/* 纬度*/
-	double longitude;									/* 经度*/
-	float ground_speed;								/* 速度*/
-	float drection;									/* 方位角 真北参照系*/
-	S8 north_south;                                                          /* N or S*/
-	S8 east_west;                                                             /* E or W*/
+    //base data
+    S32 conn_port_handle;
+    S32 port;
+    volatile S8 satellite_num;								//卫星数
+    S32 gps_status;									//GPS当前状态
 
-       kal_bool is_use_agps;
-	U8 nmea_start;
-	U8 nmea_end;
-	S8 nmea_buffer[RJ_GPS_MAX_NMEA][RJ_GPS_MAX_NMEA_LEN];
+    //GPS data
+    //格林威治标准时间
+    mdi_gps_nmea_utc_time_struct      utc_time; 			/* UTC time */
+    mdi_gps_nmea_utc_date_struct      utc_date; 			/* UTC date */
+    double latitude;									/* 纬度*/
+    double longitude;									/* 经度*/
+    float ground_speed;								/* 速度*/
+    float drection;									/* 方位角 真北参照系*/
+    S8 north_south;                                                          /* N or S*/
+    S8 east_west;                                                             /* E or W*/
 
-    #if defined(__AGPS_USER_PLANE__) || defined(__AGPS_CONTROL_PLANE__)
+    kal_bool is_use_agps;
+    U8 nmea_start;
+    U8 nmea_end;
+    S8 nmea_buffer[RJ_GPS_MAX_NMEA][RJ_GPS_MAX_NMEA_LEN];
+
+#if defined(__AGPS_USER_PLANE__) || defined(__AGPS_CONTROL_PLANE__)
     U8 gps_pos_type;
 #endif
 
 
-    #if defined(__AGPS_USER_PLANE__)
+#if defined(__AGPS_USER_PLANE__)
     supl_mmi_position_struct minigps_ma_position;
 #endif
 #if defined(__AGPS_CONTROL_PLANE__)
@@ -304,35 +304,35 @@ typedef struct
 
     nvram_ef_agps_cp_config_struct agps_cp_config;
 #endif
-}RJ_gps_context_struct;
+} RJ_gps_context_struct;
 
 typedef struct
 {
-        kal_uint8 sate_id;              /*satellite id*/
-        kal_uint8 snr;                  /*SNR in dB*/
-        
-}RJ_gps_engineer_satinfo;
+    kal_uint8 sate_id;              /*satellite id*/
+    kal_uint8 snr;                  /*SNR in dB*/
+
+} RJ_gps_engineer_satinfo;
 #ifdef HD8020_GPS_SUPPORT
 typedef struct
 {
-	S8 agps_buf[MAX_BIRD_RCV_BUFFER_SIZE];   /*peph data*/
-	kal_int32 agps_len;						 /*total peph data len*/
+    S8 agps_buf[MAX_BIRD_RCV_BUFFER_SIZE];   /*peph data*/
+    kal_int32 agps_len;						 /*total peph data len*/
 
-	kal_int32 peph_len;						 /*one peph len*/	
-	kal_int32 peph_pos;	
+    kal_int32 peph_len;						 /*one peph len*/
+    kal_int32 peph_pos;
 
-	U8 cold_start_ack_num;					 /*ack number*/
-	U8 cold_start_times;						/*do cold start times*/
-	U8 write_peph_times;					/*write peph times*/
-	U8 write_peph_start;						/*start to write peph flag*/
-	U8 peph_ack_ok_num;					/*peph ack ok number*/
-	U8 peph_ack_err_num;					/*peph ack err number*/
-	kal_int32 index;							/*peph buf indx*/
-	U8 total_item;									/*peph data total item*/
-	applib_time_struct get_peph_last_time;		/*get peph data last time*/
-	applib_time_struct peph_write_over_time;	/*write peph over time*/
-	applib_time_struct gps_close_time;	/*write peph over time*/
-}peph_op_struct;
+    U8 cold_start_ack_num;					 /*ack number*/
+    U8 cold_start_times;						/*do cold start times*/
+    U8 write_peph_times;					/*write peph times*/
+    U8 write_peph_start;						/*start to write peph flag*/
+    U8 peph_ack_ok_num;					/*peph ack ok number*/
+    U8 peph_ack_err_num;					/*peph ack err number*/
+    kal_int32 index;							/*peph buf indx*/
+    U8 total_item;									/*peph data total item*/
+    applib_time_struct get_peph_last_time;		/*get peph data last time*/
+    applib_time_struct peph_write_over_time;	/*write peph over time*/
+    applib_time_struct gps_close_time;	/*write peph over time*/
+} peph_op_struct;
 
 #endif
 void bird_set_gpspositon(S8 updatekind);

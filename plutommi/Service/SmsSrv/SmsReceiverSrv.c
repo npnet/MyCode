@@ -680,7 +680,7 @@ static void srv_sms_add_sms_to_await(srv_sms_sim_enum sim_id, smslib_general_str
 }
 
 /* lqy 2013.4.16 start*/
-extern void bird_set_SMS_codetype(U8 type);
+extern void bird_set_SMS_codetype__(U8 type);
 /* lqy 2013.4.16 end*/
 /*****************************************************************************
  * FUNCTION
@@ -693,7 +693,7 @@ extern void bird_set_SMS_codetype(U8 type);
  * RETURNS
  *  void
  *****************************************************************************/
- extern U8 yd_tk001_all_Msg(smslib_general_struct* data);//lqy
+ extern U8 yd_tk001_all_Msg__(smslib_general_struct* data);//lqy
 static void srv_sms_handle_new_msg(srv_sms_sim_enum sim_id, mmi_sms_new_msg_pdu_ind_struct *data)
 {
     /*----------------------------------------------------------------*/
@@ -714,10 +714,10 @@ static void srv_sms_handle_new_msg(srv_sms_sim_enum sim_id, mmi_sms_new_msg_pdu_
 
         /* huangbx 2013.4.16 start*/
         kal_prompt_trace(  MOD_SOC,"srv_sms_handle_new_msg dcs %d", app_lib_data->tpdu.alphabet_type);
-        bird_set_SMS_codetype(app_lib_data->tpdu.alphabet_type);
+        bird_set_SMS_codetype__(app_lib_data->tpdu.alphabet_type);
         /* huangbx 2013.4.16 end*/
 
-        yd_tk001_all_Msg(app_lib_data);
+        yd_tk001_all_Msg__(app_lib_data);
          kal_prompt_trace(MOD_SOC," srv_sms_handle_new_msg =  %d,%d",srv_sms_get_list_size(SRV_SMS_BOX_INBOX),srv_sms_get_list_size(SRV_SMS_BOX_OUTBOX));
 	  if(srv_sms_get_list_size(SRV_SMS_BOX_INBOX)>20)
 	  {

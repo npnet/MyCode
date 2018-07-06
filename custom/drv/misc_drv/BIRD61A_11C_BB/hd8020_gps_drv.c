@@ -133,7 +133,7 @@ void QuickSort(unsigned char* arr,unsigned char* sort,unsigned char startPos, un
 static void print_gga(nmeap_gga_t *gga)
 {
     
-    kal_prompt_trace(MOD_SOC,"found GNGGA message %f,%f,%f,%d,%d,%d,%f,%f\n",
+    kal_prompt_trace(MOD_GPS,"found GNGGA message %f,%f,%f,%d,%d,%d,%f,%f\n",
             gga->latitude  ,
             gga->longitude, 
             gga->altitude , 
@@ -156,15 +156,15 @@ static void gntxt_callout(nmeap_context_t *context,void *data,void *user_data)
     txt_data.hed_1= ptxt->hed_1;
     txt_data.hed_2= ptxt->hed_2;
     strcpy(txt_data.hed_string, ptxt->hed_string);
-    //kal_prompt_trace(MOD_SOC," gngga_callout pgga->satellites =%d",pgga->satellites);
-    //kal_prompt_trace(MOD_SOC," gngga_callout gga_data->sat_in_view =%d",gga_data.sat_in_view);	
-    //kal_prompt_trace(MOD_SOC," gngga_callout pgga->quality  =%d",pgga->quality);	
-    //kal_prompt_trace(MOD_SOC," gngga_callout gga_data->quality  =%d",gga_data.quality);		
-    kal_prompt_trace(MOD_SOC,"txt_data.hed_string = %s, %d, %d, %d", txt_data.hed_string, txt_data.hed_0, txt_data.hed_1, txt_data.hed_2);	
+    //kal_prompt_trace(MOD_GPS," gngga_callout pgga->satellites =%d",pgga->satellites);
+    //kal_prompt_trace(MOD_GPS," gngga_callout gga_data->sat_in_view =%d",gga_data.sat_in_view);	
+    //kal_prompt_trace(MOD_GPS," gngga_callout pgga->quality  =%d",pgga->quality);	
+    //kal_prompt_trace(MOD_GPS," gngga_callout gga_data->quality  =%d",gga_data.quality);		
+    kal_prompt_trace(MOD_GPS,"txt_data.hed_string = %s, %d, %d, %d", txt_data.hed_string, txt_data.hed_0, txt_data.hed_1, txt_data.hed_2);	
 	
     RJ_GPS_Callback(MDI_GPS_PARSER_NMEA_TXT, &txt_data, 0); 
 
-    //kal_prompt_trace(MOD_SOC," ------------gngga_callout\n");	
+    //kal_prompt_trace(MOD_GPS," ------------gngga_callout\n");	
     //print_gga(pgga);
 }
 
@@ -182,15 +182,15 @@ static void gngga_callout(nmeap_context_t *context,void *data,void *user_data)
     gga_data.east_west= pgga->east_west;
     gga_data.north_south= pgga->north_south;
     gga_data.h_precision = pgga->hdop;
-    //kal_prompt_trace(MOD_SOC," gngga_callout pgga->satellites =%d",pgga->satellites);
-    //kal_prompt_trace(MOD_SOC," gngga_callout gga_data->sat_in_view =%d",gga_data.sat_in_view);	
-    //kal_prompt_trace(MOD_SOC," gngga_callout pgga->quality  =%d",pgga->quality);	
-    //kal_prompt_trace(MOD_SOC," gngga_callout gga_data->quality  =%d",gga_data.quality);		
-    //kal_prompt_trace(MOD_SOC," ------------gngga_callout enter");	
+    //kal_prompt_trace(MOD_GPS," gngga_callout pgga->satellites =%d",pgga->satellites);
+    //kal_prompt_trace(MOD_GPS," gngga_callout gga_data->sat_in_view =%d",gga_data.sat_in_view);	
+    //kal_prompt_trace(MOD_GPS," gngga_callout pgga->quality  =%d",pgga->quality);	
+    //kal_prompt_trace(MOD_GPS," gngga_callout gga_data->quality  =%d",gga_data.quality);		
+    //kal_prompt_trace(MOD_GPS," ------------gngga_callout enter");	
 	
     RJ_GPS_Callback(MDI_GPS_PARSER_NMEA_GGA, &gga_data, 0); 
 			
-    //kal_prompt_trace(MOD_SOC," ------------gngga_callout\n");	
+    //kal_prompt_trace(MOD_GPS," ------------gngga_callout\n");	
     //print_gga(pgga);
 }
 
@@ -198,7 +198,7 @@ static void gngga_callout(nmeap_context_t *context,void *data,void *user_data)
 /** do something with the RMC data */
 static void print_rmc(nmeap_rmc_t *rmc)
 {
-     kal_prompt_trace(MOD_SOC,"found GNRMC Message %d %c %f %f %f %f %d %f\n",
+     kal_prompt_trace(MOD_GPS,"found GNRMC Message %d %c %f %f %f %f %d %f\n",
             rmc->time,
             rmc->warn,
             rmc->latitude,
@@ -214,7 +214,7 @@ static void print_rmc(nmeap_rmc_t *rmc)
 static void gnrmc_callout(nmeap_context_t *context,void *data,void *user_data)
 {
     nmeap_rmc_t *prmc = (nmeap_rmc_t *)data;
-    kal_prompt_trace(MOD_SOC,"-------------gnrmc_callout\n");
+    kal_prompt_trace(MOD_GPS,"-------------gnrmc_callout\n");
     //print_rmc(prmc);
 }
 
@@ -245,14 +245,14 @@ static void gnvtg_callout(nmeap_context_t *context,void *data,void *user_data)
 	
     RJ_GPS_Callback(MDI_GPS_PARSER_NMEA_VTG, &vtg_data, 0); 	
 	
-     //kal_prompt_trace(MOD_SOC,"-------------gnvtg_callout\n");
+     //kal_prompt_trace(MOD_GPS,"-------------gnvtg_callout\n");
     //print_vtg(vtg);
 }
 
 /** do something with the GPGSV data */
 static void print_gpgsv(nmeap_gpgsv_t *gpgsv)
 {
-    kal_prompt_trace(MOD_SOC,"found GPGSV Message %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
+    kal_prompt_trace(MOD_GPS,"found GPGSV Message %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
             gpgsv->pack_count,
             gpgsv->pack_index,
             gpgsv->sat_count,
@@ -306,27 +306,27 @@ static void gpgsv_callout(nmeap_context_t *context,void *data,void *user_data)
 	    }
 
 	    g_gsv_cyclenum = g_gsv_cyclenum +1;	
-	     kal_prompt_trace(MOD_SOC,"for  gpgsv_callout g_gsv_cyclenum=%d,g_gpgsv_row = %d",g_gsv_cyclenum,g_gpgsv_row); 				
+	     kal_prompt_trace(MOD_GPS,"for  gpgsv_callout g_gsv_cyclenum=%d,g_gpgsv_row = %d",g_gsv_cyclenum,g_gpgsv_row); 				
 	     for(i=0;i<4;i++) {   			
 		  bd_sate_id[g_gsv_num] = pgpgsv->sat_data[i].id;	
 	         bd_snr[g_gsv_num]       = pgpgsv->sat_data[i].sig;	
 	         g_gsv_num = g_gsv_num + 1;	 	
 		if(gp_gsv_sat<bd_snr[i])
 			gp_gsv_sat=bd_snr[i];
-			kal_prompt_trace(MOD_BT,"gp_gsv_sat=%d",gp_gsv_sat);	
-	         kal_prompt_trace(MOD_SOC,"for  g_gsv_num=%d, sat_data id = %d, sat_data sig=%d",g_gsv_num,pgpgsv->sat_data[i].id,pgpgsv->sat_data[i].sig); 			
+			//kal_prompt_trace(MOD_GPS,"gp_gsv_sat=%d",gp_gsv_sat);	
+	         kal_prompt_trace(MOD_GPS,"for  g_gsv_num=%d, sat_data id = %d, sat_data sig=%d",g_gsv_num,pgpgsv->sat_data[i].id,pgpgsv->sat_data[i].sig); 			
 	    	}	
     #endif 	// BD_HDDZ
 		gp_gsv_num=pgpgsv->sat_count;
-	kal_prompt_trace(MOD_BT,"gp_gsv_num=%d",gp_gsv_num);	
-    //kal_prompt_trace(MOD_SOC,"-------------gpgsv_callout\n");
+	//kal_prompt_trace(MOD_GPS,"gp_gsv_num=%d",gp_gsv_num);	
+    //kal_prompt_trace(MOD_GPS,"-------------gpgsv_callout\n");
     print_gpgsv(pgpgsv);
 }
 
 /** do something with the BDGSV data */
 static void print_bdgsv(nmeap_bdgsv_t *bdgsv)
 {
-     kal_prompt_trace(MOD_SOC,"found BDGSV Message %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+     kal_prompt_trace(MOD_GPS,"found BDGSV Message %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
             bdgsv->pack_count,
             bdgsv->pack_index,
             bdgsv->sat_count,
@@ -367,26 +367,26 @@ static void bdgsv_callout(nmeap_context_t *context,void *data,void *user_data)
 	    }			 	
 	    	
 	    g_gsv_cyclenum = g_gsv_cyclenum +1;	
-           kal_prompt_trace(MOD_SOC,"for  bdgsv_callout g_gsv_cyclenum=%d,g_bdgsv_row = %d",g_gsv_cyclenum,g_bdgsv_row); 
+           kal_prompt_trace(MOD_GPS,"for  bdgsv_callout g_gsv_cyclenum=%d,g_bdgsv_row = %d",g_gsv_cyclenum,g_bdgsv_row); 
 	    
 	    for(i=0;i<4;i++) {
 	         bd_sate_id[g_gsv_num] = pbdgsv->sat_data[i].id;	
 	         bd_snr[g_gsv_num]       = pbdgsv->sat_data[i].sig;	
 	         g_gsv_num = g_gsv_num + 1;	 	
-	         kal_prompt_trace(MOD_SOC,"for g_gsv_num =%d, sat_data id = %d, sat_data sig=%d",g_gsv_num,pbdgsv->sat_data[i].id,pbdgsv->sat_data[i].sig); 		    		
+	         kal_prompt_trace(MOD_GPS,"for g_gsv_num =%d, sat_data id = %d, sat_data sig=%d",g_gsv_num,pbdgsv->sat_data[i].id,pbdgsv->sat_data[i].sig); 		    		
 	    	}		
 	 
 	    
 	    if (g_gsv_cyclenum>=(g_gpgsv_row+g_bdgsv_row))	{
-		  kal_prompt_trace(MOD_SOC,"-------------quiksort start");	
+		  kal_prompt_trace(MOD_GPS,"-------------quiksort start");	
 		  QuickSort(bd_snr,bd_sate_id,0,31);	
-		  kal_prompt_trace(MOD_SOC,"-------------quiksort end");	
+		  kal_prompt_trace(MOD_GPS,"-------------quiksort end");	
 		  for(i=0;i<12;i++)
 		  {
 		      gsv_data.rsv[i].sate_id = bd_sate_id[i];
 		      gsv_data.rsv[i].snr = bd_snr[i];
-		      kal_prompt_trace(MOD_SOC,"bd_sate_id=%d",bd_sate_id[i]);	  
-		      kal_prompt_trace(MOD_SOC,"bd_snr=%d",bd_snr[i]);	  	  
+		      kal_prompt_trace(MOD_GPS,"bd_sate_id=%d",bd_sate_id[i]);	  
+		      kal_prompt_trace(MOD_GPS,"bd_snr=%d",bd_snr[i]);	  	  
 		  }  
 		  g_gsv_cyclenum = 0;
 		  g_gsv_num = 0;
@@ -396,13 +396,13 @@ static void bdgsv_callout(nmeap_context_t *context,void *data,void *user_data)
 	    }		
     #endif  //BD_HDDZ	
 	
-    //kal_prompt_trace(MOD_SOC,"-------------bdgsv_callout\n");
+    //kal_prompt_trace(MOD_GPS,"-------------bdgsv_callout\n");
     print_bdgsv(pbdgsv);
 }
 //add by lqy for BD
 void BD_GPS_Manufacture_INIT(void)
 {	
-	kal_prompt_trace(MOD_SOC," BD_GPS_Manufacture_INIT ");	
+	kal_prompt_trace(MOD_GPS," BD_GPS_Manufacture_INIT ");	
 	Vcamd_Supply();	
 	//Vcama_Supply();	
 	Vvibr_Supply();		
@@ -430,13 +430,13 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 
        if (bnmea != TRUE) 
 	{ 	
-		kal_prompt_trace(MOD_SOC," BD_NMEAP_INIT enter");	
+		kal_prompt_trace(MOD_GPS," BD_NMEAP_INIT enter");	
 		/* ---------------------------------------*/
 		/*STEP 2 : initialize the nmea context    */                                                
 		/* ---------------------------------------*/
 	    status = nmeap_init(&nmea,(void *)&user_data);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_init status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_init status = %d ",status);
 	    }
 	    
 		/* ---------------------------------------*/
@@ -444,7 +444,7 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 		/* -------------------------------------- */
 	    status = nmeap_addParser(&nmea,"GNGGA",nmeap_gngga,gngga_callout,&gga);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add GNGGA status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add GNGGA status = %d ",status);
 	    }
 #ifdef HD8020_ACK_CHECK
 		/* ---------------------------------------*/
@@ -452,7 +452,7 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 		/* -------------------------------------- */
 	    status = nmeap_addParser(&nmea,"GNTXT",nmeap_gntxt,gntxt_callout,&txt);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add GNTXT status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add GNTXT status = %d ",status);
 	    }		
 #endif
 		/* ---------------------------------------*/
@@ -460,14 +460,14 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 		/* -------------------------------------- */
 	   /* status = nmeap_addParser(&nmea,"GNRMC",nmeap_gnrmc,gnrmc_callout,&rmc);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add GNRMC status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add GNRMC status = %d ",status);
 	    }*/
 		/* ---------------------------------------*/
 		/*STEP 4 : add standard GNVTG parser      */                                                
 		/* -------------------------------------- */
 	    status = nmeap_addParser(&nmea,"GNVTG",nmeap_gnvtg,gnvtg_callout,&vtg);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add GNVTG status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add GNVTG status = %d ",status);
 	    }
 		
 	    /* ---------------------------------------*/
@@ -476,7 +476,7 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 		
 	    status = nmeap_addParser(&nmea,"GPGSV",nmeap_gpgsv,gpgsv_callout,&gpgsv);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add GPGSV status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add GPGSV status = %d ",status);
 	    }
 
 		/* ---------------------------------------*/
@@ -485,7 +485,7 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 
 	    status = nmeap_addParser(&nmea,"BDGSV",nmeap_bdgsv,bdgsv_callout,&bdgsv);
 	    if (status != 0) {
-	        kal_prompt_trace(MOD_SOC," nmeap_add BDGSV status = %d ",status);
+	        kal_prompt_trace(MOD_GPS," nmeap_add BDGSV status = %d ",status);
 	    }
 	     bnmea = TRUE;
        	}
@@ -524,7 +524,7 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
             break;
         }
         
-        kal_prompt_trace(MOD_SOC,"BD_NMEAP_INIT readbuffer=%s  len = %d ",buffer,len);
+        kal_prompt_trace(MOD_GPS,"BD_NMEAP_INIT readbuffer=%s  len = %d ",buffer,len);
 #ifdef HD8020_ACK_CHECK		
         bird_agps_ack_handle(buffer, len);
 #endif
@@ -549,23 +549,23 @@ void BD_NMEAP_INIT(kal_uint8 *bufferaddr)
 			/* -------------------------------------- */
             switch(status) {
             case NMEAP_GNGGA:
-                kal_prompt_trace(MOD_SOC,"NMEAP_GNGGA-------------switch\n");
+                kal_prompt_trace(MOD_GPS,"NMEAP_GNGGA-------------switch\n");
                 //print_gga(&gga);
                 break;
 /*            case NMEAP_GNRMC:
-                kal_prompt_trace(MOD_SOC,"NMEAP_GNRMC-------------switch\n");
+                kal_prompt_trace(MOD_GPS,"NMEAP_GNRMC-------------switch\n");
                 print_rmc(&rmc);
                 break;*/
             case NMEAP_GNVTG:
-                kal_prompt_trace(MOD_SOC,"NMEAP_GNVTG-------------switch\n");
+                kal_prompt_trace(MOD_GPS,"NMEAP_GNVTG-------------switch\n");
                 //print_vtg(&vtg);
                 break;    
 	     case NMEAP_GPGSV:
-                kal_prompt_trace(MOD_SOC,"NMEAP_GPGSV-------------switch\n");
+                kal_prompt_trace(MOD_GPS,"NMEAP_GPGSV-------------switch\n");
                 //print_gpgsv(&gpgsv);
                 break;
             case NMEAP_BDGSV:
-                kal_prompt_trace(MOD_SOC,"NMEAP_BDGSV-------------switch\n");
+                kal_prompt_trace(MOD_GPS,"NMEAP_BDGSV-------------switch\n");
                 //print_bdgsv(&bdgsv);
                 break;			
             default:

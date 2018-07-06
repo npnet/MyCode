@@ -15,25 +15,25 @@ extern kal_bool is_ac_charger_in(void);
 
 void yd_tk001_power_off_handler()
 {
-	kal_prompt_trace(MOD_SOC,"yd_tk001_power_off_handler");  
+    kal_prompt_trace(MOD_SOC,"yd_tk001_power_off_handler");
 #if defined(BIRD_EXTERNEL_POWER_UNSUPPORT)
-	return;
+    return;
 #else
-	StartTimer(BIRD_POWEROFF_TIMER, RJ_GPS_APP_10S, rj_volt_poweroff);
-	return;
+    StartTimer(BIRD_POWEROFF_TIMER, RJ_GPS_APP_10S, rj_volt_poweroff);
+    return;
 #endif
 }
 
 
 void yd_uart_shutdown()
 {
-	kal_prompt_trace(MOD_SOC,"yd_uart_shutdown %d",is_ac_charger_in());
-	if(!is_ac_charger_in())
-	{
-	#ifndef BIRD_EXTERNEL_POWER_UNSUPPORT      	 	
-		rj_volt_poweroff();
- 	#endif
-	}
+    kal_prompt_trace(MOD_SOC,"yd_uart_shutdown %d",is_ac_charger_in());
+    if(!is_ac_charger_in())
+    {
+#ifndef BIRD_EXTERNEL_POWER_UNSUPPORT
+        rj_volt_poweroff();
+#endif
+    }
 }
 
 void yd_set_power_off_msg()
@@ -42,6 +42,6 @@ void yd_set_power_off_msg()
 
 void yd_set_uart_power_off_msg()
 {
-	SetProtocolEventHandler(yd_uart_shutdown,MSG_ID_YD_TK001_MSG_CLOSE_ALARM);
+    SetProtocolEventHandler(yd_uart_shutdown,MSG_ID_YD_TK001_MSG_CLOSE_ALARM);
 }
 

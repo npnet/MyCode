@@ -191,7 +191,8 @@
 #include "kal_public_api.h"
 #include "mmi_frm_utility_gprot.h"
 //LED
-#include "Bird_app.h"
+#include "Bird_std.h"
+
 extern RJ_POWER_GSM_GPRS_status_Info rj_led_status_info;
 
 #ifdef __INVALID_SIM_RECOVERY__

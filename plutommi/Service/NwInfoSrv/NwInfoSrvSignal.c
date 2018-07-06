@@ -582,7 +582,9 @@ static srv_nw_band_enum srv_nw_info_get_band_from_l4_value(kal_uint8 l4_band)
 }
 
  #ifdef RJ_GPS_APP
-#include "Bird_app.h"
+#include "Bird_std.h"
+extern RJ_POWER_GSM_GPRS_status_Info rj_led_status_info;
+
 #endif
 /*****************************************************************************
  * FUNCTION

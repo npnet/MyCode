@@ -6,12 +6,12 @@
 
 typedef enum
 {
-    	RJ_TIMER = 0,
-    	/*
-	Bird_task_login_Timer,
-	Bird_task_logintxbox_Timer,
-	Bird_task_calibtime_Timer,
-	Bird_task_24calib_Timer,
+    RJ_TIMER = 0,
+    /*
+    Bird_task_login_Timer,
+    Bird_task_logintxbox_Timer,
+    Bird_task_calibtime_Timer,
+    Bird_task_24calib_Timer,
        Bird_task_main_Timer,
        Bird_task_heart_Timer,
        BIRD_TASK_GPRS_TIMER_START,
@@ -41,7 +41,7 @@ typedef enum
        BIRD_TASK_OC_MAIN_HEART_TIMER,
        BIRD_TASK_OC_RUN_TIMER,
        */
-    	MAX_NUM_OF_RJ_TIMER
+    MAX_NUM_OF_RJ_TIMER
 } rj_timer_enum;
 
 
@@ -51,10 +51,10 @@ typedef enum
 /*************************************************/
 typedef enum
 {
-	RJ_SECOND_TIMER,
+    RJ_SECOND_TIMER,
 
-	MAX_RJ_SECOND_TIMER
-}rj_second_timer_enum;
+    MAX_RJ_SECOND_TIMER
+} rj_second_timer_enum;
 typedef struct
 {
     eventid event_id;

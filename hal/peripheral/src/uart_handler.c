@@ -164,9 +164,9 @@ static DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *da
 Seriport_HANDLER_T  Uart_Drv_Handler = {DCL_UART_TYPE, UART_Handler};
 extern UART_flowCtrlMode  UART_GetFlowCtrl(UART_PORT uart_port);
 
-extern  void BD_UART_READ_HANDLE(kal_uint8 *Buffaddr, kal_uint16 Length); // add by lqy
+extern  void BD_UART_READ_HANDLE__(kal_uint8 *Buffaddr, kal_uint16 Length); // add by lqy
  #ifdef BIRD_UART2_SUPPORT
-extern  void ECU_UART_READ_HANDLE(kal_uint8 *Buffaddr, kal_uint16 Length);
+extern  void ECU_UART_READ_HANDLE__(kal_uint8 *Buffaddr, kal_uint16 Length);
 #endif
 DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *data)
 {
@@ -195,7 +195,7 @@ DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *data)
 					if(return_flag == KAL_FALSE)
 						return_status = STATUS_FAIL;
 					//add by lqy
-					  kal_prompt_trace(MOD_SOC," SIO_CMD_OPEN flag =%d ,status=%d ",return_flag,return_status);
+					  kal_prompt_trace(MOD_UART," SIO_CMD_OPEN flag =%d ,status=%d ",return_flag,return_status);
 				}
 			break;
 			
@@ -217,7 +217,7 @@ DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *data)
                                    #if 1//def BIRD_UART2_SUPPORT
 					   if(dev == uart_port2)
 		                          {
-							ECU_UART_READ_HANDLE(prCtrlGetBytes->puBuffaddr,prCtrlGetBytes->u2RetSize);
+							ECU_UART_READ_HANDLE__(prCtrlGetBytes->puBuffaddr,prCtrlGetBytes->u2RetSize);
 		                           }
 					 #endif	
                                    #ifdef BIRD_UART3_SUPPORT					 
@@ -226,9 +226,9 @@ DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *data)
                                          if(prCtrlGetBytes->u2RetSize < prCtrlGetBytes->u2Length) {	
 						     strcat((char*)bd_buffer,(char*)prCtrlGetBytes->puBuffaddr);		 	
 						     bd_num = bd_num + prCtrlGetBytes->u2RetSize	;	
-						     kal_prompt_trace(MOD_SOC," SIO_CMD_GET_BYTES  bd_num=%d",bd_num); 
-						     kal_prompt_trace(MOD_SOC," SIO_CMD_GET_BYTES bd_buffer = %s",bd_buffer);
-						     BD_UART_READ_HANDLE(bd_buffer,bd_num);		
+						     kal_prompt_trace(MOD_UART," SIO_CMD_GET_BYTES  bd_num=%d",bd_num); 
+						     kal_prompt_trace(MOD_UART," SIO_CMD_GET_BYTES bd_buffer = %s",bd_buffer);
+						     BD_UART_READ_HANDLE__(bd_buffer,bd_num);		
 						     bd_num=0;	 
 						     memset(bd_buffer, 0, sizeof(bd_buffer));
                                          	}		  
@@ -248,7 +248,7 @@ DCL_STATUS UART_Handler(DCL_DEV dev,DCL_CTRL_CMD cmd, DCL_CTRL_DATA_T *data)
 					UART_CTRL_PUT_BYTES_T* prCtrlPutBytes;
 					prCtrlPutBytes = &(data->rUARTCtrlPUTBYTES);
 				prCtrlPutBytes->u2RetSize=	pUart_CMD_FUNC[dev]->PutBytes(dev, prCtrlPutBytes->puBuffaddr, prCtrlPutBytes->u2Length,(module_type)(prCtrlPutBytes->u4OwenrId) );
-				kal_prompt_trace(MOD_SOC," SIO_CMD_PUT_BYTES  u2RetSize=%d",prCtrlPutBytes->u2RetSize);
+				kal_prompt_trace(MOD_UART," SIO_CMD_PUT_BYTES  u2RetSize=%d",prCtrlPutBytes->u2RetSize);
 				}
 			break;
 			

@@ -1,11 +1,11 @@
 /**************************************************************************
   Copyright (C), 2012-2013, BIRD. Co., Ltd.
-  File name:      
+  File name:
   Author:       Version:        Date: 2013-05-29
   Description:   BIRD standard function header file for reference, BIRD module
-  Others:         
-  Function List:  
-  History:       
+  Others:
+  Function List:
+  History:
     1. Date:
        Author:
        Modification:
@@ -27,7 +27,7 @@
 #endif
 
 #ifndef S8
-#define S8 char 
+#define S8 char
 #endif
 
 #ifndef S16
@@ -75,10 +75,10 @@ typedef S32 handle_pss;
 //定义矩形类型
 typedef struct
 {
-	U16	x;
-	U16	y;
-	U16	width;
-	U16	height;
+    U16	x;
+    U16	y;
+    U16	width;
+    U16	height;
 } rect_t;
 
 
@@ -88,22 +88,37 @@ typedef struct
     U8 Log_type;
     U8 Log_data_len;
     kal_char Log_buffer[512];
-}Bird_log_type;
+} Bird_log_type;
+
+typedef struct
+{
+    kal_bool  b_SIM_IS_SERACHING;
+    kal_bool  b_GSM_IS_SERACHING;
+    kal_bool  b_GPS_IS_SERACHING;
+    kal_bool b_SERVER_IS_LOGGING;
+    kal_bool b_GPS_IS_CLOSE;
+    kal_bool b_SOC_IS_CONNECTING;
+    kal_bool b_SOC_IS_CONNECTED;
+    kal_bool b_GSM_IS_CLOSE;
+    kal_bool b_SIM_IS_CLOSE;
+    kal_bool b_LOGSERVER_IS_CLOSE;
+} RJ_POWER_GSM_GPRS_status_Info;
+
 
 #define BIRD_LOG_FILE_PATH "%c:\\log.dat"    //by lqy 
-#define BIRD_LOG_FILE_PATH2 "%c:\\Lima\\log2.dat" 
-#define BIRD_POS_FILE_PATH "%c:\\posdata.dat" 
+#define BIRD_LOG_FILE_PATH2 "%c:\\Lima\\log2.dat"
+#define BIRD_POS_FILE_PATH "%c:\\posdata.dat"
 #define BIRD_RTLOG_DIR "%c:\\Rtlog"
 #define BIRD_RTLOG_FILE_PATH "%c:\\Rtlog\\log_%04d-%02d-%02d-%02d-%02d-%02d.txt"
 #define BIRD_RTLOG_FILE "%c:\\Rtlog\\log_*.txt"
 #define BIRD_SOUND_RECORD_FOLDER "%c:\\RECORD"
 #define BIRD_SOUND_RECORD_PATH "%c:\\RECORD\\REC_%s.amr"
-#define BIRD_TBOXDATA_DIR "%c:\\Tboxdata" 
-#define BIRD_TBOXDATA_PATH "%c:\\Tboxdata\\rec_%04d-%02d-%02d-%02d.txt" 
-#define BIRD_TBOXDATA_FILE "%c:\\Tboxdata\\rec_*.txt" 
-#define BIRD_TBOXINFO_DIR "%c:\\Tboxinfo" 
-#define BIRD_TBOXINFO_PATH "%c:\\Tboxinfo\\rec_%04d-%02d-%02d-%02d.txt" 
-#define BIRD_TBOXINFO_FILE "%c:\\Tboxinfo\\rec_*.txt" 
+#define BIRD_TBOXDATA_DIR "%c:\\Tboxdata"
+#define BIRD_TBOXDATA_PATH "%c:\\Tboxdata\\rec_%04d-%02d-%02d-%02d.txt"
+#define BIRD_TBOXDATA_FILE "%c:\\Tboxdata\\rec_*.txt"
+#define BIRD_TBOXINFO_DIR "%c:\\Tboxinfo"
+#define BIRD_TBOXINFO_PATH "%c:\\Tboxinfo\\rec_%04d-%02d-%02d-%02d.txt"
+#define BIRD_TBOXINFO_FILE "%c:\\Tboxinfo\\rec_*.txt"
 
 typedef void (*void_fn_t)(void);
 typedef void (* timer_fn_t)(void);

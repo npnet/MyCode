@@ -1,3 +1,5 @@
+#define BIRD_CAN_SIMULATE_SEND_SUPPORT
+
 #ifdef BIRD_CAN_SUPPORT
 #include "can.h"
 #include    "eint.h"
@@ -26,6 +28,7 @@ static kal_bool can_send_eint_state = (kal_bool)KAL_TRUE;
 static kal_bool can_normal_data = (kal_bool)KAL_FALSE;
 extern void can_simulate_eint_hisr(void);
 #endif
+
 
 volatile applib_time_struct cur_time;
 #ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
@@ -285,10 +288,11 @@ void can_table_create(void)
 #endif	
 }
 kal_uint8 can_selfcheck_flag =0;
+kal_bool have_new_can_data = KAL_FALSE;//add by zyz 
 void can_unit_fill(kal_uint32 id, kal_uint8 *data)
 {
 	kal_uint8 i = 0, id_value[4] = {0};
-	static kal_uint8 old_sec = 0,cnt = 0;
+	static kal_uint8 old_sec = -1,cnt = 0;
 
 	id_value[0] = (id & 0xff000000) >>24;
 	id_value[1] = (id & 0xff0000) >>16;
@@ -296,9 +300,11 @@ void can_unit_fill(kal_uint32 id, kal_uint8 *data)
 	id_value[3] = (id & 0xff);
 
 	kal_prompt_trace(MOD_USB, "can_unit_fill id_value[0] = %x, id_value[1]= %x, id_value[2]= %x, id_value[3]= %x", id_value[0], id_value[1], id_value[2], id_value[3]);	
+	have_new_can_data = KAL_FALSE;
 #ifdef CAN_SHANSHAN_SUPPORT	
 	if (id == 0x18FF97D2)
 	{
+		have_new_can_data = KAL_TRUE;
 		kal_prompt_trace(MOD_USB, "can_unit_fill data[0] = %d", data[0]);
 		memcpy(&can_rx_temp_buf[CAN_VOLTAGE_NUM + (data[0]-1)/CAN_VOLTAGE_DATA_LENGTH][4], data, CAN_DATA_LENGTH);
 #if	SHANSHAN_CAN_DEBUG	
@@ -312,6 +318,7 @@ void can_unit_fill(kal_uint32 id, kal_uint8 *data)
 	}
 	else if (id == 0x18FF98D2)
 	{
+		have_new_can_data = KAL_TRUE;
 		kal_prompt_trace(MOD_USB, "can_unit_fill data[0] = %d", data[0]);
 		memcpy(&can_rx_temp_buf[CAN_TEMPERATURE_NUM + (data[0]-1)/CAN_TEMPERATURE_DATA_LENGTH][4], data, CAN_DATA_LENGTH);
 #if SHANSHAN_CAN_DEBUG		
@@ -331,24 +338,33 @@ void can_unit_fill(kal_uint32 id, kal_uint8 *data)
 		{
 			memcpy(&can_rx_temp_buf[i][4], data, CAN_DATA_LENGTH);
 			can_selfcheck_flag =1;
+			have_new_can_data = KAL_TRUE;
 		}
 	}
 	
     	applib_dt_get_rtc_time(&cur_time);
 	kal_prompt_trace(MOD_USB, "cur_time.nMin = %d , cur_time.nSec = %d ,", cur_time.nMin,cur_time.nSec);		
+#if 0//	add by zyz 
 	if(cnt = 0)
 	{
+	kal_prompt_trace(MOD_USB, "cnt = %d, old_sec =  ", cnt , old_sec);
 	old_sec = cur_time.nSec;
 	cnt = 1;
 	}
-	if(cur_time.nSec != old_sec)
+#endif	
+	if(have_new_can_data == KAL_FALSE)
+		return;
+			
+	//if(cur_time.nSec != old_sec)
 	{
+#if 0 // add by zyz 	
 		car_can_data.date[0] = cur_time.nYear %100;    
 		car_can_data.date[1] = cur_time.nMonth;
 		car_can_data.date[2] = cur_time.nDay;
 		car_can_data.date[3] = cur_time.nHour;
 		car_can_data.date[4] = cur_time.nMin;
 		car_can_data.date[5] = cur_time.nSec;
+#endif		
 		memcpy(can_rx_buf,can_rx_temp_buf, CAN_ID_NUM*CAN_UNIT_NUM);
 		bird_send_message(MSG_ID_CAN_RX_CHECK);
 	//	can_rx_data_check();
@@ -575,7 +591,7 @@ void can1_hw_rx(void)
 		rec_id |= CAN1_SID << 18;
 		
 		can_unit_fill(rec_id, CAN1_DATA);	
-		kal_prompt_trace(MOD_SOC, "rec_id = %x, CAN1_DLC = %x, data:%x %x %x %x %x", rec_id, CAN1_DLC, CAN1_DATA[0], CAN1_DATA[1], CAN1_DATA[2], CAN1_DATA[3], CAN1_DATA[4]);
+		kal_prompt_trace(MOD_USB, "rec_id = %x, CAN1_DLC = %x, data:%x %x %x %x %x", rec_id, CAN1_DLC, CAN1_DATA[0], CAN1_DATA[1], CAN1_DATA[2], CAN1_DATA[3], CAN1_DATA[4]);
 		MCP2515_byte_write1(CANINTF, 0x00);		
 	}	
 #ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
@@ -601,7 +617,7 @@ void can2_eint_hisr(void)
 
 
 
-#include "gpio_var.c"
+//#include "gpio_var.c"
 void can_int_register()
 {
 	kal_prompt_trace(MOD_USB, "can_int_register");	
@@ -616,7 +632,7 @@ void can_int_register()
 	EINT_Registration(CAN2_EINT_NO,KAL_FALSE, can2_eint_state,can2_eint_hisr, KAL_TRUE);
 	EINT_Set_Sensitivity(CAN2_EINT_NO, EDGE_SENSITIVE);
 	EINT_Set_Polarity(CAN2_EINT_NO, can2_eint_state);
-#ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
+#if 0//def BIRD_CAN_SIMULATE_SEND_SUPPORT
 	EINT_Registration(PUSH_EINT_NO,KAL_FALSE, can_send_eint_state,can_simulate_eint_hisr, KAL_TRUE);
 	EINT_Set_Polarity(PUSH_EINT_NO, can_send_eint_state);
 	EINT_SW_Debounce_Modify(PUSH_EINT_NO,20);
@@ -650,6 +666,7 @@ void can_start(void)
 #ifdef BIRD_CAN_SIMULATE_SEND_SUPPORT
 void can_simulate_eint_hisr(void)
 {	
+#if 0
 	kal_uint8  data = 0;
 	if (can_send_eint_state == KAL_TRUE)
 	{
@@ -665,6 +682,7 @@ void can_simulate_eint_hisr(void)
 		kal_prompt_trace(MOD_USB, "can_simulate_eint_hisr 1");	 
 		can_normal_data = KAL_FALSE;
 	}	
+#endif	
 }
 void can1_send_data(void)
 {
@@ -720,6 +738,66 @@ void can1_send_data(void)
 	MCP2515_can1_rts_tx0();
 }
 
+
+void can2_send_data(void)
+{
+	kal_uint8  data = 0, id0, id1, id2,id3,dlc = 0;
+	kal_uint32 send_id1 = 0;
+	kal_uint8 send_data1[8] = {0};	
+	unsigned char HSID,LSID,EID8,EID0;
+	static kal_uint8 count = 0;
+	char gpio_data = 0;
+
+	return;
+
+       if (can_normal_data == KAL_FALSE)
+       {
+		send_id1 = can_send_data[count].can_id;
+		dlc = can_send_data[count].can_dlc;
+		memcpy(send_data1, can_send_data[count].can_data, 8);
+       }
+	else
+	{
+		send_id1 = can_send_data_normal[count].can_id;
+		dlc = can_send_data_normal[count].can_dlc;
+		memcpy(send_data1, can_send_data_normal[count].can_data, 8);		
+	}
+
+	kal_prompt_trace(MOD_USB, "can2_send_data  send_id2= %x, dlc = %d, send_data2 = %x %x %x %x %x %x %x %x", send_id1, dlc, send_data1[0], 
+		send_data1[1], send_data1[2], send_data1[3], send_data1[4], send_data1[5], send_data1[6], send_data1[7]);
+	count++;
+	if(count >= CAN_DATA_NUM)
+		count = 0;
+	id0 = send_id1 >>24;
+	id1 = send_id1 >>16;
+	id2 = send_id1 >>8;
+	id3 = send_id1;
+
+	HSID = (id0<<3) + (id1>>5);
+	LSID= ((id1<<3)&0xe0)+(id1 & 0x03)+0x08;
+	EID8 = id2;
+	EID0 = id3;	
+	
+	MCP2515_byte_write2(TXB0SIDH,HSID);   // SID10--SID3  
+	MCP2515_byte_write2(TXB0SIDL,LSID);   //SID2--SID0  EID17--SID16 
+	MCP2515_byte_write2(TXB0EID8,EID8);   // EID15--SID8  
+	MCP2515_byte_write2(TXB0EID0,EID0);   //EID7--EID0  
+	
+	MCP2515_byte_write2(TXB0DLC, 8);     
+	MCP2515_byte_write2(TXB0D0,send_data1[0]);  
+	MCP2515_byte_write2(TXB0D1,send_data1[1]);   
+	MCP2515_byte_write2(TXB0D2,send_data1[2]);   
+	MCP2515_byte_write2(TXB0D3,send_data1[3]);   
+	MCP2515_byte_write2(TXB0D4,send_data1[4]);   
+	MCP2515_byte_write2(TXB0D5,send_data1[5]);   
+	MCP2515_byte_write2(TXB0D6,send_data1[6]);   
+	MCP2515_byte_write2(TXB0D7,send_data1[7]);  	
+	MCP2515_can2_rts_tx0();
+}
+
+
+
+#if 0
 void can2_send_data(void)
 {
 	kal_uint8  data = 0, id0, id1, id2, id3, dlc = 0;
@@ -765,4 +843,8 @@ void can2_send_data(void)
 	MCP2515_can2_rts_tx0();
 }
 #endif
+
+
 #endif
+#endif
+
