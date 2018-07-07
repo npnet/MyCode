@@ -342,5 +342,3 @@ LOAD_SEC_ROM 0x10480000
          *    (TBOX_ROCODE, TBOX_RODATA)
     }
 }
-
-
